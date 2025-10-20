@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Student Enrollment</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover { background: #0056b3; }
+    .msg { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Enroll New Student</h2>
+    <input id="phone" type="text" placeholder="Phone Number" required />
+    <input id="name" type="text" placeholder="Full Name" required />
+    <select id="course">
+      <option value="">Select Course</option>
+      <option value="Standard">Standard</option>
+      <option value="FastTrack">FastTrack</option>
+    </select>
+    <button onclick="enroll()">Enroll Course</button>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <script>
+    const scriptURL = "YOUR_DEPLOYED_SCRIPT_URL"; // Replace with your Apps Script web app URL
+
+    async function enroll() {
+      const phone = document.getElementById("phone").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const course = document.getElementById("course").value;
+      const msg = document.getElementById("msg");
+
+      if (!phone || !name || !course) {
+        msg.textContent = "Please fill all fields.";
+        msg.style.color = "red";
+        return;
+      }
+
+      msg.textContent = "Submitting...";
+      const res = await fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "enrollStudent", phone, name, course })
+      });
+      const text = await res.text();
+
+      if (text === "PENDING_APPROVAL") {
+        msg.textContent = "Your enrollment request is pending admin approval.";
+        msg.style.color = "green";
+      } else if (text === "ALREADY_EXISTS") {
+        msg.textContent = "Phone number already exists!";
+        msg.style.color = "red";
+      } else {
+        msg.textContent = "Error occurred, please try again.";
+        msg.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
