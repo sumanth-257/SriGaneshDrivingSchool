@@ -41,116 +41,111 @@
     <div id="tableContainer">Loading...</div>
   </div>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwUsm7jlVgWuArh1vb8UzAj9ueyVOgXZnDXUeDRQ2JkCAQD-3q4hHzZLvtjEQMbr5cj/exec";
-    let adminPass = "";
+ <script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwUsm7jlVgWuArh1vb8UzAj9ueyVOgXZnDXUeDRQ2JkCAQD-3q4hHzZLvtjEQMbr5cj/exec";
+  let adminPass = "";
 
-    async function login() {
-      adminPass = document.getElementById("adminPass").value.trim();
-      if (!adminPass) {
-        document.getElementById("loginMsg").textContent = "Enter password!";
-        return;
-      }
-
-      const res = await fetch(`${scriptURL}?action=checkAdmin&password=${adminPass}`);
-      const data = await res.text();
-      if (data !== "VALID") {
-        document.getElementById("loginMsg").textContent = "Invalid password!";
-        return;
-      }
-
-      document.getElementById("loginSection").style.display = "none";
-      document.getElementById("contentSection").style.display = "block";
-      loadPendingAttendance();
+  function login() {
+    adminPass = document.getElementById("adminPass").value.trim();
+    if (!adminPass) {
+      document.getElementById("loginMsg").textContent = "Enter password!";
+      return;
     }
 
-    function logout() {
-      adminPass = "";
-      document.getElementById("contentSection").style.display = "none";
-      document.getElementById("loginSection").style.display = "block";
+    // No need to validate now; directly try loading data
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("contentSection").style.display = "block";
+    loadPendingAttendance();
+  }
+
+  function logout() {
+    adminPass = "";
+    document.getElementById("contentSection").style.display = "none";
+    document.getElementById("loginSection").style.display = "block";
+  }
+
+  async function loadPendingAttendance() {
+    const res = await fetch(`${scriptURL}?action=pending&password=${adminPass}`);
+    const data = await res.json();
+    if (data.status !== "OK") {
+      alert("Invalid password or unauthorized access");
+      logout();
+      return;
     }
 
-    async function loadPendingAttendance() {
-      const res = await fetch(`${scriptURL}?action=pending&password=${adminPass}`);
-      const data = await res.json();
-      if (data.status !== "OK") {
-        alert("Unauthorized or error");
-        logout();
-        return;
-      }
+    let html = "<h3>Pending Attendance Approvals</h3>";
+    html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Timing</th><th>Actions</th></tr>`;
+    if (data.records.length === 0) html += `<tr><td colspan='6'>No pending records</td></tr>`;
+    data.records.forEach(r => {
+      html += `<tr>
+        <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.timing}</td>
+        <td>
+          <button class="approve" onclick="approve('${r.phone}','${r.date}')">Approve</button>
+          <button class="deny" onclick="deny('${r.phone}','${r.date}')">Deny</button>
+        </td>
+      </tr>`;
+    });
+    html += "</table>";
+    document.getElementById("tableContainer").innerHTML = html;
+  }
 
-      let html = "<h3>Pending Attendance Approvals</h3>";
-      html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Timing</th><th>Actions</th></tr>`;
-      if (data.records.length === 0) html += `<tr><td colspan='6'>No pending records</td></tr>`;
-      data.records.forEach(r => {
-        html += `<tr>
-          <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.timing}</td>
-          <td>
-            <button class="approve" onclick="approve('${r.phone}','${r.date}')">Approve</button>
-            <button class="deny" onclick="deny('${r.phone}','${r.date}')">Deny</button>
-          </td>
-        </tr>`;
-      });
-      html += "</table>";
-      document.getElementById("tableContainer").innerHTML = html;
+  async function loadPendingStudents() {
+    const res = await fetch(`${scriptURL}?action=pendingStudents&password=${adminPass}`);
+    const data = await res.json();
+    if (data.status !== "OK") {
+      alert("Invalid password or unauthorized access");
+      logout();
+      return;
     }
 
-    async function loadPendingStudents() {
-      const res = await fetch(`${scriptURL}?action=pendingStudents&password=${adminPass}`);
-      const data = await res.json();
-      if (data.status !== "OK") {
-        alert("Unauthorized or error");
-        logout();
-        return;
-      }
+    let html = "<h3>Pending Student Enrollments</h3>";
+    html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Max Classes</th><th>Actions</th></tr>`;
+    if (data.records.length === 0) html += `<tr><td colspan='6'>No pending enrollments</td></tr>`;
+    data.records.forEach(r => {
+      html += `<tr>
+        <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.maxClasses}</td>
+        <td>
+          <button class="approve" onclick="approveStudent('${r.phone}')">Approve</button>
+          <button class="deny" onclick="denyStudent('${r.phone}')">Deny</button>
+        </td>
+      </tr>`;
+    });
+    html += "</table>";
+    document.getElementById("tableContainer").innerHTML = html;
+  }
 
-      let html = "<h3>Pending Student Enrollments</h3>";
-      html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Max Classes</th><th>Actions</th></tr>`;
-      if (data.records.length === 0) html += `<tr><td colspan='6'>No pending enrollments</td></tr>`;
-      data.records.forEach(r => {
-        html += `<tr>
-          <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.maxClasses}</td>
-          <td>
-            <button class="approve" onclick="approveStudent('${r.phone}')">Approve</button>
-            <button class="deny" onclick="denyStudent('${r.phone}')">Deny</button>
-          </td>
-        </tr>`;
-      });
-      html += "</table>";
-      document.getElementById("tableContainer").innerHTML = html;
-    }
+  async function approve(phone, date) {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams({ action: "approve", phone, date })
+    });
+    loadPendingAttendance();
+  }
 
-    async function approve(phone, date) {
-      await fetch(scriptURL, {
-        method: "POST",
-        body: new URLSearchParams({ action: "approve", phone, date })
-      });
-      loadPendingAttendance();
-    }
+  async function deny(phone, date) {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams({ action: "deny", phone, date })
+    });
+    loadPendingAttendance();
+  }
 
-    async function deny(phone, date) {
-      await fetch(scriptURL, {
-        method: "POST",
-        body: new URLSearchParams({ action: "deny", phone, date })
-      });
-      loadPendingAttendance();
-    }
+  async function approveStudent(phone) {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams({ action: "approveStudent", phone })
+    });
+    loadPendingStudents();
+  }
 
-    async function approveStudent(phone) {
-      await fetch(scriptURL, {
-        method: "POST",
-        body: new URLSearchParams({ action: "approveStudent", phone })
-      });
-      loadPendingStudents();
-    }
+  async function denyStudent(phone) {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams({ action: "denyStudent", phone })
+    });
+    loadPendingStudents();
+  }
+</script>
 
-    async function denyStudent(phone) {
-      await fetch(scriptURL, {
-        method: "POST",
-        body: new URLSearchParams({ action: "denyStudent", phone })
-      });
-      loadPendingStudents();
-    }
-  </script>
 </body>
 </html>
