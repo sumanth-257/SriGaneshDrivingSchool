@@ -1,95 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Admin Attendance Approval</title>
-<style>
-body { font-family:'Segoe UI',sans-serif; background:#f1f5f9; margin:0; padding:0; }
-header { background:#0f172a; color:white; padding:15px; text-align:center; }
-#loginBox, #recordsBox { max-width:700px; margin:40px auto; background:white; padding:20px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-table { width:100%; border-collapse:collapse; margin-top:10px; }
-th, td { border:1px solid #cbd5e1; padding:8px; text-align:center; }
-button { background:#1e40af; color:white; border:none; padding:6px 10px; border-radius:5px; cursor:pointer; }
-button:hover { background:#3b82f6; }
-button.deny { background:#dc2626; }
-button.deny:hover { background:#ef4444; }
-</style>
+  <meta charset="UTF-8">
+  <title>Admin Portal</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f0f2f5; padding: 20px; }
+    h2 { text-align: center; }
+    .login, .content { 
+      max-width: 700px; margin: auto; background: white; 
+      padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px; margin: 5px; border-radius: 5px;
+      border: 1px solid #ccc; font-size: 15px;
+    }
+    button { cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #007bff; color: white; }
+    .approve { background: #28a745; color: white; border: none; }
+    .deny { background: #dc3545; color: white; border: none; }
+    .tabs { text-align: center; margin-bottom: 15px; }
+    .tabs button { margin: 0 5px; }
+  </style>
 </head>
 <body>
-<header><h2>Admin - Approve / Deny Attendance</h2></header>
+  <h2>Admin Portal</h2>
+  <div class="login" id="loginSection">
+    <input type="password" id="adminPass" placeholder="Enter Admin Password" />
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
 
-<div id="loginBox">
-  <label>Enter Admin Password:</label>
-  <input type="password" id="password" placeholder="Enter password">
-  <button onclick="login()">Login</button>
-  <p id="loginStatus"></p>
-</div>
+  <div class="content" id="contentSection" style="display:none;">
+    <div class="tabs">
+      <button onclick="loadPendingAttendance()">Pending Attendance</button>
+      <button onclick="loadPendingStudents()">Pending Students</button>
+      <button onclick="logout()">Logout</button>
+    </div>
+    <div id="tableContainer">Loading...</div>
+  </div>
 
-<div id="recordsBox" style="display:none;">
-  <h3>Pending Attendance Requests</h3>
-  <table id="pendingTable">
-    <thead>
-      <tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Timing</th><th>Actions</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+  <script>
+    const scriptURL = "YOUR_DEPLOYED_SCRIPT_URL"; // Replace this
+    let adminPass = "";
 
-<script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_aDgxKfK5EWptArZ4xpFsaSpokS9glB1tkTodZBycjKuyDMiM9LYD085RsoQUEQtA/exec";
-
-function login() {
-  const pass = document.getElementById("password").value.trim();
-  if (!pass) return;
-  document.getElementById("loginStatus").textContent = "Verifying...";
-  fetch(`${SCRIPT_URL}?password=${encodeURIComponent(pass)}&action=pending`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "UNAUTHORIZED") {
-        document.getElementById("loginStatus").textContent = "❌ Wrong password!";
-      } else {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("recordsBox").style.display = "block";
-        loadPending(data.records);
+    async function login() {
+      adminPass = document.getElementById("adminPass").value.trim();
+      if (!adminPass) {
+        document.getElementById("loginMsg").textContent = "Enter password!";
+        return;
       }
-    });
-}
 
-function loadPending(records) {
-  const tbody = document.querySelector("#pendingTable tbody");
-  tbody.innerHTML = "";
-  if (records.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='6'>✅ No pending records</td></tr>";
-    return;
-  }
-  records.forEach(r => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${new Date(r.date).toLocaleString()}</td>
-      <td>${r.phone}</td>
-      <td>${r.name}</td>
-      <td>${r.course}</td>
-      <td>${r.timing}</td>
-      <td>
-        <button onclick="approve('${r.phone}','${r.date}')">Approve</button>
-        <button class="deny" onclick="deny('${r.phone}','${r.date}')">Deny</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+      const res = await fetch(`${scriptURL}?action=checkAdmin&password=${adminPass}`);
+      const data = await res.text();
+      if (data !== "VALID") {
+        document.getElementById("loginMsg").textContent = "Invalid password!";
+        return;
+      }
 
-function approve(phone, dateVal) {
-  fetch(`${SCRIPT_URL}?action=approve&phone=${encodeURIComponent(phone)}&date=${encodeURIComponent(dateVal)}`, { method: "POST" })
-    .then(res => res.text())
-    .then(() => { alert("✅ Approved!"); location.reload(); });
-}
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("contentSection").style.display = "block";
+      loadPendingAttendance();
+    }
 
-function deny(phone, dateVal) {
-  fetch(`${SCRIPT_URL}?action=deny&phone=${encodeURIComponent(phone)}&date=${encodeURIComponent(dateVal)}`, { method: "POST" })
-    .then(res => res.text())
-    .then(() => { alert("❌ Request Denied"); location.reload(); });
-}
-</script>
+    function logout() {
+      adminPass = "";
+      document.getElementById("contentSection").style.display = "none";
+      document.getElementById("loginSection").style.display = "block";
+    }
+
+    async function loadPendingAttendance() {
+      const res = await fetch(`${scriptURL}?action=pending&password=${adminPass}`);
+      const data = await res.json();
+      if (data.status !== "OK") {
+        alert("Unauthorized or error");
+        logout();
+        return;
+      }
+
+      let html = "<h3>Pending Attendance Approvals</h3>";
+      html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Timing</th><th>Actions</th></tr>`;
+      if (data.records.length === 0) html += `<tr><td colspan='6'>No pending records</td></tr>`;
+      data.records.forEach(r => {
+        html += `<tr>
+          <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.timing}</td>
+          <td>
+            <button class="approve" onclick="approve('${r.phone}','${r.date}')">Approve</button>
+            <button class="deny" onclick="deny('${r.phone}','${r.date}')">Deny</button>
+          </td>
+        </tr>`;
+      });
+      html += "</table>";
+      document.getElementById("tableContainer").innerHTML = html;
+    }
+
+    async function loadPendingStudents() {
+      const res = await fetch(`${scriptURL}?action=pendingStudents&password=${adminPass}`);
+      const data = await res.json();
+      if (data.status !== "OK") {
+        alert("Unauthorized or error");
+        logout();
+        return;
+      }
+
+      let html = "<h3>Pending Student Enrollments</h3>";
+      html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Max Classes</th><th>Actions</th></tr>`;
+      if (data.records.length === 0) html += `<tr><td colspan='6'>No pending enrollments</td></tr>`;
+      data.records.forEach(r => {
+        html += `<tr>
+          <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.maxClasses}</td>
+          <td>
+            <button class="approve" onclick="approveStudent('${r.phone}')">Approve</button>
+            <button class="deny" onclick="denyStudent('${r.phone}')">Deny</button>
+          </td>
+        </tr>`;
+      });
+      html += "</table>";
+      document.getElementById("tableContainer").innerHTML = html;
+    }
+
+    async function approve(phone, date) {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "approve", phone, date })
+      });
+      loadPendingAttendance();
+    }
+
+    async function deny(phone, date) {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "deny", phone, date })
+      });
+      loadPendingAttendance();
+    }
+
+    async function approveStudent(phone) {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "approveStudent", phone })
+      });
+      loadPendingStudents();
+    }
+
+    async function denyStudent(phone) {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "denyStudent", phone })
+      });
+      loadPendingStudents();
+    }
+  </script>
 </body>
 </html>
