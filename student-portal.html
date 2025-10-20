@@ -44,9 +44,8 @@ button:hover { background:#3b82f6; }
   <button type="submit" id="markBtn" disabled>Mark Attendance</button>
   <div id="info"></div>
 </form>
-
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_aDgxKfK5EWptArZ4xpFsaSpokS9glB1tkTodZBycjKuyDMiM9LYD085RsoQUEQtA/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzsJv8UWA43YMeXYtsc00ZjvyedNl1XKBtdsCJfYYrWDb1HRJeul14DUlLSWC8ZdF99/exec";
 
 const phoneInput = document.getElementById("phone");
 const verifyBtn = document.getElementById("verifyBtn");
@@ -58,7 +57,23 @@ const timingSelect = document.getElementById("timing");
 
 let isVerified = false;
 let courseType = "";
+let verifiedPhone = "";
 
+// ✅ New: Create table container dynamically
+const tableContainer = document.createElement("div");
+tableContainer.style.marginTop = "20px";
+tableContainer.style.display = "none";
+document.querySelector("form").appendChild(tableContainer);
+
+const viewBtn = document.createElement("button");
+viewBtn.textContent = "📜 View My Attendance";
+viewBtn.type = "button";
+viewBtn.style.marginTop = "10px";
+viewBtn.style.background = "#0f766e";
+viewBtn.style.display = "none";
+document.querySelector("form").appendChild(viewBtn);
+
+// 🔍 Verify Student
 verifyBtn.addEventListener("click", () => {
   const phone = phoneInput.value.trim();
   if (!phone) return info.textContent = "⚠️ Please enter phone number.";
@@ -71,7 +86,10 @@ verifyBtn.addEventListener("click", () => {
         info.textContent = "❌ Not registered.";
         studentInfoDiv.style.display = "none";
         markBtn.disabled = true;
+        viewBtn.style.display = "none";
+        tableContainer.style.display = "none";
       } else {
+        verifiedPhone = phone;
         courseType = data.course;
         document.getElementById("studentName").textContent = data.name;
         document.getElementById("studentCourse").textContent = data.course;
@@ -81,6 +99,7 @@ verifyBtn.addEventListener("click", () => {
         buildTimingDropdown(courseType);
         isVerified = true;
         markBtn.disabled = false;
+        viewBtn.style.display = "block";
         info.textContent = "";
       }
     })
@@ -112,6 +131,7 @@ function buildTimingDropdown(course) {
   timingSelect.style.display = "block";
 }
 
+// 📝 Mark Attendance
 document.getElementById("attendanceForm").addEventListener("submit", e => {
   e.preventDefault();
   if (!isVerified) return info.textContent = "⚠️ Verify student first.";
@@ -144,6 +164,57 @@ document.getElementById("attendanceForm").addEventListener("submit", e => {
       info.textContent = "Could not connect.";
     });
 });
+
+// 📜 New Feature: View Attendance
+viewBtn.addEventListener("click", () => {
+  if (!verifiedPhone) return info.textContent = "⚠️ Please verify your number first.";
+  info.textContent = "Fetching attendance...";
+  fetch(`${SCRIPT_URL}?action=viewAttendance&phone=${encodeURIComponent(verifiedPhone)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "OK" && data.records.length > 0) {
+        renderAttendanceTable(data.records);
+        tableContainer.style.display = "block";
+        info.textContent = "";
+      } else {
+        tableContainer.innerHTML = "<p style='text-align:center;'>No attendance records yet.</p>";
+        tableContainer.style.display = "block";
+        info.textContent = "";
+      }
+    })
+    .catch(() => {
+      info.textContent = "⚠️ Error fetching attendance.";
+    });
+});
+
+function renderAttendanceTable(records) {
+  let html = `
+    <table border="1" cellspacing="0" cellpadding="8" style="width:100%; border-collapse:collapse; text-align:center; font-size:14px;">
+      <thead style="background:#1e3a8a; color:white;">
+        <tr>
+          <th>Date</th>
+          <th>Course</th>
+          <th>Timing</th>
+          <th>Class #</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+  records.forEach(r => {
+    html += `
+      <tr>
+        <td>${r.date}</td>
+        <td>${r.course}</td>
+        <td>${r.timing}</td>
+        <td>${r.count}</td>
+        <td>${r.status}</td>
+      </tr>
+    `;
+  });
+  html += "</tbody></table>";
+  tableContainer.innerHTML = html;
+}
 </script>
 </body>
 </html>
