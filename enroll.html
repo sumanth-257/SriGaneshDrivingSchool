@@ -42,7 +42,7 @@
 <body>
   <div class="container">
     <h2>Enroll New Student</h2>
-    <input id="phone" type="text" placeholder="Phone Number" required />
+    <input id="phone" type="text" placeholder="Phone Number" maxlength="10" required />
     <input id="name" type="text" placeholder="Full Name" required />
     <select id="course">
       <option value="">Select Course</option>
@@ -55,33 +55,53 @@
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
+
+    // Allow only digits in phone input
+    document.getElementById("phone").addEventListener("input", function () {
+      this.value = this.value.replace(/[^0-9]/g, ""); // removes non-numeric characters
+    });
+
     async function enroll() {
       const phone = document.getElementById("phone").value.trim();
       const name = document.getElementById("name").value.trim();
       const course = document.getElementById("course").value;
       const msg = document.getElementById("msg");
 
+      // Validation
       if (!phone || !name || !course) {
         msg.textContent = "Please fill all fields.";
         msg.style.color = "red";
         return;
       }
 
-      msg.textContent = "Submitting...";
-      const res = await fetch(scriptURL, {
-        method: "POST",
-        body: new URLSearchParams({ action: "enrollStudent", phone, name, course })
-      });
-      const text = await res.text();
-
-      if (text === "PENDING_APPROVAL") {
-        msg.textContent = "Your enrollment request is pending admin approval.";
-        msg.style.color = "green";
-      } else if (text === "ALREADY_EXISTS") {
-        msg.textContent = "Phone number already exists!";
+      if (!/^[0-9]{10}$/.test(phone)) {
+        msg.textContent = "Enter a valid 10-digit phone number.";
         msg.style.color = "red";
-      } else {
-        msg.textContent = "Error occurred, please try again.";
+        return;
+      }
+
+      msg.textContent = "Submitting...";
+      msg.style.color = "black";
+
+      try {
+        const res = await fetch(scriptURL, {
+          method: "POST",
+          body: new URLSearchParams({ action: "enrollStudent", phone, name, course })
+        });
+        const text = await res.text();
+
+        if (text === "PENDING_APPROVAL") {
+          msg.textContent = "Your enrollment request is pending admin approval.";
+          msg.style.color = "green";
+        } else if (text === "ALREADY_EXISTS") {
+          msg.textContent = "Phone number already exists!";
+          msg.style.color = "red";
+        } else {
+          msg.textContent = "Error occurred, please try again.";
+          msg.style.color = "red";
+        }
+      } catch (e) {
+        msg.textContent = "Network error, please try again.";
         msg.style.color = "red";
       }
     }
