@@ -1,245 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Attendance Portal</title>
-<style>
-body { font-family:'Segoe UI',sans-serif; background:#f8fafc; color:#1e293b; margin:0; }
-header { background:#1e3a8a; color:white; text-align:center; padding:20px; }
-form { max-width:500px; margin:30px auto; background:white; padding:30px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-label { font-weight:600; display:block; margin-top:15px; }
-input, select { width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:6px; }
-button { margin-top:20px; width:100%; background:#1e3a8a; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:600; }
-button:hover { background:#3b82f6; }
-#info { margin-top:15px; text-align:center; font-weight:600; }
-#studentInfo p { margin:5px 0; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    }
+
+    nav .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f59e0b, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Hero Header */
+    header {
+      position: relative;
+      min-height: 45vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #dc2626 100%);
+      overflow: hidden;
+      text-align: center;
+      color: white;
+      padding: 60px 20px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background-image: 
+        radial-gradient(circle at 20% 50%, #f59e0b 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #3b82f6 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    header h1 {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 15px;
+      line-height: 1.2;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      opacity: 0.95;
+      font-weight: 300;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Form Container */
+    .form-wrapper {
+      max-width: 500px;
+      margin: -40px auto 40px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 10;
+    }
+
+    .form-wrapper h2 {
+      text-align: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, #1e3a8a, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      font-weight: 800;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    label {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      background: #f8fafc;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    /* Buttons */
+    button {
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    #verifyBtn {
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+    }
+
+    #verifyBtn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    #markBtn {
+      background: linear-gradient(135deg, #f59e0b, #dc2626);
+      color: white;
+    }
+
+    #markBtn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+    }
+
+    #markBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #viewBtn {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: white !important;
+    }
+
+    #viewBtn:hover {
+      transform: translateY(-3px) !important;
+      box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4) !important;
+    }
+
+    /* Student Info Card */
+    #studentInfo {
+      display: none;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 6px solid #1e3a8a;
+      margin: 20px 0;
+      animation: slideIn 0.4s ease-out;
+    }
+
+    #studentInfo p {
+      margin: 10px 0;
+      font-size: 15px;
+      color: #0f172a;
+      font-weight: 500;
+    }
+
+    #studentInfo strong {
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Info Messages */
+    #info {
+      margin-top: 15px;
+      padding: 15px;
+      text-align: center;
+      font-weight: 600;
+      border-radius: 10px;
+      font-size: 15px;
+      min-height: 20px;
+    }
+
+    #info.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 2px solid #86efac;
+    }
+
+    #info.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 2px solid #fca5a5;
+    }
+
+    #info.info {
+      background: #e0f2fe;
+      color: #0c4a6e;
+      border: 2px solid #7dd3fc;
+    }
+
+    /* Attendance Table */
+    .table-wrapper {
+      display: none;
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      overflow-x: auto;
+    }
+
+    .table-wrapper h3 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #1e3a8a, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      padding: 18px;
+      font-weight: 700;
+      text-align: center;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 16px;
+      text-align: center;
+      font-weight: 500;
+      border-bottom: 1px solid #e2e8f0;
+      color: #0f172a;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f0f9ff;
+    }
+
+    .status-approved {
+      color: #10b981;
+      font-weight: 700;
+    }
+
+    .status-pending {
+      color: #f59e0b;
+      font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        min-height: 40vh;
+        padding: 40px 15px;
+      }
+
+      header h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+      }
+
+      header p {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+      }
+
+      .form-wrapper {
+        margin: -40px 15px 30px;
+        padding: 30px 20px;
+      }
+
+      .form-wrapper h2 {
+        font-size: 20px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 12px 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        min-height: 35vh;
+        padding: 30px 10px;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 0.95rem;
+      }
+
+      .form-wrapper {
+        margin: -35px 10px 20px;
+        padding: 25px 15px;
+      }
+
+      .form-wrapper h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+
+      .table-wrapper {
+        margin: 30px 10px;
+        padding: 20px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 10px 5px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>🎓 Student Attendance Portal</h1>
-  <p>New Sri Raja Driving School</p>
-</header>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">🚗 New Sri Raja Driving School</div>
+  </nav>
 
-<form id="attendanceForm" autocomplete="off">
-  <label>Phone Number</label>
-  <input type="text" id="phone" required maxlength="10" placeholder="Enter 10-digit phone number" />
+  <!-- Hero Header -->
+  <header>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>📊 Student Attendance Portal</h1>
+      <p>Track Your Driving Progress</p>
+    </div>
+  </header>
 
-  <button type="button" id="verifyBtn">🔍 Verify Student</button>
+  <!-- Form Container -->
+  <div class="form-wrapper">
+    <h2>Mark Your Attendance</h2>
+    
+    <form id="attendanceForm" autocomplete="off">
+      <div>
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" required maxlength="10" placeholder="Enter 10-digit phone number" />
+      </div>
 
-  <div id="studentInfo" style="display:none;">
-    <p><strong>Name:</strong> <span id="studentName"></span></p>
-    <p><strong>Course:</strong> <span id="studentCourse"></span></p>
-    <p><strong>Classes Taken:</strong> <span id="studentTaken"></span></p>
-    <p><strong>Remaining:</strong> <span id="studentRemaining"></span></p>
+      <button type="button" id="verifyBtn">🔍 Verify Student</button>
+
+      <div id="studentInfo">
+        <p><strong>Name:</strong> <span id="studentName"></span></p>
+        <p><strong>Course:</strong> <span id="studentCourse"></span></p>
+        <p><strong>Classes Taken:</strong> <span id="studentTaken"></span></p>
+        <p><strong>Remaining:</strong> <span id="studentRemaining"></span></p>
+      </div>
+
+      <div>
+        <label id="timingLabel" for="timing" style="display:none;">Select Timing</label>
+        <select id="timing" style="display:none;">
+          <option value="">-- Select Timing --</option>
+        </select>
+      </div>
+
+      <button type="submit" id="markBtn" disabled>✅ Mark Attendance</button>
+      <div id="info"></div>
+    </form>
+
+    <button type="button" id="viewBtn" style="display:none; margin-top:10px;">📜 View My Attendance</button>
   </div>
 
-  <label id="timingLabel" style="display:none;">Select Timing</label>
-  <select id="timing" style="display:none;">
-    <option value="">-- Select Timing --</option>
-  </select>
+  <!-- Attendance Table -->
+  <div class="table-wrapper">
+    <h3>Your Attendance Records</h3>
+    <div id="tableContent"></div>
+  </div>
 
-  <button type="submit" id="markBtn" disabled>Mark Attendance</button>
-  <div id="info"></div>
-</form>
+  <!-- Footer -->
+  <footer>
+    <p><strong>© 2025 New Sri Raja Driving School, Vizianagaram</strong></p>
+    <p>Driving Excellence Since 1995 | All Rights Reserved</p>
+  </footer>
 
-<script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
 
-const phoneInput = document.getElementById("phone");
-const verifyBtn = document.getElementById("verifyBtn");
-const markBtn = document.getElementById("markBtn");
-const info = document.getElementById("info");
-const studentInfoDiv = document.getElementById("studentInfo");
-const timingLabel = document.getElementById("timingLabel");
-const timingSelect = document.getElementById("timing");
+    const phoneInput = document.getElementById("phone");
+    const verifyBtn = document.getElementById("verifyBtn");
+    const markBtn = document.getElementById("markBtn");
+    const info = document.getElementById("info");
+    const studentInfoDiv = document.getElementById("studentInfo");
+    const timingLabel = document.getElementById("timingLabel");
+    const timingSelect = document.getElementById("timing");
+    const viewBtn = document.getElementById("viewBtn");
+    const tableWrapper = document.querySelector(".table-wrapper");
+    const tableContent = document.getElementById("tableContent");
 
-let isVerified = false;
-let courseType = "";
-let verifiedPhone = "";
+    let isVerified = false;
+    let courseType = "";
+    let verifiedPhone = "";
 
-// ✅ Restrict phone input to digits only
-phoneInput.addEventListener("input", function() {
-  this.value = this.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-});
-
-// ✅ Create attendance table container dynamically
-const tableContainer = document.createElement("div");
-tableContainer.style.marginTop = "20px";
-tableContainer.style.display = "none";
-document.querySelector("form").appendChild(tableContainer);
-
-const viewBtn = document.createElement("button");
-viewBtn.textContent = "📜 View My Attendance";
-viewBtn.type = "button";
-viewBtn.style.marginTop = "10px";
-viewBtn.style.background = "#0f766e";
-viewBtn.style.display = "none";
-document.querySelector("form").appendChild(viewBtn);
-
-// 🔍 Verify Student
-verifyBtn.addEventListener("click", () => {
-  const phone = phoneInput.value.trim();
-
-  // New validation check
-  if (!/^[0-9]{10}$/.test(phone)) {
-    info.textContent = "⚠️ Enter a valid 10-digit phone number.";
-    info.style.color = "red";
-    return;
-  }
-
-  info.textContent = "Verifying...";
-  info.style.color = "black";
-
-  fetch(`${SCRIPT_URL}?phone=${encodeURIComponent(phone)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "NOT_REGISTERED") {
-        info.textContent = "❌ Not registered.";
-        info.style.color = "red";
-        studentInfoDiv.style.display = "none";
-        markBtn.disabled = true;
-        viewBtn.style.display = "none";
-        tableContainer.style.display = "none";
-      } else {
-        verifiedPhone = phone;
-        courseType = data.course;
-        document.getElementById("studentName").textContent = data.name;
-        document.getElementById("studentCourse").textContent = data.course;
-        document.getElementById("studentTaken").textContent = data.taken;
-        document.getElementById("studentRemaining").textContent = data.remaining;
-        studentInfoDiv.style.display = "block";
-        buildTimingDropdown(courseType);
-        isVerified = true;
-        markBtn.disabled = false;
-        viewBtn.style.display = "block";
-        info.textContent = "";
-      }
-    })
-    .catch(() => {
-      info.textContent = "⚠️ Server error.";
-      info.style.color = "red";
-    });
-});
-
-function buildTimingDropdown(course) {
-  timingSelect.innerHTML = `<option value="">-- Select Timing --</option>`;
-  const times = [];
-  if (course.toLowerCase().includes("fast")) {
-    for (let h = 6; h <= 17; h++) {
-      const ampm = h < 12 ? "AM" : "PM";
-      times.push(`${h > 12 ? h - 12 : h}:00 ${ampm}`);
+    function showInfo(message, type) {
+      info.textContent = message;
+      info.className = type;
     }
-  } else {
-    for (let h = 6; h <= 17; h++) {
-      const ampm = h < 12 ? "AM" : "PM";
-      times.push(`${h > 12 ? h - 12 : h}:00 ${ampm}`);
-      times.push(`${h > 12 ? h - 12 : h}:30 ${ampm}`);
+
+    // Restrict phone input to digits only
+    phoneInput.addEventListener("input", function() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    });
+
+    // Verify Student
+    verifyBtn.addEventListener("click", () => {
+      const phone = phoneInput.value.trim();
+
+      if (!/^[0-9]{10}$/.test(phone)) {
+        showInfo("⚠️ Enter a valid 10-digit phone number.", "error");
+        return;
+      }
+
+      showInfo("Verifying...", "info");
+
+      fetch(`${SCRIPT_URL}?phone=${encodeURIComponent(phone)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "NOT_REGISTERED") {
+            showInfo("❌ Phone number not registered.", "error");
+            studentInfoDiv.style.display = "none";
+            markBtn.disabled = true;
+            viewBtn.style.display = "none";
+            tableWrapper.style.display = "none";
+          } else {
+            verifiedPhone = phone;
+            courseType = data.course;
+            document.getElementById("studentName").textContent = data.name;
+            document.getElementById("studentCourse").textContent = data.course;
+            document.getElementById("studentTaken").textContent = data.taken;
+            document.getElementById("studentRemaining").textContent = data.remaining;
+            studentInfoDiv.style.display = "block";
+            buildTimingDropdown(courseType);
+            isVerified = true;
+            markBtn.disabled = false;
+            viewBtn.style.display = "block";
+            showInfo("✅ Student verified successfully!", "success");
+          }
+        })
+        .catch(() => {
+          showInfo("⚠️ Server error. Please try again.", "error");
+        });
+    });
+
+    function buildTimingDropdown(course) {
+      timingSelect.innerHTML = `<option value="">-- Select Timing --</option>`;
+      const times = [];
+      if (course.toLowerCase().includes("fast")) {
+        for (let h = 6; h <= 17; h++) {
+          const ampm = h < 12 ? "AM" : "PM";
+          times.push(`${h > 12 ? h - 12 : h}:00 ${ampm}`);
+        }
+      } else {
+        for (let h = 6; h <= 17; h++) {
+          const ampm = h < 12 ? "AM" : "PM";
+          times.push(`${h > 12 ? h - 12 : h}:00 ${ampm}`);
+          times.push(`${h > 12 ? h - 12 : h}:30 ${ampm}`);
+        }
+      }
+      times.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        timingSelect.appendChild(opt);
+      });
+      timingLabel.style.display = "block";
+      timingSelect.style.display = "block";
     }
-  }
-  times.forEach(t => {
-    const opt = document.createElement("option");
-    opt.value = t;
-    opt.textContent = t;
-    timingSelect.appendChild(opt);
-  });
-  timingLabel.style.display = "block";
-  timingSelect.style.display = "block";
-}
 
-// 📝 Mark Attendance
-document.getElementById("attendanceForm").addEventListener("submit", e => {
-  e.preventDefault();
-  if (!isVerified) return info.textContent = "⚠️ Verify student first.";
-  const phone = phoneInput.value.trim();
-  const timing = timingSelect.value;
-  if (!timing) return info.textContent = "⚠️ Please select timing.";
-
-  markBtn.disabled = true;
-  markBtn.textContent = "Submitting...";
-  const formData = new FormData();
-  formData.append("phone", phone);
-  formData.append("timing", timing);
-
-  fetch(SCRIPT_URL, { method: "POST", body: formData })
-    .then(res => res.text())
-    .then(text => {
-      if (text === "PENDING_REVIEW") {
-        markBtn.textContent = "✅ Attendance Submitted";
-        info.textContent = "Pending admin approval.";
-        info.style.color = "green";
-      } else if (text === "LIMIT_REACHED") {
-        markBtn.textContent = "⚠️ Limit Reached";
-        info.textContent = "Course limit reached.";
-        info.style.color = "red";
-      } else {
-        markBtn.textContent = "❌ Error";
-        info.textContent = "Something went wrong.";
-        info.style.color = "red";
+    // Mark Attendance
+    document.getElementById("attendanceForm").addEventListener("submit", e => {
+      e.preventDefault();
+      if (!isVerified) {
+        showInfo("⚠️ Please verify student first.", "error");
+        return;
       }
-    })
-    .catch(() => {
-      markBtn.textContent = "⚠️ Network Error";
-      info.textContent = "Could not connect.";
-      info.style.color = "red";
-    });
-});
-
-// 📜 View Attendance
-viewBtn.addEventListener("click", () => {
-  if (!verifiedPhone) return info.textContent = "⚠️ Please verify your number first.";
-  info.textContent = "Fetching attendance...";
-  info.style.color = "black";
-
-  fetch(`${SCRIPT_URL}?action=viewAttendance&phone=${encodeURIComponent(verifiedPhone)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "OK" && data.records.length > 0) {
-        renderAttendanceTable(data.records);
-        tableContainer.style.display = "block";
-        info.textContent = "";
-      } else {
-        tableContainer.innerHTML = "<p style='text-align:center;'>No attendance records yet.</p>";
-        tableContainer.style.display = "block";
-        info.textContent = "";
+      const phone = phoneInput.value.trim();
+      const timing = timingSelect.value;
+      if (!timing) {
+        showInfo("⚠️ Please select a timing.", "error");
+        return;
       }
-    })
-    .catch(() => {
-      info.textContent = "⚠️ Error fetching attendance.";
-      info.style.color = "red";
-    });
-});
 
-function renderAttendanceTable(records) {
-  let html = `
-    <table border="1" cellspacing="0" cellpadding="8" style="width:100%; border-collapse:collapse; text-align:center; font-size:14px;">
-      <thead style="background:#1e3a8a; color:white;">
-        <tr>
-          <th>Date</th>
-          <th>Course</th>
-          <th>Timing</th>
-          <th>Class #</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
-  records.forEach(r => {
-    html += `
-      <tr>
-        <td>${r.date}</td>
-        <td>${r.course}</td>
-        <td>${r.timing}</td>
-        <td>${r.count}</td>
-        <td>${r.status}</td>
-      </tr>
-    `;
-  });
-  html += "</tbody></table>";
-  tableContainer.innerHTML = html;
-}
-</script>
+      markBtn.disabled = true;
+      const originalText = markBtn.textContent;
+      markBtn.textContent = "⏳ Submitting...";
+
+      const formData = new FormData();
+      formData.append("phone", phone);
+      formData.append("timing", timing);
+
+      fetch(SCRIPT_URL, { method: "POST", body: formData })
+        .then(res => res.text())
+        .then(text => {
+          if (text === "PENDING_REVIEW") {
+            markBtn.textContent = "✅ Submitted";
+            showInfo("✅ Attendance submitted! Pending admin approval.", "success");
+          } else if (text === "LIMIT_REACHED") {
+            markBtn.textContent = originalText;
+            showInfo("⚠️ You've reached your course limit.", "error");
+            markBtn.disabled = false;
+          } else {
+            markBtn.textContent = originalText;
+            showInfo("❌ Error submitting attendance.", "error");
+            markBtn.disabled = false;
+          }
+        })
+        .catch(() => {
+          markBtn.textContent = originalText;
+          showInfo("⚠️ Network error. Please try again.", "error");
+          markBtn.disabled = false;
+        });
+    });
+
+    // View Attendance
+    viewBtn.addEventListener("click", () => {
+      if (!verifiedPhone) {
+        showInfo("⚠️ Please verify your number first.", "error");
+        return;
+      }
+      showInfo("Fetching attendance...", "info");
+
+      fetch(`${SCRIPT_URL}?action=viewAttendance&phone=${encodeURIComponent(verifiedPhone)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "OK" && data.records.length > 0) {
+            renderAttendanceTable(data.records);
+            tableWrapper.style.display = "block";
+            info.textContent = "";
+            tableWrapper.scrollIntoView({ behavior: "smooth" });
+          } else {
+            tableContent.innerHTML = "<p style='text-align:center; padding:30px; color:#64748b; font-weight:600;'>No attendance records yet.</p>";
+            tableWrapper.style.display = "block";
+            info.textContent = "";
+            tableWrapper.scrollIntoView({ behavior: "smooth" });
+          }
+        })
+        .catch(() => {
+          showInfo("⚠️ Error fetching attendance.", "error");
+        });
+    });
+
+    function renderAttendanceTable(records) {
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Course</th>
+              <th>Timing</th>
+              <th>Class #</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      records.forEach(r => {
+        const statusClass = r.status.includes("Approved") ? "status-approved" : "status-pending";
+        html += `
+          <tr>
+            <td>${r.date}</td>
+            <td>${r.course}</td>
+            <td>${r.timing}</td>
+            <td>${r.count}</td>
+            <td class="${statusClass}">${r.status}</td>
+          </tr>
+        `;
+      });
+      html += "</tbody></table>";
+      tableContent.innerHTML = html;
+    }
+  </script>
+
 </body>
 </html>
