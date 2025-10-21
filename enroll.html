@@ -1,110 +1,444 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Student Enrollment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Enrollment - New Sri Raja Driving School</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f5f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    }
+
+    nav .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f59e0b, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Hero Header */
+    header {
+      position: relative;
+      min-height: 45vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      width: 350px;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #dc2626 100%);
+      overflow: hidden;
       text-align: center;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 15px;
-    }
-    button {
-      background: #007bff;
       color: white;
-      border: none;
-      cursor: pointer;
-      transition: 0.2s;
+      padding: 60px 20px;
     }
-    button:hover { background: #0056b3; }
-    .msg { margin-top: 10px; font-weight: bold; }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background-image: 
+        radial-gradient(circle at 20% 50%, #f59e0b 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #3b82f6 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: 15px;
+      line-height: 1.2;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: clamp(0.95rem, 4vw, 1.2rem);
+      opacity: 0.95;
+      font-weight: 300;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Form Container */
+    .form-wrapper {
+      max-width: 480px;
+      margin: -40px auto 60px;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 10;
+    }
+
+    .form-wrapper h2 {
+      text-align: center;
+      font-size: 22px;
+      background: linear-gradient(135deg, #1e3a8a, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 28px;
+      font-weight: 800;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    label {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: -12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      background: #f8fafc;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    /* Buttons */
+    button {
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    #enrollBtn {
+      background: linear-gradient(135deg, #f59e0b, #dc2626);
+      color: white;
+      margin-top: 8px;
+    }
+
+    #enrollBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+    }
+
+    #enrollBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Messages */
+    #msg {
+      margin-top: 16px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 600;
+      border-radius: 10px;
+      font-size: 14px;
+      min-height: 20px;
+      display: none;
+    }
+
+    #msg.show {
+      display: block;
+    }
+
+    #msg.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 2px solid #86efac;
+    }
+
+    #msg.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 2px solid #fca5a5;
+    }
+
+    #msg.info {
+      background: #e0f2fe;
+      color: #0c4a6e;
+      border: 2px solid #7dd3fc;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      padding: 18px;
+      border-left: 5px solid #f59e0b;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #92400e;
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: #b45309;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    footer p:first-child {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        min-height: 40vh;
+        padding: 40px 15px;
+      }
+
+      header h1 {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
+      }
+
+      header p {
+        font-size: clamp(0.85rem, 3vw, 1rem);
+      }
+
+      .form-wrapper {
+        margin: -35px 15px 40px;
+        padding: 28px 20px;
+      }
+
+      .form-wrapper h2 {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        min-height: 35vh;
+        padding: 30px 10px;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 0.9rem;
+      }
+
+      .form-wrapper {
+        margin: -30px 10px 30px;
+        padding: 25px 15px;
+      }
+
+      .form-wrapper h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 11px 16px;
+        font-size: 13px;
+      }
+
+      input, select {
+        padding: 11px 12px;
+        font-size: 14px;
+      }
+
+      .info-box {
+        padding: 14px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Enroll New Student</h2>
-    <input id="phone" type="text" placeholder="Phone Number" maxlength="10" required />
-    <input id="name" type="text" placeholder="Full Name" required />
-    <select id="course">
-      <option value="">Select Course</option>
-      <option value="Standard">Standard</option>
-      <option value="FastTrack">FastTrack</option>
-    </select>
-    <button onclick="enroll()">Enroll Course</button>
-    <div class="msg" id="msg"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">🚗 New Sri Raja Driving School</div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>🧾 Enroll New Student</h1>
+      <p>Start Your Driving Journey Today</p>
+    </div>
+  </header>
+
+  <!-- Form Container -->
+  <div class="form-wrapper">
+    <h2>Student Registration</h2>
+    
+    <form id="enrollmentForm">
+      <div>
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" placeholder="Enter 10-digit phone number" maxlength="10" required />
+      </div>
+
+      <div>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required />
+      </div>
+
+      <div>
+        <label for="course">Select Course</label>
+        <select id="course" required>
+          <option value="">-- Choose a Course --</option>
+          <option value="Standard">Standard Course (20 Classes in 20 Days)</option>
+          <option value="FastTrack">FastTrack Course (20 Classes in 10 Days)</option>
+        </select>
+      </div>
+
+      <button type="submit" id="enrollBtn">✅ Enroll Now</button>
+      <div id="msg"></div>
+    </form>
   </div>
 
+  <!-- Footer -->
+  <footer>
+    <p><strong>© 2025 New Sri Raja Driving School, Vizianagaram</strong></p>
+    <p>Driving Excellence Since 1995 | All Rights Reserved</p>
+  </footer>
+
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
+
+    const phoneInput = document.getElementById("phone");
+    const nameInput = document.getElementById("name");
+    const courseSelect = document.getElementById("course");
+    const enrollBtn = document.getElementById("enrollBtn");
+    const msg = document.getElementById("msg");
+    const form = document.getElementById("enrollmentForm");
 
     // Allow only digits in phone input
-    document.getElementById("phone").addEventListener("input", function () {
-      this.value = this.value.replace(/[^0-9]/g, ""); // removes non-numeric characters
+    phoneInput.addEventListener("input", function() {
+      this.value = this.value.replace(/[^0-9]/g, "");
     });
 
-    async function enroll() {
-      const phone = document.getElementById("phone").value.trim();
-      const name = document.getElementById("name").value.trim();
-      const course = document.getElementById("course").value;
-      const msg = document.getElementById("msg");
+    function showMessage(text, type) {
+      msg.textContent = text;
+      msg.className = `show ${type}`;
+    }
+
+    // Handle form submission
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const phone = phoneInput.value.trim();
+      const name = nameInput.value.trim();
+      const course = courseSelect.value;
 
       // Validation
       if (!phone || !name || !course) {
-        msg.textContent = "Please fill all fields.";
-        msg.style.color = "red";
+        showMessage("⚠️ Please fill all fields.", "error");
         return;
       }
 
       if (!/^[0-9]{10}$/.test(phone)) {
-        msg.textContent = "Enter a valid 10-digit phone number.";
-        msg.style.color = "red";
+        showMessage("⚠️ Enter a valid 10-digit phone number.", "error");
         return;
       }
 
-      msg.textContent = "Submitting...";
-      msg.style.color = "black";
+      // Disable button and show loading state
+      enrollBtn.disabled = true;
+      const originalText = enrollBtn.textContent;
+      enrollBtn.textContent = "⏳ Processing...";
+      showMessage("Submitting your enrollment...", "info");
 
       try {
-        const res = await fetch(scriptURL, {
+        const response = await fetch(SCRIPT_URL, {
           method: "POST",
-          body: new URLSearchParams({ action: "enrollStudent", phone, name, course })
+          body: new URLSearchParams({
+            action: "enrollStudent",
+            phone,
+            name,
+            course
+          })
         });
-        const text = await res.text();
+
+        const text = await response.text();
 
         if (text === "PENDING_APPROVAL") {
-          msg.textContent = "Your enrollment request is pending admin approval.";
-          msg.style.color = "green";
+          showMessage("✅ Enrollment submitted! Waiting for admin approval. We'll call you soon.", "success");
+          enrollBtn.textContent = "✅ Submitted";
+          form.reset();
         } else if (text === "ALREADY_EXISTS") {
-          msg.textContent = "Phone number already exists!";
-          msg.style.color = "red";
+          showMessage("⚠️ This phone number is already registered.", "error");
+          enrollBtn.disabled = false;
+          enrollBtn.textContent = originalText;
         } else {
-          msg.textContent = "Error occurred, please try again.";
-          msg.style.color = "red";
+          showMessage("❌ Error occurred. Please try again.", "error");
+          enrollBtn.disabled = false;
+          enrollBtn.textContent = originalText;
         }
-      } catch (e) {
-        msg.textContent = "Network error, please try again.";
-        msg.style.color = "red";
+      } catch (error) {
+        showMessage("⚠️ Network error. Please check your connection and try again.", "error");
+        enrollBtn.disabled = false;
+        enrollBtn.textContent = originalText;
       }
-    }
+    });
   </script>
+
 </body>
 </html>
