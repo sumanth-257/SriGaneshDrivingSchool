@@ -1,151 +1,646 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - New Sri Raja Driving School</title>
   <style>
-    body { font-family: "Segoe UI", sans-serif; background: #f0f2f5; padding: 20px; }
-    h2 { text-align: center; }
-    .login, .content { 
-      max-width: 700px; margin: auto; background: white; 
-      padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    input, button {
-      padding: 10px; margin: 5px; border-radius: 5px;
-      border: 1px solid #ccc; font-size: 15px;
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #1e293b;
+      overflow-x: hidden;
     }
-    button { cursor: pointer; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background: #007bff; color: white; }
-    .approve { background: #28a745; color: white; border: none; }
-    .deny { background: #dc3545; color: white; border: none; }
-    .tabs { text-align: center; margin-bottom: 15px; }
-    .tabs button { margin: 0 5px; }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    }
+
+    nav .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f59e0b, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Hero Header */
+    header {
+      position: relative;
+      min-height: 40vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #dc2626 100%);
+      overflow: hidden;
+      text-align: center;
+      color: white;
+      padding: 50px 20px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background-image: 
+        radial-gradient(circle at 20% 50%, #f59e0b 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #3b82f6 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: clamp(0.9rem, 4vw, 1.1rem);
+      opacity: 0.95;
+      font-weight: 300;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Login Container */
+    .login-wrapper {
+      max-width: 450px;
+      margin: -40px auto 60px;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 10;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-wrapper h2 {
+      text-align: center;
+      font-size: 22px;
+      background: linear-gradient(135deg, #1e3a8a, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      font-weight: 800;
+    }
+
+    /* Content Container */
+    .content-wrapper {
+      max-width: 1000px;
+      margin: -40px auto 60px;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 10;
+    }
+
+    .content-wrapper h3 {
+      font-size: 20px;
+      background: linear-gradient(135deg, #1e3a8a, #dc2626);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    /* Login Form */
+    #loginSection {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    label {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: -8px;
+    }
+
+    input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      background: #f8fafc;
+    }
+
+    input[type="password"]:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    /* Buttons */
+    button {
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    #loginBtn {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+    }
+
+    #loginBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    #loginMsg {
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      min-height: 20px;
+      color: #dc2626;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .tabs button {
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      color: #1e3a8a;
+      border: 2px solid #3b82f6;
+      padding: 10px 18px;
+      font-size: 13px;
+    }
+
+    .tabs button:hover {
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .tabs button.logout {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #991b1b;
+      border-color: #fca5a5;
+    }
+
+    .tabs button.logout:hover {
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      color: white;
+    }
+
+    /* Table Styles */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    th {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      padding: 16px;
+      font-weight: 700;
+      text-align: center;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+      font-weight: 500;
+      color: #0f172a;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f0f9ff;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .approve-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 8px 14px;
+      font-size: 12px;
+    }
+
+    .approve-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .deny-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      padding: 8px 14px;
+      font-size: 12px;
+    }
+
+    .deny-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 14px;
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    footer p:first-child {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        min-height: 35vh;
+        padding: 35px 15px;
+      }
+
+      header h1 {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+      }
+
+      .login-wrapper,
+      .content-wrapper {
+        margin: -35px 15px 40px;
+        padding: 25px 20px;
+      }
+
+      .tabs {
+        gap: 8px;
+      }
+
+      .tabs button {
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 12px 8px;
+      }
+
+      .action-buttons {
+        gap: 6px;
+      }
+
+      .approve-btn, .deny-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        min-height: 30vh;
+        padding: 25px 10px;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+      }
+
+      .login-wrapper,
+      .content-wrapper {
+        margin: -30px 10px 30px;
+        padding: 20px 15px;
+      }
+
+      .login-wrapper h2,
+      .content-wrapper h3 {
+        font-size: 18px;
+      }
+
+      button {
+        padding: 10px 16px;
+        font-size: 12px;
+      }
+
+      input[type="password"], input[type="text"] {
+        padding: 10px 12px;
+      }
+
+      .tabs {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .tabs button {
+        width: 100%;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+
+      table {
+        font-size: 11px;
+      }
+
+      th, td {
+        padding: 10px 6px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .approve-btn, .deny-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-  <h2>Admin Portal</h2>
-  <div class="login" id="loginSection">
-    <input type="password" id="adminPass" placeholder="Enter Admin Password" />
-    <button onclick="login()">Login</button>
-    <p id="loginMsg"></p>
-  </div>
 
-  <div class="content" id="contentSection" style="display:none;">
-    <div class="tabs">
-      <button onclick="loadPendingAttendance()">Pending Attendance</button>
-      <button onclick="loadPendingStudents()">Pending Students</button>
-      <button onclick="logout()">Logout</button>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">🚗 New Sri Raja Driving School</div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>🔐 Admin Portal</h1>
+      <p>Manage Approvals & Student Records</p>
     </div>
-    <div id="tableContainer">Loading...</div>
+  </header>
+
+  <!-- Login Section -->
+  <div class="login-wrapper" id="loginWrapper">
+    <h2>Admin Login</h2>
+    <form id="loginSection">
+      <div>
+        <label for="adminPass">Admin Password</label>
+        <input type="password" id="adminPass" placeholder="Enter your password" required />
+      </div>
+      <button type="submit" id="loginBtn">🔓 Login</button>
+      <p id="loginMsg"></p>
+    </form>
   </div>
 
- <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
-  let adminPass = "";
+  <!-- Content Section -->
+  <div class="content-wrapper" id="contentWrapper" style="display:none;">
+    <div class="tabs">
+      <button onclick="loadPendingAttendance()">📋 Pending Attendance</button>
+      <button onclick="loadPendingStudents()">👥 Pending Students</button>
+      <button class="logout" onclick="logout()">🚪 Logout</button>
+    </div>
+    <div class="table-wrapper">
+      <div id="tableContainer">Loading...</div>
+    </div>
+  </div>
 
-  function login() {
-    adminPass = document.getElementById("adminPass").value.trim();
-    if (!adminPass) {
-      document.getElementById("loginMsg").textContent = "Enter password!";
-      return;
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 New Sri Raja Driving School, Vizianagaram</p>
+    <p>Driving Excellence Since 1995 | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
+    let adminPass = "";
+
+    const loginForm = document.getElementById("loginSection");
+    const loginMsg = document.getElementById("loginMsg");
+    const adminPassInput = document.getElementById("adminPass");
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      adminPass = adminPassInput.value.trim();
+      if (!adminPass) {
+        loginMsg.textContent = "⚠️ Enter password!";
+        loginMsg.style.color = "#991b1b";
+        return;
+      }
+
+      document.getElementById("loginWrapper").style.display = "none";
+      document.getElementById("contentWrapper").style.display = "block";
+      loadPendingAttendance();
+    });
+
+    function logout() {
+      adminPass = "";
+      document.getElementById("contentWrapper").style.display = "none";
+      document.getElementById("loginWrapper").style.display = "block";
+      adminPassInput.value = "";
+      loginMsg.textContent = "";
     }
 
-    // No need to validate now; directly try loading data
-    document.getElementById("loginSection").style.display = "none";
-    document.getElementById("contentSection").style.display = "block";
-    loadPendingAttendance();
-  }
+    async function loadPendingAttendance() {
+      const res = await fetch(`${SCRIPT_URL}?action=pending&password=${adminPass}`);
+      const data = await res.json();
+      if (data.status !== "OK") {
+        alert("Invalid password or unauthorized access");
+        logout();
+        return;
+      }
 
-  function logout() {
-    adminPass = "";
-    document.getElementById("contentSection").style.display = "none";
-    document.getElementById("loginSection").style.display = "block";
-  }
+      let html = "<h3>Pending Attendance Approvals</h3>";
+      html += `<table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Phone</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Timing</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
-  async function loadPendingAttendance() {
-    const res = await fetch(`${scriptURL}?action=pending&password=${adminPass}`);
-    const data = await res.json();
-    if (data.status !== "OK") {
-      alert("Invalid password or unauthorized access");
-      logout();
-      return;
+      if (data.records.length === 0) {
+        html += `<tr><td colspan="6" class="empty-state">No pending records</td></tr>`;
+      } else {
+        data.records.forEach(r => {
+          html += `<tr>
+            <td>${r.date}</td>
+            <td>${r.phone}</td>
+            <td>${r.name}</td>
+            <td>${r.course}</td>
+            <td>${r.timing}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="approve-btn" onclick="approve('${r.phone}','${r.date}')">✅ Approve</button>
+                <button class="deny-btn" onclick="deny('${r.phone}','${r.date}')">❌ Deny</button>
+              </div>
+            </td>
+          </tr>`;
+        });
+      }
+      html += "</tbody></table>";
+      document.getElementById("tableContainer").innerHTML = html;
     }
 
-    let html = "<h3>Pending Attendance Approvals</h3>";
-    html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Timing</th><th>Actions</th></tr>`;
-    if (data.records.length === 0) html += `<tr><td colspan='6'>No pending records</td></tr>`;
-    data.records.forEach(r => {
-      html += `<tr>
-        <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.timing}</td>
-        <td>
-          <button class="approve" onclick="approve('${r.phone}','${r.date}')">Approve</button>
-          <button class="deny" onclick="deny('${r.phone}','${r.date}')">Deny</button>
-        </td>
-      </tr>`;
-    });
-    html += "</table>";
-    document.getElementById("tableContainer").innerHTML = html;
-  }
+    async function loadPendingStudents() {
+      const res = await fetch(`${SCRIPT_URL}?action=pendingStudents&password=${adminPass}`);
+      const data = await res.json();
+      if (data.status !== "OK") {
+        alert("Invalid password or unauthorized access");
+        logout();
+        return;
+      }
 
-  async function loadPendingStudents() {
-    const res = await fetch(`${scriptURL}?action=pendingStudents&password=${adminPass}`);
-    const data = await res.json();
-    if (data.status !== "OK") {
-      alert("Invalid password or unauthorized access");
-      logout();
-      return;
+      let html = "<h3>Pending Student Enrollments</h3>";
+      html += `<table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Phone</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Max Classes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      if (data.records.length === 0) {
+        html += `<tr><td colspan="6" class="empty-state">No pending enrollments</td></tr>`;
+      } else {
+        data.records.forEach(r => {
+          html += `<tr>
+            <td>${r.date}</td>
+            <td>${r.phone}</td>
+            <td>${r.name}</td>
+            <td>${r.course}</td>
+            <td>${r.maxClasses}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="approve-btn" onclick="approveStudent('${r.phone}')">✅ Approve</button>
+                <button class="deny-btn" onclick="denyStudent('${r.phone}')">❌ Deny</button>
+              </div>
+            </td>
+          </tr>`;
+        });
+      }
+      html += "</tbody></table>";
+      document.getElementById("tableContainer").innerHTML = html;
     }
 
-    let html = "<h3>Pending Student Enrollments</h3>";
-    html += `<table><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Max Classes</th><th>Actions</th></tr>`;
-    if (data.records.length === 0) html += `<tr><td colspan='6'>No pending enrollments</td></tr>`;
-    data.records.forEach(r => {
-      html += `<tr>
-        <td>${r.date}</td><td>${r.phone}</td><td>${r.name}</td><td>${r.course}</td><td>${r.maxClasses}</td>
-        <td>
-          <button class="approve" onclick="approveStudent('${r.phone}')">Approve</button>
-          <button class="deny" onclick="denyStudent('${r.phone}')">Deny</button>
-        </td>
-      </tr>`;
-    });
-    html += "</table>";
-    document.getElementById("tableContainer").innerHTML = html;
-  }
+    async function approve(phone, date) {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "approve", phone, date })
+      });
+      loadPendingAttendance();
+    }
 
-  async function approve(phone, date) {
-    await fetch(scriptURL, {
-      method: "POST",
-      body: new URLSearchParams({ action: "approve", phone, date })
-    });
-    loadPendingAttendance();
-  }
+    async function deny(phone, date) {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "deny", phone, date })
+      });
+      loadPendingAttendance();
+    }
 
-  async function deny(phone, date) {
-    await fetch(scriptURL, {
-      method: "POST",
-      body: new URLSearchParams({ action: "deny", phone, date })
-    });
-    loadPendingAttendance();
-  }
+    async function approveStudent(phone) {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "approveStudent", phone })
+      });
+      loadPendingStudents();
+    }
 
-  async function approveStudent(phone) {
-    await fetch(scriptURL, {
-      method: "POST",
-      body: new URLSearchParams({ action: "approveStudent", phone })
-    });
-    loadPendingStudents();
-  }
-
-  async function denyStudent(phone) {
-    await fetch(scriptURL, {
-      method: "POST",
-      body: new URLSearchParams({ action: "denyStudent", phone })
-    });
-    loadPendingStudents();
-  }
-</script>
+    async function denyStudent(phone) {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "denyStudent", phone })
+      });
+      loadPendingStudents();
+    }
+  </script>
 
 </body>
 </html>
