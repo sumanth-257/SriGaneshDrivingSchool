@@ -25,7 +25,7 @@ button:hover { background:#3b82f6; }
 
 <form id="attendanceForm" autocomplete="off">
   <label>Phone Number</label>
-  <input type="text" id="phone" required />
+  <input type="text" id="phone" required maxlength="10" placeholder="Enter 10-digit phone number" />
 
   <button type="button" id="verifyBtn">🔍 Verify Student</button>
 
@@ -44,6 +44,7 @@ button:hover { background:#3b82f6; }
   <button type="submit" id="markBtn" disabled>Mark Attendance</button>
   <div id="info"></div>
 </form>
+
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygHhzPYbEH8LPii07ubPSjgW7dTFrmto9B9shIXSGmp7iPQrjVUWNEV0mHU7qEoUwK/exec";
 
@@ -59,7 +60,12 @@ let isVerified = false;
 let courseType = "";
 let verifiedPhone = "";
 
-// ✅ New: Create table container dynamically
+// ✅ Restrict phone input to digits only
+phoneInput.addEventListener("input", function() {
+  this.value = this.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+});
+
+// ✅ Create attendance table container dynamically
 const tableContainer = document.createElement("div");
 tableContainer.style.marginTop = "20px";
 tableContainer.style.display = "none";
@@ -76,14 +82,23 @@ document.querySelector("form").appendChild(viewBtn);
 // 🔍 Verify Student
 verifyBtn.addEventListener("click", () => {
   const phone = phoneInput.value.trim();
-  if (!phone) return info.textContent = "⚠️ Please enter phone number.";
+
+  // New validation check
+  if (!/^[0-9]{10}$/.test(phone)) {
+    info.textContent = "⚠️ Enter a valid 10-digit phone number.";
+    info.style.color = "red";
+    return;
+  }
 
   info.textContent = "Verifying...";
+  info.style.color = "black";
+
   fetch(`${SCRIPT_URL}?phone=${encodeURIComponent(phone)}`)
     .then(res => res.json())
     .then(data => {
       if (data.status === "NOT_REGISTERED") {
         info.textContent = "❌ Not registered.";
+        info.style.color = "red";
         studentInfoDiv.style.display = "none";
         markBtn.disabled = true;
         viewBtn.style.display = "none";
@@ -103,7 +118,10 @@ verifyBtn.addEventListener("click", () => {
         info.textContent = "";
       }
     })
-    .catch(() => info.textContent = "⚠️ Server error.");
+    .catch(() => {
+      info.textContent = "⚠️ Server error.";
+      info.style.color = "red";
+    });
 });
 
 function buildTimingDropdown(course) {
@@ -151,24 +169,30 @@ document.getElementById("attendanceForm").addEventListener("submit", e => {
       if (text === "PENDING_REVIEW") {
         markBtn.textContent = "✅ Attendance Submitted";
         info.textContent = "Pending admin approval.";
+        info.style.color = "green";
       } else if (text === "LIMIT_REACHED") {
         markBtn.textContent = "⚠️ Limit Reached";
         info.textContent = "Course limit reached.";
+        info.style.color = "red";
       } else {
         markBtn.textContent = "❌ Error";
         info.textContent = "Something went wrong.";
+        info.style.color = "red";
       }
     })
     .catch(() => {
       markBtn.textContent = "⚠️ Network Error";
       info.textContent = "Could not connect.";
+      info.style.color = "red";
     });
 });
 
-// 📜 New Feature: View Attendance
+// 📜 View Attendance
 viewBtn.addEventListener("click", () => {
   if (!verifiedPhone) return info.textContent = "⚠️ Please verify your number first.";
   info.textContent = "Fetching attendance...";
+  info.style.color = "black";
+
   fetch(`${SCRIPT_URL}?action=viewAttendance&phone=${encodeURIComponent(verifiedPhone)}`)
     .then(res => res.json())
     .then(data => {
@@ -184,6 +208,7 @@ viewBtn.addEventListener("click", () => {
     })
     .catch(() => {
       info.textContent = "⚠️ Error fetching attendance.";
+      info.style.color = "red";
     });
 });
 
