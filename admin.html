@@ -482,7 +482,8 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUv9Hh8SuL9wbrAO2PFCg0WDLA4vhk2YIi5AD60KFU1s1GMamZYMHQ-34Vn_0Zniou/exec";
+    // NOTE: Update this URL to match your deployed Apps Script web app URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLlQZ2HbHvKImG-o2tgMQ9ysFSnvxg9nJ3upoVdj6T6SsCOjykZCtxh88BXvg3dwLm/exec";
     let adminPass = "";
 
     const loginForm = document.getElementById("loginSection");
@@ -675,6 +676,7 @@
     }
 
     // Fixed: loadRegisteredStudents now uses adminPass (from login) and writes to tableContainer
+    // Removed the 'Password' column header to match the secure Apps Script response.
     async function loadRegisteredStudents() {
       if (!adminPass) {
         alert("Please login first (enter admin password).");
@@ -707,14 +709,14 @@
               <th>Course</th>
               <th>Max Classes</th>
               <th>Classes Taken</th>
-              <th>Password</th>
+              <!-- ✅ Removed 'Password' header -->
             </tr>
           </thead>
           <tbody>
       `;
 
       if (!data.records || data.records.length === 0) {
-        html += `<tr><td colspan="6" class="empty-state">No registered students</td></tr>`;
+        html += `<tr><td colspan="5" class="empty-state">No registered students</td></tr>`; // Adjusted colspan
       } else {
         data.records.forEach(r => {
           html += `
