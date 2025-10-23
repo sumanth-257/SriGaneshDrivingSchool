@@ -336,10 +336,9 @@
         <input type="text" id="phone" placeholder="Enter 10-digit phone number" maxlength="10" required />
       </div>
 
-<div>
+      <div>
         <label for="password">Password</label>
-      
-<input id="password" type="text" placeholder="Create Password" maxlength="6" required />
+        <input id="password" type="password" placeholder="Create a 6-digit password" maxlength="6" required />
       </div>
 
       <div>
@@ -368,9 +367,10 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUv9Hh8SuL9wbrAO2PFCg0WDLA4vhk2YIi5AD60KFU1s1GMamZYMHQ-34Vn_0Zniou/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLlQZ2HbHvKImG-o2tgMQ9ysFSnvxg9nJ3upoVdj6T6SsCOjykZCtxh88BXvg3dwLm/exec";
 
     const phoneInput = document.getElementById("phone");
+    const passwordInput = document.getElementById("password");
     const nameInput = document.getElementById("name");
     const courseSelect = document.getElementById("course");
     const enrollBtn = document.getElementById("enrollBtn");
@@ -379,6 +379,11 @@
 
     // Allow only digits in phone input
     phoneInput.addEventListener("input", function() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    });
+
+    // Allow only digits in password (since it's numeric)
+    passwordInput.addEventListener("input", function() {
       this.value = this.value.replace(/[^0-9]/g, "");
     });
 
@@ -392,17 +397,23 @@
       e.preventDefault();
 
       const phone = phoneInput.value.trim();
+      const password = passwordInput.value.trim(); // ✅ Now captured
       const name = nameInput.value.trim();
       const course = courseSelect.value;
 
       // Validation
-      if (!phone || !name || !course) {
+      if (!phone || !password || !name || !course) {
         showMessage("⚠️ Please fill all fields.", "error");
         return;
       }
 
       if (!/^[0-9]{10}$/.test(phone)) {
         showMessage("⚠️ Enter a valid 10-digit phone number.", "error");
+        return;
+      }
+
+      if (!/^[0-9]{6}$/.test(password)) {
+        showMessage("⚠️ Password must be 6 digits.", "error");
         return;
       }
 
@@ -419,7 +430,8 @@
             action: "enrollStudent",
             phone,
             name,
-            course
+            course,
+            password  // ✅ Now sent to Apps Script
           })
         });
 
@@ -433,8 +445,12 @@
           showMessage("⚠️ This phone number is already registered.", "error");
           enrollBtn.disabled = false;
           enrollBtn.textContent = originalText;
+        } else if (text === "MISSING_FIELDS") {
+          showMessage("❌ Missing required data. Please try again.", "error");
+          enrollBtn.disabled = false;
+          enrollBtn.textContent = originalText;
         } else {
-          showMessage("❌ Error occurred. Please try again.", "error");
+          showMessage("❌ Unexpected error. Please try again.", "error");
           enrollBtn.disabled = false;
           enrollBtn.textContent = originalText;
         }
