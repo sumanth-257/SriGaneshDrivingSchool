@@ -120,6 +120,8 @@
     <form id="attendanceForm" autocomplete="off">
       <label for="phone">Phone Number</label>
       <input type="text" id="phone" required maxlength="10" placeholder="Enter 10-digit phone number" />
+<label for="password">Password</label>
+      <input type="text" id="password" required maxlength="6" placeholder="Enter your password" />
       <button type="button" id="verifyBtn">🔍 Verify Student</button>
 
       <div id="studentInfo">
@@ -151,7 +153,7 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPxlnwOZdxhgYOWB9NDNiosBVKIRV11KWD6pDBitf4-2JQT77kbVwwtpGltCLY-lVg/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUv9Hh8SuL9wbrAO2PFCg0WDLA4vhk2YIi5AD60KFU1s1GMamZYMHQ-34Vn_0Zniou/exec";
 
     const phoneInput = document.getElementById("phone");
     const verifyBtn = document.getElementById("verifyBtn");
