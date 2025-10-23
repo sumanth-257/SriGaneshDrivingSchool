@@ -120,8 +120,10 @@
     <form id="attendanceForm" autocomplete="off">
       <label for="phone">Phone Number</label>
       <input type="text" id="phone" required maxlength="10" placeholder="Enter 10-digit phone number" />
-<label for="password">Password</label>
-      <input type="text" id="password" required maxlength="6" placeholder="Enter your password" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required maxlength="6" placeholder="Enter your password" />
+
       <button type="button" id="verifyBtn">🔍 Verify Student</button>
 
       <div id="studentInfo">
@@ -153,9 +155,10 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUv9Hh8SuL9wbrAO2PFCg0WDLA4vhk2YIi5AD60KFU1s1GMamZYMHQ-34Vn_0Zniou/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDsnDuO_7k4Ck1s-VRRqa3Gj8UgGihs8zj11GfuGeaD1xqsvji_i6Rlg5DNq9U4gEw/exec";
 
     const phoneInput = document.getElementById("phone");
+    const passwordInput = document.getElementById("password");
     const verifyBtn = document.getElementById("verifyBtn");
     const markBtn = document.getElementById("markBtn");
     const info = document.getElementById("info");
@@ -175,46 +178,72 @@
       info.className = type;
     }
 
+    function resetVerification() {
+      studentInfoDiv.style.display = "none";
+      timingLabel.style.display = "none";
+      timingSelect.style.display = "none";
+      markBtn.disabled = true;
+      viewBtn.style.display = "none";
+      tableWrapper.style.display = "none";
+      isVerified = false;
+      verifiedPhone = "";
+    }
+
     // ✅ Restrict phone input to 10 digits only
     phoneInput.addEventListener("input", function() {
       this.value = this.value.replace(/[^0-9]/g, "");
       if (this.value.length > 10) this.value = this.value.slice(0, 10);
     });
 
-    // Verify Student
+    // ✅ SECURE: Verify with password
     verifyBtn.addEventListener("click", () => {
       const phone = phoneInput.value.trim();
+      const password = passwordInput.value.trim();
+
       if (!/^[0-9]{10}$/.test(phone)) {
         showInfo("⚠️ Enter a valid 10-digit phone number.", "error");
         return;
       }
+      if (!password) {
+        showInfo("⚠️ Enter your password.", "error");
+        return;
+      }
+
       showInfo("Verifying...", "info");
 
-      fetch(`${SCRIPT_URL}?phone=${encodeURIComponent(phone)}`)
+      // ✅ Send action, phone, and password
+      fetch(`${SCRIPT_URL}?action=verifyStudent&phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`)
         .then(res => res.json())
         .then(data => {
-          if (data.status === "NOT_REGISTERED") {
+          if (data.status === "WRONG_PASSWORD") {
+            showInfo("❌ Incorrect password.", "error");
+            resetVerification();
+          } else if (data.status === "NOT_REGISTERED") {
             showInfo("❌ Phone number not registered.", "error");
-            studentInfoDiv.style.display = "none";
-            markBtn.disabled = true;
-            viewBtn.style.display = "none";
-            tableWrapper.style.display = "none";
-          } else {
+            resetVerification();
+          } else if (data.status === "FOUND") {
             verifiedPhone = phone;
             courseType = data.course;
             document.getElementById("studentName").textContent = data.name;
             document.getElementById("studentCourse").textContent = data.course;
             document.getElementById("studentTaken").textContent = data.taken;
             document.getElementById("studentRemaining").textContent = data.remaining;
+            
             studentInfoDiv.style.display = "block";
             buildTimingDropdown(courseType);
             isVerified = true;
             markBtn.disabled = false;
             viewBtn.style.display = "block";
             showInfo("✅ Student verified successfully!", "success");
+          } else {
+            showInfo("❓ Unexpected response.", "error");
+            resetVerification();
           }
         })
-        .catch(() => showInfo("⚠️ Server error. Please try again.", "error"));
+        .catch(() => {
+          showInfo("⚠️ Server error. Please try again.", "error");
+          resetVerification();
+        });
     });
 
     function buildTimingDropdown(course) {
@@ -242,7 +271,6 @@
       timingSelect.style.display = "block";
     }
 
-    // ✅ Helper: Format Date & Time
     function formatDateTime(rawDate) {
       try {
         const date = new Date(rawDate);
@@ -265,7 +293,6 @@
       }
     }
 
-    // Mark Attendance
     document.getElementById("attendanceForm").addEventListener("submit", e => {
       e.preventDefault();
       if (!isVerified) {
@@ -310,7 +337,6 @@
         });
     });
 
-    // View Attendance
     viewBtn.addEventListener("click", () => {
       if (!verifiedPhone) {
         showInfo("⚠️ Please verify your number first.", "error");
@@ -321,7 +347,7 @@
       fetch(`${SCRIPT_URL}?action=viewAttendance&phone=${encodeURIComponent(verifiedPhone)}`)
         .then(res => res.json())
         .then(data => {
-          if (data.status === "OK" && data.records.length > 0) {
+          if (data.status === "OK" && data.records && data.records.length > 0) {
             renderAttendanceTable(data.records);
             tableWrapper.style.display = "block";
             info.textContent = "";
@@ -336,7 +362,6 @@
         .catch(() => showInfo("⚠️ Error fetching attendance.", "error"));
     });
 
-    // ✅ Updated render function with date formatting
     function renderAttendanceTable(records) {
       let html = `
         <table>
