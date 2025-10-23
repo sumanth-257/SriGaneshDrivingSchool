@@ -474,6 +474,8 @@
     <div class="tabs">
       <button onclick="loadPendingAttendance()">📋 Pending Attendance</button>
       <button onclick="loadPendingStudents()">👥 Pending Students</button>
+<button onclick="loadRegisteredStudents()">View Registered Students</button>
+
       <button class="logout" onclick="logout()">🚪 Logout</button>
     </div>
     <div class="table-wrapper">
@@ -488,7 +490,7 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPxlnwOZdxhgYOWB9NDNiosBVKIRV11KWD6pDBitf4-2JQT77kbVwwtpGltCLY-lVg/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUv9Hh8SuL9wbrAO2PFCg0WDLA4vhk2YIi5AD60KFU1s1GMamZYMHQ-34Vn_0Zniou/exec";
     let adminPass = "";
 
     const loginForm = document.getElementById("loginSection");
@@ -640,6 +642,47 @@
       });
       loadPendingStudents();
     }
+
+async function loadRegisteredStudents() {
+  const password = document.getElementById("password").value.trim();
+  const res = await fetch(`${SCRIPT_URL}?action=viewStudents&password=${password}`);
+  const data = await res.json();
+
+  if (data.status !== "OK") {
+    alert("Unauthorized or no data found.");
+    return;
+  }
+
+  let html = `
+    <h3>Registered Students</h3>
+    <table border="1" style="border-collapse:collapse;width:100%;text-align:center">
+      <tr style="background:#1e3a8a;color:white;">
+        <th>Phone</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Max Classes</th>
+        <th>Classes Taken</th>
+        <th>Password</th>
+      </tr>
+  `;
+
+  data.records.forEach(r => {
+    html += `
+      <tr>
+        <td>${r.phone}</td>
+        <td>${r.name}</td>
+        <td>${r.course}</td>
+        <td>${r.maxClasses}</td>
+        <td>${r.classesTaken}</td>
+        <td>${r.password || "-"}</td>
+      </tr>`;
+  });
+
+  html += "</table>";
+  document.getElementById("pendingContainer").innerHTML = html;
+}
+
+
   </script>
 
 </body>
