@@ -4,1270 +4,375 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>New Sri Raja Driving School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f172a;
-      color: #1e293b;
-      overflow-x: hidden;
-    }
-
-    /* Language Popup */
-    .popup {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      backdrop-filter: blur(5px);
-    }
-    .popup-content {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 450px;
-    }
-    .popup-content h2 {
-      margin-bottom: 15px;
-      background: linear-gradient(135deg, #1e3a8a, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 24px;
-    }
-    .popup-content p {
-      color: #475569;
-      margin-bottom: 20px;
-    }
-    .popup-content button {
-      margin: 8px;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-    .popup-content button:hover {
-      transform: scale(1.08);
-    }
-    .btn-en {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      color: white;
-    }
-    .btn-te {
-      background: linear-gradient(135deg, #dc2626, #f59e0b);
-      color: white;
-    }
-    .btn-skip {
-      background: #e2e8f0;
-      color: #0f172a;
-    }
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Navigation */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 2rem;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    }
-    nav .logo {
-      font-size: 20px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #f59e0b, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Hero */
-    header {
-      position: relative;
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #dc2626 100%);
-      overflow: hidden;
-      text-align: center;
-      color: white;
-      padding: 40px 20px;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.1;
-      background-image: 
-        radial-gradient(circle at 20% 50%, #f59e0b 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, #3b82f6 0%, transparent 50%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    header h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 900;
-      margin-bottom: 20px;
-      line-height: 1.2;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    header p {
-      font-size: clamp(1.2rem, 4vw, 1.8rem);
-      margin-bottom: 40px;
-      opacity: 0.95;
-      font-weight: 300;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      padding: 14px 32px;
-      font-size: 16px;
-      font-weight: 700;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: inline-block;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #f59e0b, #dc2626);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.15);
-      color: white;
-      border: 2px solid rgba(255,255,255,0.3);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.25);
-      border-color: rgba(255,255,255,0.5);
-      transform: translateY(-3px);
-    }
-
-    .btn-view-courses {
-      background: rgba(51, 181, 229, 0.9);
-      border-color: rgba(51, 181, 229, 1);
-    }
-
-    .btn-view-courses:hover {
-      background: rgba(51, 181, 229, 1);
-    }
-
-    .btn-student-portal {
-      background: rgba(76, 175, 80, 0.9);
-      border-color: rgba(76, 175, 80, 1);
-    }
-
-    .btn-student-portal:hover {
-      background: rgba(76, 175, 80, 1);
-    }
-
-    .btn-admin {
-      background: rgba(156, 39, 176, 0.9);
-      border-color: rgba(156, 39, 176, 1);
-    }
-
-    .btn-admin:hover {
-      background: rgba(156, 39, 176, 1);
-    }
-
-    .alert-banner {
-      background: rgba(220, 38, 38, 0.9);
-      padding: 15px 30px;
-      border-radius: 12px;
-      display: inline-block;
-      animation: pulse 2s infinite;
-      border: 2px solid #f87171;
-    }
-
-    .alert-banner span {
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    /* Sections */
-    .section {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 60px 40px;
-      border-radius: 20px;
-      background: white;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    }
-
-    .section h2 {
-      text-align: center;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #1e3a8a, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 800;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: #64748b;
-      font-size: 18px;
-      margin-bottom: 50px;
-      font-weight: 500;
-    }
-
-    /* Stats */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
-      margin: 40px 0;
-    }
-
-    .stat-card {
-      padding: 40px;
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      border-radius: 16px;
-      text-align: center;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-10px);
-      border-color: #3b82f6;
-      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
-    }
-
-    .stat-number {
-      font-size: 56px;
-      font-weight: 900;
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .stat-label {
-      font-size: 16px;
-      color: #64748b;
-      margin-top: 12px;
-      font-weight: 600;
-    }
-
-    /* Features */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-
-    .feature-card {
-      padding: 35px;
-      background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
-      border-radius: 16px;
-      text-align: center;
-      border-left: 6px solid #f59e0b;
-      transition: all 0.3s;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
-      border-left-color: #dc2626;
-    }
-
-    .feature-icon {
-      font-size: 56px;
-      margin-bottom: 15px;
-      display: block;
-    }
-
-    .feature-card h3 {
-      color: #1e3a8a;
-      margin-bottom: 12px;
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    .feature-card p {
-      color: #64748b;
-      line-height: 1.6;
-    }
-
-    /* Table */
-    .timings-wrapper {
-      overflow-x: auto;
-      margin-top: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    th {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      color: white;
-      padding: 20px;
-      font-weight: 700;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    td {
-      padding: 18px;
-      text-align: center;
-      font-weight: 500;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: #f0f9ff;
-    }
-
-    .closed-text {
-      color: #dc2626;
-      font-weight: 700;
-    }
-
-    /* Classes */
-    .classes-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-
-    .class-card {
-      padding: 35px;
-      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-      border-radius: 16px;
-      border-left: 6px solid #1e3a8a;
-      transition: all 0.3s;
-    }
-
-    .class-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(30, 58, 138, 0.2);
-    }
-
-    .class-card h3 {
-      color: #1e3a8a;
-      margin-bottom: 15px;
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .class-card p {
-      color: #475569;
-      line-height: 1.8;
-      margin-bottom: 12px;
-    }
-
-    .note-box {
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      padding: 25px;
-      border-left: 6px solid #f59e0b;
-      border-radius: 12px;
-      margin-top: 30px;
-    }
-
-    .note-box strong {
-      color: #92400e;
-    }
-
-    .note-box ul {
-      margin-top: 15px;
-      list-style: none;
-      line-height: 1.9;
-    }
-
-    .note-box ul li:before {
-      content: "✓ ";
-      color: #f59e0b;
-      font-weight: 700;
-      margin-right: 8px;
-    }
-
-    /* Testimonials */
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-
-    .testimonial {
-      padding: 30px;
-      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      border-radius: 16px;
-      border-left: 6px solid #059669;
-      position: relative;
-      transition: all 0.3s;
-    }
-
-    .testimonial:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(5, 150, 105, 0.2);
-    }
-
-    .testimonial:before {
-      content: '"';
-      font-size: 60px;
-      color: #10b981;
-      opacity: 0.2;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-
-    .testimonial p {
-      color: #047857;
-      font-style: italic;
-      line-height: 1.8;
-      position: relative;
-      z-index: 1;
-    }
-
-    .testimonial strong {
-      display: block;
-      margin-top: 15px;
-      color: #059669;
-      font-style: normal;
-      text-align: right;
-      font-weight: 700;
-    }
-
-    /* Contact */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-
-    .contact-item {
-      padding: 35px;
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      border-radius: 16px;
-      text-align: center;
-      border-top: 4px solid #3b82f6;
-      transition: all 0.3s;
-    }
-
-    .contact-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
-    }
-
-    .contact-icon {
-      font-size: 44px;
-      margin-bottom: 15px;
-    }
-
-    .contact-item strong {
-      color: #1e3a8a;
-      font-size: 18px;
-      display: block;
-      margin-bottom: 12px;
-    }
-
-    .contact-item a {
-      color: #1e3a8a;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.3s;
-      display: block;
-      margin: 8px 0;
-    }
-
-    .contact-item a:hover {
-      color: #f59e0b;
-      transform: scale(1.05);
-    }
-
-    .contact-item p {
-      color: #64748b;
-      line-height: 1.8;
-    }
-
-    /* Resources */
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-
-    .resource-card {
-      padding: 35px;
-      background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
-      border-radius: 16px;
-      text-align: center;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-    }
-
-    .resource-card:hover {
-      transform: translateY(-10px);
-      border-color: #a855f7;
-      box-shadow: 0 15px 40px rgba(168, 85, 247, 0.2);
-    }
-
-    .resource-card-icon {
-      font-size: 48px;
-      margin-bottom: 15px;
-    }
-
-    .resource-card a {
-      color: #7c3aed;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 20px;
-      display: block;
-      margin-bottom: 12px;
-    }
-
-    .resource-card a:hover {
-      color: #a855f7;
-    }
-
-    .resource-card p {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    /* Footer */
-    footer {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
-    }
-
-    footer p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-
-    footer p:first-child {
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      header {
-        min-height: 55vh;
-        padding: 30px 15px;
-      }
-      
-      header h1 { 
-        font-size: clamp(1.8rem, 6vw, 2.5rem);
-        margin-bottom: 15px;
-      }
-      
-      header p { 
-        font-size: clamp(0.9rem, 3vw, 1.2rem);
-        margin-bottom: 25px;
-      }
-      
-      .cta-buttons {
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-      
-      .btn { 
-        padding: 10px 16px; 
-        font-size: 13px;
-      }
-      
-      .alert-banner {
-        padding: 10px 15px;
-      }
-      
-      .alert-banner span {
-        font-size: 13px;
-      }
-      
-      .section { 
-        margin: 25px 10px; 
-        padding: 40px 20px; 
-      }
-      
-      .section h2 { 
-        font-size: clamp(1.5rem, 4vw, 2.2rem);
-      }
-      
-      .section-subtitle {
-        font-size: 16px;
-        margin-bottom: 30px;
-      }
-      
-      .stats { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 15px; 
-      }
-      
-      .stat-card {
-        padding: 25px;
-      }
-      
-      .stat-number { 
-        font-size: 40px; 
-      }
-      
-      .stat-label {
-        font-size: 13px;
-      }
-      
-      .features { 
-        grid-template-columns: 1fr; 
-        gap: 15px;
-      }
-      
-      .feature-card {
-        padding: 25px;
-        border-left: 4px solid #f59e0b;
-      }
-      
-      .feature-icon {
-        font-size: 40px;
-      }
-      
-      .feature-card h3 {
-        font-size: 18px;
-      }
-      
-      .feature-card p {
-        font-size: 14px;
-      }
-      
-      th, td { 
-        padding: 12px 8px; 
-        font-size: 13px;
-      }
-      
-      th {
-        font-size: 14px;
-      }
-      
-      .classes-list { 
-        grid-template-columns: 1fr; 
-        gap: 15px;
-      }
-      
-      .class-card {
-        padding: 25px;
-      }
-      
-      .class-card h3 {
-        font-size: 20px;
-      }
-      
-      .class-card p {
-        font-size: 14px;
-      }
-      
-      .note-box {
-        padding: 15px;
-        font-size: 13px;
-      }
-      
-      .note-box ul li {
-        margin: 5px 0;
-      }
-      
-      .testimonials { 
-        grid-template-columns: 1fr; 
-        gap: 15px;
-      }
-      
-      .testimonial {
-        padding: 20px;
-      }
-      
-      .testimonial:before {
-        font-size: 40px;
-      }
-      
-      .contact-grid { 
-        grid-template-columns: 1fr; 
-        gap: 15px;
-      }
-      
-      .contact-item {
-        padding: 25px;
-      }
-      
-      .contact-icon {
-        font-size: 36px;
-      }
-      
-      .contact-item strong {
-        font-size: 16px;
-      }
-      
-      .contact-item a {
-        font-size: 14px;
-      }
-      
-      .resources-grid { 
-        grid-template-columns: 1fr; 
-        gap: 15px;
-      }
-      
-      .resource-card {
-        padding: 25px;
-      }
-      
-      .resource-card-icon {
-        font-size: 40px;
-      }
-      
-      .resource-card a {
-        font-size: 18px;
-      }
-      
-      .resource-card p {
-        font-size: 13px;
-      }
-      
-      footer {
-        padding: 25px 15px;
-      }
-      
-      footer p {
-        font-size: 12px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        min-height: 50vh;
-        padding: 25px 10px;
-      }
-      
-      header h1 { 
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-      }
-      
-      header p {
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-      }
-      
-      .cta-buttons { 
-        flex-direction: column;
-        gap: 8px;
-        margin-bottom: 15px;
-      }
-      
-      .btn { 
-        width: 100%;
-        padding: 12px 16px;
-        font-size: 13px;
-      }
-      
-      .alert-banner {
-        padding: 8px 12px;
-        margin-top: 10px;
-      }
-      
-      .alert-banner span {
-        font-size: 12px;
-        white-space: normal;
-      }
-      
-      .section {
-        margin: 20px 5px;
-        padding: 30px 15px;
-      }
-      
-      .section h2 {
-        font-size: 1.4rem;
-        margin-bottom: 12px;
-      }
-      
-      .section-subtitle {
-        font-size: 14px;
-        margin-bottom: 25px;
-      }
-      
-      .stats { 
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-      
-      .stat-card {
-        padding: 20px;
-      }
-      
-      .stat-number {
-        font-size: 36px;
-      }
-      
-      .stat-label {
-        font-size: 12px;
-      }
-      
-      .features {
-        grid-template-columns: 1fr;
-      }
-      
-      .feature-card {
-        padding: 20px;
-      }
-      
-      .feature-icon {
-        font-size: 36px;
-      }
-      
-      .feature-card h3 {
-        font-size: 16px;
-      }
-      
-      .feature-card p {
-        font-size: 13px;
-      }
-      
-      table {
-        font-size: 12px;
-      }
-      
-      th, td {
-        padding: 10px 5px;
-      }
-      
-      .class-card {
-        padding: 20px;
-      }
-      
-      .class-card h3 {
-        font-size: 18px;
-      }
-      
-      .class-card p {
-        font-size: 13px;
-        margin-bottom: 8px;
-      }
-      
-      .note-box {
-        padding: 12px;
-        font-size: 12px;
-      }
-      
-      .note-box ul li {
-        margin: 3px 0;
-      }
-      
-      .testimonial {
-        padding: 18px;
-      }
-      
-      .testimonial p {
-        font-size: 13px;
-      }
-      
-      .testimonial:before {
-        font-size: 35px;
-        left: 10px;
-      }
-      
-      .contact-item {
-        padding: 20px;
-      }
-      
-      .contact-icon {
-        font-size: 32px;
-      }
-      
-      .contact-item strong {
-        font-size: 15px;
-      }
-      
-      .contact-item a {
-        font-size: 13px;
-      }
-      
-      .contact-item p {
-        font-size: 12px;
-      }
-      
-      .resource-card {
-        padding: 20px;
-      }
-      
-      .resource-card-icon {
-        font-size: 36px;
-      }
-      
-      .resource-card a {
-        font-size: 16px;
-      }
-      
-      .resource-card p {
-        font-size: 12px;
-      }
-      
-      footer {
-        padding: 20px 10px;
-      }
-      
-      footer p {
-        font-size: 11px;
-        margin: 3px 0;
-      }
+    :root {
+      --amber: #ffb700; --amber2: #ff8c00; --crimson: #e63946;
+      --bg: #060a10; --bg2: #0b1120; --bg3: #0f1a2e;
+      --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.07);
+      --text: #e8eaf0; --muted: #6b7a99;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.02;pointer-events:none;z-index:9999;}
+
+    /* POPUP */
+    .popup{position:fixed;inset:0;background:rgba(6,10,16,0.92);display:flex;align-items:center;justify-content:center;z-index:8000;backdrop-filter:blur(20px);}
+    .popup-inner{position:relative;padding:52px 44px;text-align:center;max-width:400px;width:90%;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);}
+    .popup-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,183,0,0.06),rgba(230,57,70,0.06));border:1px solid rgba(255,183,0,0.15);border-radius:20px;backdrop-filter:blur(40px);}
+    .popup-inner>*{position:relative;z-index:1;}
+    .popup-icon{font-size:2.8rem;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(255,183,0,0.5));}
+    .popup-inner h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:8px;color:white;}
+    .popup-inner p{color:var(--muted);font-size:0.9rem;margin-bottom:32px;}
+    .popup-btns{display:flex;flex-direction:column;gap:12px;}
+    .lang-btn{padding:14px;border:none;border-radius:12px;font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;}
+    .lang-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transform:translateX(-100%);transition:transform 0.5s;}
+    .lang-btn:hover::before{transform:translateX(100%);}
+    .lang-btn:hover{transform:translateY(-2px);}
+    .lang-en{background:linear-gradient(135deg,#ffb700,#ff8c00);color:#060a10;font-weight:700;box-shadow:0 8px 32px rgba(255,183,0,0.4);}
+    .lang-te{background:linear-gradient(135deg,#e63946,#c41230);color:white;box-shadow:0 8px 32px rgba(230,57,70,0.4);}
+    .lang-skip{background:var(--surface);color:var(--muted);border:1px solid var(--border)!important;}
+    @keyframes popIn{from{opacity:0;transform:scale(0.85) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 5%;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s;}
+    nav.scrolled{background:rgba(6,10,16,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:white;display:flex;align-items:center;gap:10px;}
+    .nav-dot{width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 12px var(--amber);animation:pulseDot 2s infinite;}
+    @keyframes pulseDot{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:0.6}}
+    .nav-right{font-size:0.68rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+    /* HERO */
+    #hero{min-height:88vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center;padding:80px 20px 60px;}
+    #pCanvas{position:absolute;inset:0;z-index:0;}
+    .orb1{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(255,183,0,0.1) 0%,transparent 70%);top:-150px;left:-150px;border-radius:50%;animation:floatO 9s ease-in-out infinite;}
+    .orb2{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(230,57,70,0.09) 0%,transparent 70%);bottom:-100px;right:-100px;border-radius:50%;animation:floatO 11s ease-in-out infinite reverse;}
+    @keyframes floatO{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-30px)}66%{transform:translate(-20px,25px)}}
+    .hc{position:relative;z-index:2;max-width:880px;}
+    .h-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(255,183,0,0.08);border:1px solid rgba(255,183,0,0.2);border-radius:100px;font-size:0.72rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:32px;animation:fsu 0.8s 0.1s both;}
+    .h-tag-d{width:6px;height:6px;background:var(--amber);border-radius:50%;animation:pulseDot 1.5s infinite;}
+    .h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,9vw,7.5rem);line-height:0.92;letter-spacing:-2px;margin-bottom:28px;color:white;animation:fsu 0.8s 0.2s both;}
+    .h1 em{display:block;background:linear-gradient(135deg,#ffb700,#ff8c00,#e63946);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+    .h-sub{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto 44px;animation:fsu 0.8s 0.3s both;}
+    .h-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fsu 0.8s 0.4s both;margin-bottom:36px;}
+    @keyframes fsu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+    /* â•â• GLOWING BUTTONS â•â• */
+    .btn{position:relative;padding:14px 30px;border:none;border-radius:14px;font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:600;letter-spacing:0.3px;cursor:pointer;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+    .btn:hover{transform:translateY(-4px) scale(1.03);}
+    .btn:active{transform:translateY(-1px) scale(0.98);}
+    .btn .shimmer{position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-20deg);transition:left 0.55s;}
+    .btn:hover .shimmer{left:160%;}
+    .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.25);transform:scale(0);animation:rpl 0.6s linear;pointer-events:none;}
+    @keyframes rpl{to{transform:scale(4.5);opacity:0}}
+
+    .btn-amber{background:linear-gradient(135deg,#ffb700,#ff8c00);color:#060a10;box-shadow:0 8px 28px rgba(255,183,0,0.4),inset 0 1px 0 rgba(255,255,255,0.25);}
+    .btn-amber:hover{box-shadow:0 18px 50px rgba(255,183,0,0.65),0 0 0 1px rgba(255,183,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3);}
+    .btn-red{background:linear-gradient(135deg,#e63946,#c0392b);color:white;box-shadow:0 8px 28px rgba(230,57,70,0.35),inset 0 1px 0 rgba(255,255,255,0.15);}
+    .btn-red:hover{box-shadow:0 18px 50px rgba(230,57,70,0.6);}
+    .btn-ghost{background:rgba(255,255,255,0.05);color:var(--text);border:1px solid rgba(255,255,255,0.1);box-shadow:inset 0 1px 0 rgba(255,255,255,0.07);}
+    .btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);box-shadow:0 8px 28px rgba(0,0,0,0.3);}
+    .btn-green{background:linear-gradient(135deg,#00c896,#00a87a);color:#060a10;box-shadow:0 8px 28px rgba(0,200,150,0.35),inset 0 1px 0 rgba(255,255,255,0.2);}
+    .btn-green:hover{box-shadow:0 18px 50px rgba(0,200,150,0.58);}
+    .btn-teal{background:linear-gradient(135deg,#00b4d8,#0077b6);color:white;box-shadow:0 8px 28px rgba(0,180,216,0.35),inset 0 1px 0 rgba(255,255,255,0.15);}
+    .btn-teal:hover{box-shadow:0 18px 50px rgba(0,180,216,0.6);}
+    .btn-purple{background:linear-gradient(135deg,#9b5de5,#6a0dad);color:white;box-shadow:0 8px 28px rgba(155,93,229,0.35),inset 0 1px 0 rgba(255,255,255,0.15);}
+    .btn-purple:hover{box-shadow:0 18px 50px rgba(155,93,229,0.6);}
+    .btn-sm{padding:10px 22px;font-size:0.8rem;border-radius:10px;}
+
+    /* ALERT */
+    .h-alert{display:inline-flex;align-items:center;gap:12px;padding:12px 24px;border-radius:12px;background:rgba(230,57,70,0.1);border:1px solid rgba(230,57,70,0.25);color:#ff8a92;font-size:0.82rem;font-weight:600;letter-spacing:1px;animation:fsu 0.8s 0.5s both,alertP 3s 1.3s infinite;}
+    @keyframes alertP{0%,100%{border-color:rgba(230,57,70,0.25)}50%{border-color:rgba(230,57,70,0.6)}}
+    .shake{animation:shk 1.5s infinite;}
+    @keyframes shk{0%,100%{transform:rotate(0)}15%{transform:rotate(-8deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(5deg)}}
+    .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;animation:fsu 1s 1s both;}
+    .scroll-line{width:1px;height:48px;background:linear-gradient(var(--amber),transparent);animation:sLine 2s ease-in-out infinite;}
+    @keyframes sLine{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{opacity:0;transform:scaleY(0);transform-origin:bottom}}
+
+    /* SECTIONS */
+    .sec{padding:60px 5%;}
+    .sec.dark{background:var(--bg2);}
+    .inner{max-width:1140px;margin:0 auto;}
+    .s-lbl{display:inline-flex;align-items:center;gap:10px;font-size:0.68rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+    .s-lbl::before{content:'';width:28px;height:1.5px;background:var(--amber);}
+    h2.s-ttl{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.05;margin-bottom:12px;color:white;}
+    .s-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:500px;}
+
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:36px;}
+    .stat{padding:32px 24px;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.3s;}
+    .stat:last-child{border-right:none;}
+    .stat::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(255,183,0,0.08) 0%,transparent 70%);opacity:0;transition:opacity 0.3s;}
+    .stat:hover{background:rgba(255,183,0,0.04);}
+    .stat:hover::before{opacity:1;}
+    .stat-n{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;background:linear-gradient(135deg,#ffb700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+    .stat-l{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px;font-weight:600;}
+
+    /* FEATURES */
+    .fg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;}
+    .fc{padding:34px 28px;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);position:relative;overflow:hidden;cursor:default;}
+    .fc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,183,0,0.07) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;}
+    .fc:hover{transform:translateY(-8px);border-color:rgba(255,183,0,0.25);box-shadow:0 24px 60px rgba(0,0,0,0.45);}
+    .fc:hover::after{opacity:1;}
+    .fc-ico{width:50px;height:50px;border-radius:14px;background:rgba(255,183,0,0.1);border:1px solid rgba(255,183,0,0.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px;}
+    .fc h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:white;margin-bottom:10px;}
+    .fc p{font-size:0.88rem;color:var(--muted);line-height:1.7;}
+
+    /* TABLE */
+    .t-shell{border-radius:18px;overflow:hidden;border:1px solid var(--border);margin-top:36px;}
+    table{width:100%;border-collapse:collapse;}
+    thead th{padding:18px 24px;font-family:'Syne',sans-serif;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;background:rgba(255,183,0,0.07);color:var(--amber);text-align:center;border-bottom:1px solid var(--border);}
+    tbody td{padding:18px 24px;text-align:center;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:500;color:var(--text);}
+    tbody tr:last-child td{border-bottom:none;}
+    tbody tr{background:var(--surface);transition:background 0.2s;}
+    tbody tr:hover{background:rgba(255,183,0,0.04);}
+    .closed-td{color:#e63946;font-weight:700;letter-spacing:2px;}
+
+    /* COURSES */
+    .cg{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px;}
+    .cc{border-radius:20px;padding:40px 34px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);position:relative;overflow:hidden;transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
+    .cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--amber),transparent);transform:scaleX(0);transition:transform 0.4s;}
+    .cc:hover{transform:translateY(-8px);border-color:rgba(255,183,0,0.25);box-shadow:0 32px 80px rgba(0,0,0,0.5);}
+    .cc:hover::before{transform:scaleX(1);}
+    .cc-pill{display:inline-block;padding:5px 14px;background:rgba(255,183,0,0.1);border:1px solid rgba(255,183,0,0.2);border-radius:100px;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
+    .cc h3{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:white;margin-bottom:6px;}
+    .cc-dur{font-size:0.95rem;color:var(--amber);font-weight:600;margin-bottom:16px;}
+    .cc p{font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
+    .cp{display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--muted);margin-bottom:8px;}
+    .cp-d{width:5px;height:5px;background:var(--amber);border-radius:50%;flex-shrink:0;}
+    .note-b{margin-top:32px;padding:24px 28px;border-radius:14px;background:rgba(255,183,0,0.04);border:1px solid rgba(255,183,0,0.14);}
+    .note-b strong{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:14px;}
+    .ni{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--muted);margin-bottom:8px;}
+    .ni::before{content:'â€º';color:var(--amber);font-weight:700;}
+
+    /* TESTIMONIALS */
+    .tg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
+    .tc{padding:32px 26px;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
+    .tc:hover{transform:translateY(-7px);border-color:rgba(0,200,150,0.25);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
+    .tc-q{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;line-height:1;color:rgba(255,183,0,0.12);margin-bottom:4px;}
+    .tc p{font-size:0.9rem;color:var(--muted);line-height:1.75;font-style:italic;}
+    .tc strong{display:block;margin-top:16px;color:white;font-size:0.85rem;font-weight:700;}
+    .stars{color:var(--amber);font-size:0.8rem;letter-spacing:2px;margin-bottom:10px;}
+
+    /* CONTACT */
+    .contg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
+    .contc{padding:36px 28px;text-align:center;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
+    .contc:hover{transform:translateY(-7px);border-color:rgba(0,180,216,0.3);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
+    .c-ico{font-size:2.3rem;margin-bottom:16px;filter:drop-shadow(0 0 12px rgba(255,183,0,0.4));}
+    .contc strong{font-family:'Syne',sans-serif;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:white;display:block;margin-bottom:14px;}
+    .contc a{display:block;color:var(--amber);text-decoration:none;font-weight:600;font-size:0.92rem;margin:5px 0;transition:all 0.2s;}
+    .contc a:hover{color:white;text-shadow:0 0 16px rgba(255,183,0,0.5);}
+    .contc p{color:var(--muted);font-size:0.88rem;line-height:1.7;}
+
+    /* RESOURCES */
+    .rg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+    .rc{padding:32px 28px;border-radius:18px;border:1px solid var(--border);background:var(--surface);display:flex;gap:18px;align-items:flex-start;backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
+    .rc:hover{transform:translateY(-6px);border-color:rgba(155,93,229,0.3);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
+    .r-ico{width:48px;height:48px;border-radius:13px;background:rgba(155,93,229,0.1);border:1px solid rgba(155,93,229,0.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+    .rc a{display:block;color:white;text-decoration:none;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:6px;transition:color 0.2s;}
+    .rc a:hover{color:var(--amber);}
+    .rc p{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+
+    /* FOOTER */
+    footer{padding:40px 5%;text-align:center;border-top:1px solid var(--border);}
+    .f-brand{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:white;margin-bottom:8px;}
+    .f-brand span{color:var(--amber);}
+    footer p{color:var(--muted);font-size:0.82rem;}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .fg,.tg,.contg{grid-template-columns:1fr 1fr;}
+      .cg,.rg{grid-template-columns:1fr;}
+      .stats{grid-template-columns:repeat(2,1fr);}
+      .h-btns{flex-direction:column;align-items:center;}
+      .btn{width:100%;max-width:300px;justify-content:center;}
+    }
+    @media(max-width:480px){
+      .fg,.tg,.contg{grid-template-columns:1fr;}
+      .stats{grid-template-columns:repeat(2,1fr);}
+      .sec{padding:44px 5%;}
+      nav{padding:0 16px;}
+      .h1{letter-spacing:-1px;}
+      .h-btns .btn{max-width:100%;}
+      .popup-inner{padding:36px 24px;}
+    }
+    @media(max-width:360px){
+      .stats{grid-template-columns:1fr 1fr;}
+      .stat{padding:20px 12px;}
+      .stat-n{font-size:2.2rem;}
     }
   </style>
 </head>
 <body>
-
-  <!-- Language Popup -->
-  <div id="languagePopup" class="popup" aria-hidden="false">
-    <div class="popup-content" role="dialog" aria-labelledby="langTitle">
-      <h2 id="langTitle" data-en="Select Language" data-te="భాషను ఎంచుకోండి">Select Language</h2>
-      <p data-en="Choose your preferred language to view the site." data-te="సైట్‌ను వీక్షించడానికి మీ ఇష్టం ఉన్న భాషను ఎంచుకోండి">Choose your preferred language to view the site.</p>
-      <div>
-        <button class="btn-en" onclick="setLanguage('en')" aria-label="English">English</button>
-        <button class="btn-te" onclick="setLanguage('te')" aria-label="Telugu">తెలుగు</button>
-      </div>
-      <div style="margin-top:12px;">
-        <button class="btn-skip" onclick="skipPopup()" data-en="Skip (show English)" data-te="ఉపేక్షించండి (ఇంగ్లీష్ చూపించు)">Skip (show English)</button>
+  <!-- POPUP -->
+  <div id="lPop" class="popup">
+    <div class="popup-inner">
+      <div class="popup-icon">ðŸš—</div>
+      <h2 data-en="Select Language" data-te="à°­à°¾à°· à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿">Select Language</h2>
+      <p data-en="Choose your preferred language" data-te="à°®à±€ à°‡à°·à±à°Ÿà°®à±ˆà°¨ à°­à°¾à°·à°¨à± à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿">Choose your preferred language</p>
+      <div class="popup-btns">
+        <button class="lang-btn lang-en" onclick="setLang('en')"><span class="shimmer"></span>ðŸ‡¬ðŸ‡§ English</button>
+        <button class="lang-btn lang-te" onclick="setLang('te')"><span class="shimmer"></span>ðŸ‡®ðŸ‡³ à°¤à±†à°²à±à°—à±</button>
+        <button class="lang-btn lang-skip" onclick="setLang('en')" data-en="Skip â†’ English" data-te="à°¦à°¾à°Ÿà°µà±‡à°¯à°¿">Skip â†’ English</button>
       </div>
     </div>
   </div>
 
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo"><div class="nav-dot"></div>New Sri Raja Driving</div>
+    <div class="nav-right">Est. 2000 Â· Vizianagaram</div>
+  </nav>
 
-
-  <!-- Hero -->
-  <header>
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-      <h1 data-en="New Sri Raja Driving School" data-te="న్యూ శ్రీ రాజా డ్రైవింగ్ స్కూల్">New Sri Raja Driving School</h1>
-      <p data-en="Master the Road with Confidence & Safety" data-te="ఆత్మవిశ్వాసం మరియు భద్రతతో రోడ్డు మీద ప్రావీణ్యం పొందండి">Master the Road with Confidence & Safety</p>
-      <div class="cta-buttons">
-        <a href="tel:+919494331119" class="btn btn-primary" data-en="📞 Call Now" data-te="📞 ఇప్పుడే  కాల్ చేయండి">📞 Call Now</a>
-        <a href="#classes" class="btn btn-secondary btn-view-courses" data-en="View Courses" data-te="కోర్సులు చూడండి">View Courses</a>
-        <a href="student-portal.html" target="_blank" class="btn btn-secondary btn-student-portal" data-en="Student Portal" data-te="విద్యార్థి పోర్టల్">Student Portal</a>
-        <a href="enroll.html" target="_blank" class="btn btn-secondary" data-en="Enroll New Student" data-te="కొత్త విద్యార్థి నమోదు" style="background: #059669; color: white;">🧾 Enroll New Student</a>
-        <a href="admin.html" target="_blank" class="btn btn-secondary btn-admin" data-en="Admin Login" data-te="అడ్మిన్ లాగిన్">🔑 Admin Login</a>
+  <!-- HERO -->
+  <section id="hero">
+    <canvas id="pCanvas"></canvas>
+    <div class="orb1"></div><div class="orb2"></div>
+    <div class="hc">
+      <div class="h-tag"><div class="h-tag-d"></div><span data-en="Vizianagaram's #1 Driving School" data-te="à°µà°¿à°œà°¯à°¨à°—à°°à°‚ à°¨à°‚à°¬à°°à± 1 à°¡à±à°°à±ˆà°µà°¿à°‚à°—à± à°¸à±à°•à±‚à°²à±">Vizianagaram's #1 Driving School</span></div>
+      <h1 class="h1"><span data-en="Master" data-te="à°ªà±à°°à°¾à°µà±€à°£à±à°¯à°‚">Master</span><em data-en="The Road" data-te="à°°à±‹à°¡à±à°¡à±à°²à±‹">The Road</em></h1>
+      <p class="h-sub" data-en="Train with 30+ years of expertise. 15,000+ confident graduates. Complete license support." data-te="30+ à°¸à°‚à°µà°¤à±à°¸à°°à°¾à°² à°¨à??à?ªà??à??à??à??à??à??à?? à??à??à??à??à??à??. 15,000+ à??à??à??à??à??à??à??à?? à?ªà?Ÿà??à?Ÿà??à??à??à??à??à??à??. à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??.">Train with 30+ years of expertise. 15,000+ confident graduates. Complete license support.</p>
+      <div class="h-btns">
+        <a href="tel:+919494331119" class="btn btn-amber"><span class="shimmer"></span>ðŸ?ž Call Now</a>
+        <a href="enroll.html" target="_blank" class="btn btn-green"><span class="shimmer"></span>ðŸ?? Enroll Now</a>
+        <a href="student-portal.html" target="_blank" class="btn btn-teal"><span class="shimmer"></span>ðŸ?Š Student Portal</a>
+        <a href="#classes" class="btn btn-ghost"><span class="shimmer"></span><span data-en="View Courses â??" data-te="à??à??à??à??à??à??à??à?? â??">View Courses â??</span></a>
+        <a href="admin.html" target="_blank" class="btn btn-purple"><span class="shimmer"></span>ðŸ?? Admin</a>
       </div>
-      <div class="alert-banner">
-        <span data-en="🚨 ALERT TODAY, ALIVE TOMORROW 🚨" data-te="🚨 ఈరోజు జాగ్రత్తగా ఉంటే, రేపు సురక్షితంగా ఉంటారు 🚨">🚨 ALERT TODAY, ALIVE TOMORROW 🚨</span>
-      </div>
+      <div class="h-alert"><span class="shake">âš?ï??</span><span data-en="ALERT TODAY â?? ALIVE TOMORROW" data-te="à??à??à??à?œà?? à?œà??à??à??à??à??à??à??à??à?? â?? à??à??à?ªà?? à??à??à??à??à??à??à??à??à??à??à??">ALERT TODAY â?? ALIVE TOMORROW</span></div>
     </div>
-  </header>
+    <div class="scroll-hint"><div class="scroll-line"></div><span>scroll</span></div>
+  </section>
 
-  <!-- Stats -->
-  <section class="section">
+  <!-- STATS -->
+  <section class="sec dark"><div class="inner">
     <div class="stats">
-      <div class="stat-card">
-        <div class="stat-number">30+</div>
-        <div class="stat-label" data-en="Years Experience" data-te="సంవత్సరాల అనుభవం">Years Experience</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">200</div>
-        <div class="stat-label" data-en="KM Training" data-te="కిమీ శిక్షణ">KM Training</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">100%</div>
-        <div class="stat-label" data-en="License Support" data-te="లైసెన్స్ సహాయం">License Support</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">15000+</div>
-        <div class="stat-label" data-en="Happy Students" data-te="సంతోషించిన విద్యార్థులు">Happy Students</div>
-      </div>
+      <div class="stat"><div class="stat-n">30+</div><div class="stat-l" data-en="Years Experience" data-te="à??à??à?µà??à??à??à??à??à?? à??à??à??à??à?µà??">Years Experience</div></div>
+      <div class="stat"><div class="stat-n">200</div><div class="stat-l" data-en="KM Training" data-te="à??à??à??à?? à??à??à??à??à??à??">KM Training</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l" data-en="License Support" data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à??">License Support</div></div>
+      <div class="stat"><div class="stat-n">15k+</div><div class="stat-l" data-en="Happy Students" data-te="à??à??à??à??à??à??à??à?šà??à?? à?µà??à??à??à??à??à??à??à??à??à??à??">Happy Students</div></div>
     </div>
-  </section>
+  </div></section>
 
-  <!-- About -->
-  <section class="section">
-    <h2 data-en="About Us" data-te="మా గురించి">About Us</h2>
-    <p class="section-subtitle" data-en="Building Safe & Confident Drivers" data-te="సురక్షితమైన మరియు ఆత్మవిశ్వాసంతో కూడిన డ్రైవర్లను నిర్మించడం">Building Safe & Confident Drivers</p>
-    <p style="text-align: center; line-height: 1.9; font-size: 17px; color: #475569; margin-top: 30px;"
-       data-en="We care deeply about every student's success. Our mission is to create safe, knowledgeable, and confident drivers who make Vizianagaram roads safer for everyone."
-       data-te="మేము ప్రతి విద్యార్థి యొక్క విజయం గురించి లోతుగా జాగ్రత్త వహిస్తాము. మా లక్ష్యం సురక్షితమైన, జ్ఞానవంతులైన మరియు ఆత్మవిశ్వాసంతో కూడిన డ్రైవర్లను సృష్టించడం.">
-      We care deeply about every student's success. Our mission is to create safe, knowledgeable, and confident drivers who make Vizianagaram roads safer for everyone.
-    </p>
-  </section>
-
-  <!-- Features -->
-  <section class="section">
-    <h2 data-en="Why Choose Us" data-te="మమ్మల్ని ఎందుకు ఎంచుకోవాలి">Why Choose Us</h2>
-    <p class="section-subtitle" data-en="What Makes Us Different" data-te="మమ్మల్ని ప్రత్యేకంగా చేసేది">What Makes Us Different</p>
-    <div class="features">
-      <div class="feature-card">
-        <span class="feature-icon">👨‍🏫</span>
-        <h3 data-en="Expert Instructor" data-te="నైపుణ్య శిక్షకుడు">Expert Instructor</h3>
-        <p data-en="Learn from Ganesh sir with 30+ years of professional driving instruction experience"
-           data-te="గణేష్ సర్ నుండి 30+ సంవత్సరాల పేషাదారీ డ్రైవింగ్ బోధన అనుభవంతో నేర్చుకోండి">Learn from Ganesh sir with 30+ years of professional driving instruction experience</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🛣️</span>
-        <h3 data-en="Real Traffic Training" data-te="నిజమైన ట్రాఫిక్ శిక్షణ">Real Traffic Training</h3>
-        <p data-en="Practical on-road sessions in actual traffic conditions for real-world confidence"
-           data-te="వాస్తవ ట్రాఫిక్ పరిస్థితులలో ఆన్-రోడ్ సెషన్లు">Practical on-road sessions in actual traffic conditions for real-world confidence</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📋</span>
-        <h3 data-en="Complete License Support" data-te="పూర్తి లైసెన్స్ సహాయం">Complete License Support</h3>
-        <p data-en="Full assistance for learner's and permanent license processes"
-           data-te="లెర్నర్ మరియు పర్మనెంట్ లైసెన్స్ కోసం పూర్తి సహాయం">Full assistance for learner's and permanent license processes</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">⏰</span>
-        <h3 data-en="Flexible Timings" data-te="అనుకూల సమయాలు">Flexible Timings</h3>
-        <p data-en="Morning and afternoon batches to fit your schedule perfectly"
-           data-te="ఉదయం మరియు మధ్యాహ్న బ్యాచ్‌లు మీ షెడ్యూల్‌కు సరిపోవటానికి">Morning and afternoon batches to fit your schedule perfectly</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🎯</span>
-        <h3 data-en="Patient Teaching" data-te="ధైర్యవంతమైన బోధన">Patient Teaching</h3>
-        <p data-en="Clear explanations with patience - perfect for absolute beginners"
-           data-te="ధైర్యంతో స్పష్టమైన వివరణలు - పూర్తిగా నতুన వారికి">Clear explanations with patience - perfect for absolute beginners</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">✅</span>
-        <h3 data-en="200 KM Training" data-te="200 కిమీ శిక్షణ">200 KM Training</h3>
-        <p data-en="Comprehensive training covering 200 kilometers of practice"
-           data-te="200 కిలోమీటర్ల ప్రాక్టీస్‌ను కవర్ చే సమగ్ర శిక్షణ">Comprehensive training covering 200 kilometers of practice</p>
-      </div>
+  <!-- WHY US -->
+  <section class="sec"><div class="inner">
+    <div class="s-lbl" data-en="Why Choose Us" data-te="à??à??à??à?? à?Žà??à??à??à??à?? à?Žà??à?šà??à??à??à?µà??à??à??">Why Choose Us</div>
+    <h2 class="s-ttl" data-en="What Makes Us Different" data-te="à??à??à??à?? à?Žà??à??à??à??à?? à?ªà??à??à??à??à??à??à??à??à??">What Makes Us Different</h2>
+    <p class="s-sub" data-en="Three decades of proven excellence in driver education, safety, and real-world confidence." data-te="à??à??à??à??à?µà??à?? à?µà??à??à??à??à??à?? à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?ªà??à?? à??à??à?ªà??à??à??à??à??.">Three decades of proven excellence in driver education, safety, and real-world confidence.</p>
+    <div class="fg">
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 data-en="Expert Instructor" data-te="à??à??à?ªà??à?? à??à??à??à??à??à??à??à??à??">Expert Instructor</h3><p data-en="Ganesh sir brings 30+ years of precise, patient instruction. Every student leaves a confident driver." data-te="à??à??à??à??à?? à??à??à?? 30+ à??à??à?µà??à??à??à??à??à?? à??à??à?ªà??à??à??.">Ganesh sir brings 30+ years of precise, patient instruction. Every student leaves a confident driver.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3 data-en="Real Traffic Training" data-te="à??à??à?œà??à??à?? à?Ÿà??à??à??à??à??à??à?? à??à??à??à??à??à??">Real Traffic Training</h3><p data-en="Live on-road sessions in actual traffic. No shortcuts â?? real skill for real roads." data-te="à??à??à?œà??à??à?? à?Ÿà??à??à??à??à??à??à??â?Œà??à?? à??à??à??-à??à??à??à?? à??à??à??à??à??à??à??.">Live on-road sessions in actual traffic. No shortcuts â?? real skill for real roads.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><h3 data-en="Full License Support" data-te="à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??">Full License Support</h3><p data-en="End-to-end help for learner's and permanent licenses. We handle it, you drive." data-te="à??à??à??à??à??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à??à?Ÿà?? à??à??à??à??à??à??à??à?? à??à??à??à?? à?ªà??à??à??à??à?? à??à??à??à??à??.">End-to-end help for learner's and permanent licenses. We handle it, you drive.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3 data-en="Flexible Batches" data-te="à??à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??">Flexible Batches</h3><p data-en="Morning and afternoon batches Monâ??Sat. Train around your schedule." data-te="à??à??à??à?? à??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??.">Morning and afternoon batches Monâ??Sat. Train around your schedule.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3 data-en="Patient, Clear Teaching" data-te="à??à??à??à??à??à?? à??à??à?ªà??à??à?Ÿà??à??à?? à??à??à??à??">Patient, Clear Teaching</h3><p data-en="No rush. Ganesh sir makes even the most nervous beginner feel at ease from day one." data-te="à??à??à??à??à??à??, à??à??à?ªà??à??à?Ÿà??à??à?? â?? à??à?Šà??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à??à??à??à??.">No rush. Ganesh sir makes even the most nervous beginner feel at ease from day one.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3 data-en="200 KM Coverage" data-te="200 à??à??à??à?? à??à??à??à??à??à??">200 KM Coverage</h3><p data-en="Every course covers 200 kilometers of comprehensive practice â?? enough to make driving instinct." data-te="à?ªà??à??à??à?? à??à??à??à??à??à?? 200 à??à??à??à??à??à??à?Ÿà??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à?Ÿà??à??à??.">Every course covers 200 kilometers of comprehensive practice â?? enough to make driving instinct.</p></div>
     </div>
-  </section>
+  </div></section>
 
-  <!-- Timings -->
-  <section class="section">
-    <h2 data-en="Timings & Schedule" data-te="సమయాలు & షెడ్యూల్">Timings & Schedule</h2>
-    <p class="section-subtitle" data-en="Choose a batch that works for you" data-te="మీకు సరిపోయే బ్యాచ్‌ను ఎంచుకోండి">Choose a batch that works for you</p>
-    <div class="timings-wrapper">
+  <!-- SCHEDULE -->
+  <section class="sec dark"><div class="inner">
+    <div class="s-lbl" data-en="Timings" data-te="à??à??à??à??à??à??">Timings</div>
+    <h2 class="s-ttl" data-en="Schedule & Batches" data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??">Schedule & Batches</h2>
+    <p class="s-sub" data-en="Two daily batches to fit your lifestyle." data-te="à??à?? à?œà??à?µà??à??à??à??à??à??à?? à??à??à??à?ªà??à??à?? à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??.">Two daily batches to fit your lifestyle.</p>
+    <div class="t-shell">
       <table>
-        <thead>
-          <tr>
-            <th data-en="Day" data-te="రోజు">Day</th>
-            <th data-en="Morning Batch" data-te="ఉదయం బ్యాచ్">Morning Batch</th>
-            <th data-en="Afternoon Batch" data-te="మధ్యాహ్నం బ్యాచ్">Afternoon Batch</th>
-          </tr>
-        </thead>
+        <thead><tr><th data-en="Day" data-te="à??à??à?œà??">Day</th><th data-en="Morning Batch" data-te="à??à??à??à?? à??à??à??à??à?šà??">Morning Batch</th><th data-en="Afternoon Batch" data-te="à??à??à??à??à??à??à??à??à?? à??à??à??à??à?šà??">Afternoon Batch</th></tr></thead>
         <tbody>
-          <tr>
-            <td><strong data-en="Monday - Saturday" data-te="సోమ - శని">Monday - Saturday</strong></td>
-            <td data-en="6:00 AM - 12:00 PM" data-te="6:00 AM - 12:00 PM">6:00 AM - 12:00 PM</td>
-            <td data-en="1:00 PM - 6:00 PM" data-te="1:00 PM - 6:00 PM">1:00 PM - 6:00 PM</td>
-          </tr>
-          <tr>
-            <td><strong data-en="Sunday" data-te="ఆదివారం">Sunday</strong></td>
-            <td colspan="2" class="closed-text" data-en="CLOSED" data-te="సెలవు">CLOSED</td>
-          </tr>
+          <tr><td><strong data-en="Monday â?? Saturday" data-te="à??à??à?? â?? à??à??à??">Monday â?? Saturday</strong></td><td>6:00 AM â?? 12:00 PM</td><td>1:00 PM â?? 6:00 PM</td></tr>
+          <tr><td><strong data-en="Sunday" data-te="à??à??à??à?µà??à??à??">Sunday</strong></td><td colspan="2" class="closed-td" data-en="CLOSED" data-te="à??à??à??à?µà??">CLOSED</td></tr>
         </tbody>
       </table>
     </div>
-  </section>
+  </div></section>
 
-  <!-- Classes -->
-  <section id="classes" class="section">
-    <h2 data-en="Training Programs" data-te="శిక్షణ కార్యక్రమాలు">Training Programs</h2>
-    <p class="section-subtitle" data-en="Flexible learning designed for your pace" data-te="మీ వేగానికి సరిపోయే అనుకూల శిక్షణ">Flexible learning designed for your pace</p>
-    <div class="classes-list">
-      <div class="class-card">
-        <h3 data-en="🚗 Standard Course" data-te="🚗 స్టాండర్డ్ కోర్స్">🚗 Standard Course</h3>
-        <p><strong data-en="20 Classes in 20 Days" data-te="20 క్లాసులు 20 రోజుల్లో">20 Classes in 20 Days</strong></p>
-        <p data-en="Each session: 30 minutes" data-te="ప్రతి సెషన్: 30 నిమిషాలు">Each session: 30 minutes</p>
-        <p data-en="Perfect for steady learners who want to build skills gradually with daily practice."
-           data-te="రోజు ప్రాక్టీస్ ద్వారా స్థిరంగా నైపుణ్యాన్ని పెంచుకోవాలనుకునే వారికి పర్ఫెక్ట్.">Perfect for steady learners who want to build skills gradually with daily practice.</p>
-      </div>
-      <div class="class-card">
-        <h3 data-en="🚙 Fast Track Course" data-te="🚙 ఫాస్ట్ ట్రాక్ కోర్స్">🚙 Fast Track Course</h3>
-        <p><strong data-en="20 Classes in 10 Days" data-te="20 క్లాసులు 10 రోజుల్లో">20 Classes in 10 Days</strong></p>
-        <p data-en="Each session: 1 hour" data-te="ప్రతి సెషన్: 1 గంట">Each session: 1 hour</p>
-        <p data-en="Ideal for quick learners or those who need to complete training faster."
-           data-te="త్వరకు నేర్చుకునే వ్యక్తులకు లేదా శిక్షణను త్వరగా పూర్తిచేయాల్సిన వారికి తగినది.">Ideal for quick learners or those who need to complete training faster.</p>
-      </div>
+  <!-- COURSES -->
+  <section id="classes" class="sec"><div class="inner">
+    <div class="s-lbl" data-en="Programs" data-te="à??à??à??à??à??à??à??à??à??à??à??à??">Programs</div>
+    <h2 class="s-ttl" data-en="Training Courses" data-te="à??à??à??à??à??à?? à??à??à??à??à??à??à??à??">Training Courses</h2>
+    <p class="s-sub" data-en="Two programs, one goal: making you a great driver." data-te="à??à??à??à??à?? à??à??à??à??à??à??à??à??à??à??à??à??, à??à?? à??à??à??à??à??à??à??.">Two programs, one goal: making you a great driver.</p>
+    <div class="cg">
+      <div class="cc"><div class="cc-pill" data-en="Standard" data-te="à??à??à?Ÿà??à??à??à??à??à??à??">Standard</div><h3 data-en="Standard Course" data-te="à??à??à?Ÿà??à??à??à??à??à??à?? à??à??à??à??à??à??">Standard Course</h3><div class="cc-dur" data-en="20 Classes Â? 20 Days" data-te="20 à??à??à??à??à??à??à??à?? Â? 20 à??à??à?œà??à??à??">20 Classes Â? 20 Days</div><p data-en="The ideal pace for steady learners. Build skills day by day." data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à??à??à??à??à??à??à?? à??à??à??à?µà??à?? à?µà??à??à??.">The ideal pace for steady learners. Build skills day by day.</p><div class="cp"><div class="cp-d"></div><span data-en="30 minutes per session" data-te="à??à??à??à??à??â?Œà??à?? 30 à??à??à??à??à??à??à??à??">30 minutes per session</span></div><div class="cp"><div class="cp-d"></div><span data-en="200 KM total distance" data-te="à??à?Šà??à??à??à?? 200 à??à??à??à??">200 KM total distance</span></div><div class="cp"><div class="cp-d"></div><span data-en="Full license support" data-te="à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??">Full license support</span></div></div>
+      <div class="cc"><div class="cc-pill" data-en="Fast Track" data-te="à??à??à??à??à?Ÿà?? à?Ÿà??à??à??à??à??">Fast Track</div><h3 data-en="Fast Track Course" data-te="à??à??à??à??à?Ÿà?? à?Ÿà??à??à??à??à?? à??à??à??à??à??à??">Fast Track Course</h3><div class="cc-dur" data-en="20 Classes Â? 10 Days" data-te="20 à??à??à??à??à??à??à??à?? Â? 10 à??à??à?œà??à??à??">20 Classes Â? 10 Days</div><p data-en="Intensive training for quick learners. Double sessions, half the time." data-te="à??à??à?µà??à??à?? à??à??à??à??à?šà??à??à??à?µà??à??à??à??à??à??à??à?? à?µà??à??à??à??à?? à??à??à?Ÿà??à??à??à??à??à?µà?? à??à??à??à??à??à??.">Intensive training for quick learners. Double sessions, half the time.</p><div class="cp"><div class="cp-d"></div><span data-en="1 hour per session" data-te="à??à??à??à??à??â?Œà??à?? 1 à??à??à?Ÿ">1 hour per session</span></div><div class="cp"><div class="cp-d"></div><span data-en="200 KM total distance" data-te="à??à?Šà??à??à??à?? 200 à??à??à??à??">200 KM total distance</span></div><div class="cp"><div class="cp-d"></div><span data-en="Full license support" data-te="à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??">Full license support</span></div></div>
     </div>
-    <div class="note-box">
-      <strong data-en="📌 Important Notes:" data-te="📌 ముఖ్య సూచనలు:">📌 Important Notes:</strong>
-      <ul>
-        <li data-en="Total training covers 200 kilometers" data-te="మొత్తం శిక్షణ 200 కిలోమీటర్ల వరకు ఉంటుంది">Total training covers 200 kilometers</li>
-        <li data-en="Students must come to school - no home pickups available" data-te="విద్యార్థులు స్కూల్‌కు రావాలి - హోమ్ పికప్‌లు లేవు">Students must come to school - no home pickups available</li>
-        <li data-en="Distance calculated from school to school only" data-te="దూరం స్కూల్ నుండి స్కూల్ వరకు మాత్రమే">Distance calculated from school to school only</li>
-        <li data-en="Both courses cover same comprehensive curriculum" data-te="రెండు కోర్సులు ఒకే సమగ్ర పాఠ్యక్రమాన్ని కవర్ చేస్తాయి">Both courses cover same comprehensive curriculum</li>
-      </ul>
+    <div class="note-b">
+      <strong data-en="Important Notes" data-te="à??à??à??à??à?? à??à??à?šà??à??à??">Important Notes</strong>
+      <div class="ni" data-en="Total training covers 200 kilometres" data-te="à??à?Šà??à??à??à?? à??à??à??à??à??à?? 200 à??à??à??à??à??à??à?Ÿà??à??à?? à?µà??à??à??">Total training covers 200 kilometres</div>
+      <div class="ni" data-en="Students must come to school â?? no home pickups" data-te="à?µà??à??à??à??à??à??à??à??à??à??à?? à??à??à??à??à??à??â?Œà??à?? à??à??à?µà??à??à??">Students must come to school â?? no home pickups</div>
+      <div class="ni" data-en="Distance calculated school-to-school only" data-te="à??à??à??à?? à??à??à??à??à??à?? à??à??à??à??à?? à??à??à??à??à??à?? à?µà??à??à?? à??à??à??à??à??à??à??">Distance calculated school-to-school only</div>
+      <div class="ni" data-en="Both courses share the same comprehensive curriculum" data-te="à??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à??à??à??à??">Both courses share the same comprehensive curriculum</div>
     </div>
-  </section>
+  </div></section>
 
-  <!-- Testimonials -->
-  <section class="section">
-    <h2 data-en="Student Success Stories" data-te="విద్యార్థుల విజయ కథలు">Student Success Stories</h2>
-    <p class="section-subtitle" data-en="Real experiences from real learners" data-te="నిజమైన అభ్యాసకుల నుండి నిజమైన అనుభవాలు">Real experiences from real learners</p>
-    <div class="testimonials">
-      <div class="testimonial">
-        <p data-en="Excellent training and good explanation by Ganesh sir. Got confidence to drive and training in traffic. Highly recommended!" data-te="గణేష్ సర్ ద్వారా అద్భుత శిక్షణ మరియు మంచి వివరణ. ట్రాఫిక్‌లో నమ్మకంతో డ్రైవ్ చేయగలిగా.">Excellent training and good explanation by Ganesh sir. Got confidence to drive and training in traffic. Highly recommended!</p>
-        <strong data-en="— Phaniraj" data-te="— ఫణిరాజ్">— Phaniraj</strong>
-      </div>
-      <div class="testimonial">
-        <p data-en="Very good teaching method. Ganesh sir explains everything with patience. Even beginners feel comfortable here." data-te="చాలా మంచి బోధనా విధానం. గణేష్ సర్ ప్రతిదీ సహనంగా వివరించారు. మొదటిసారిగా వచ్చినవారూ సౌకర్యంగా ఉన్నారు.">Very good teaching method. Ganesh sir explains everything with patience. Even beginners feel comfortable here.</p>
-        <strong data-en="— Naziya" data-te="— నజియా">— Naziya</strong>
-      </div>
-      <div class="testimonial">
-        <p data-en="Very professional instructor. I didn't know basics but he made me drive confidently in traffic within days!" data-te="చాలా ప్రొఫెషనల్ శిక్షకుడు. నాకు ప్రాథమికతలు తెలియకపోయినా, అతను నన్ను కొన్ని రోజుల్లో ట్రాఫిక్‌లో నమ్మకంతో డ్రైవ్ చేయగలిగేలా చేశాడు!">Very professional instructor. I didn't know basics but he made me drive confidently in traffic within days!</p>
-        <strong data-en="— Sri Lakshmi" data-te="— శ్రీ లక్ష్మి">— Sri Lakshmi</strong>
-      </div>
+  <!-- TESTIMONIALS -->
+  <section class="sec dark"><div class="inner">
+    <div class="s-lbl" data-en="Students" data-te="à?µà??à??à??à??à??à??à??à??à??à??à??">Students</div>
+    <h2 class="s-ttl" data-en="Success Stories" data-te="à?µà??à?œà?? à??à??à??à??">Success Stories</h2>
+    <p class="s-sub" data-en="Real words from real drivers who trained with us." data-te="à??à?? à?µà??à??à?? à??à??à??à??à??à?? à?ªà?Šà??à??à??à?? à??à??à?œà??à??à?? à??à??à??à??à?µà??à??à?? à??à??à?Ÿà??à??.">Real words from real drivers who trained with us.</p>
+    <div class="tg">
+      <div class="tc"><div class="stars">â??â??â??â??â??</div><div class="tc-q">"</div><p data-en="Excellent training by Ganesh sir. Got real confidence to drive in traffic. Highly recommended!" data-te="à??à??à??à??à?? à??à??à?? à??à??à??à??à??à?? à??à??à??à??à??à??. à?Ÿà??à??à??à??à??à??à??â?Œà??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?µà?? à?šà??à??à??à??à??à??à??.">Excellent training by Ganesh sir. Got real confidence to drive in traffic. Highly recommended!</p><strong data-en="â?? Phaniraj" data-te="â?? à??à??à??à??à??à?œà??">â?? Phaniraj</strong></div>
+      <div class="tc"><div class="stars">â??â??â??â??â??</div><div class="tc-q">"</div><p data-en="Very good teaching method. Ganesh sir explains with patience. Even total beginners feel comfortable here." data-te="à?šà??à??à?? à??à??à?šà?? à??à??à??à??à?? à?µà??à??à??à??à??. à??à?Šà??à?Ÿà??à??à??à??à??à??à?? à?µà?šà??à?šà??à??à?µà??à??à?? à??à?Œà??à??à??à??à??à??à?? à??à??à??à??à??à??à??.">Very good teaching method. Ganesh sir explains with patience. Even total beginners feel comfortable here.</p><strong data-en="â?? Naziya" data-te="â?? à??à?œà??à??à??">â?? Naziya</strong></div>
+      <div class="tc"><div class="stars">â??â??â??â??â??</div><div class="tc-q">"</div><p data-en="Very professional. I didn't know the basics, but he made me drive confidently in traffic within days!" data-te="à?šà??à??à?? à?ªà??à??à?Šà??à??à??à??à??à??. à??à?Šà??à??à??à?? à??à??à?œà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?ªà??à??à?šà??à??à??!">Very professional. I didn't know the basics, but he made me drive confidently in traffic within days!</p><strong data-en="â?? Sri Lakshmi" data-te="â?? à??à??à??à?? à??à??à??à??à??à??à??">â?? Sri Lakshmi</strong></div>
     </div>
-  </section>
+  </div></section>
 
-  <!-- Contact -->
-  <section class="section">
-    <h2 data-en="Get in Touch" data-te="సంప్రదించండి">Get in Touch</h2>
-    <p class="section-subtitle" data-en="Ready to start your driving journey?" data-te="మీ డ్రైవింగ్ ప్రయాణం ప్రారంభించడానికి సిద్ధమా?">Ready to start your driving journey?</p>
-    <div class="contact-grid">
-      <div class="contact-item">
-        <div class="contact-icon">📞</div>
-        <strong data-en="Call Us / WhatsApp" data-te="కాల్ చేయండి / వాట్సాప్">Call Us / WhatsApp</strong>
-        <a href="tel:+919494331119" data-en="+91 9494331119" data-te="+91 9494331119">+91 9494331119</a>
-        <a href="tel:+919440754257" data-en="+91 9440754257" data-te="+91 9440754257">+91 9440754257</a>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <strong data-en="Visit Us" data-te="సందర్శించండి">Visit Us</strong>
-        <p data-en="Beside Apollo Pharmacy<br>Opposite Godrej Interio<br>Dasannapet, Vizianagaram" data-te="అపోలో ఫార్మసీ పక్కన<br>గోడ్రెజ్ ఇంటీరియో ఎదురుగా<br>దాసన్నపేట, విజయనగరం">Beside Apollo Pharmacy<br>Opposite Godrej Interio<br>Dasannapet, Vizianagaram</p>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">⏰</div>
-        <strong data-en="Open Hours" data-te="ఓపెన్ సమయం">Open Hours</strong>
-        <p data-en="Mon - Sat: 6:00 AM - 6:00 PM<br><span style='color:#dc2626;'>Closed Sundays</span>" data-te="సోమ - శని: 6:00 AM - 6:00 PM<br><span style='color:#dc2626;'>ఆదివారాలు సెలవు</span>">Mon - Sat: 6:00 AM - 6:00 PM<br><span style="color:#dc2626;">Closed Sundays</span></p>
-      </div>
+  <!-- CONTACT -->
+  <section class="sec"><div class="inner">
+    <div class="s-lbl" data-en="Contact" data-te="à??à??à?ªà??à??à??à??à??à?šà??à??à??">Contact</div>
+    <h2 class="s-ttl" data-en="Get In Touch" data-te="à??à??à?ªà??à??à??à??à??à?šà??à??à??">Get In Touch</h2>
+    <p class="s-sub" data-en="Ready to hit the road? We're one call away." data-te="à??à??à??à??à??à??à?ªà??à??à?? à?µà??à??à??à??à??à??à??à??à??à??à??à?Ÿà??à??à??à??à??à??à??? à??à?? à??à??à??à?? à?šà??à??à??à??à??.">Ready to hit the road? We're one call away.</p>
+    <div class="contg">
+      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div><strong data-en="CALL / WHATSAPP" data-te="à??à??à??à?? / à?µà??à?Ÿà??à??à??à?ªà??">CALL / WHATSAPP</strong><a href="tel:+919494331119">+91 9494331119</a><a href="tel:+919440754257">+91 9440754257</a></div>
+      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><strong data-en="VISIT US" data-te="à??à??à??à??à??à??à??à??à?šà??à??à??">VISIT US</strong><p data-en="Beside Apollo Pharmacy, Opposite Godrej Interio, Dasannapet, Vizianagaram" data-te="à??à?ªà??à??à?? à??à??à??à??à??à??à?? à?ªà??à??à??à??, à?µà??à?œà??à??à??à??à??">Beside Apollo Pharmacy<br>Opposite Godrej Interio<br>Dasannapet, Vizianagaram</p></div>
+      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><strong data-en="OPEN HOURS" data-te="à??à??à??à??">OPEN HOURS</strong><p data-en="Monâ??Sat: 6:00 AM â?? 6:00 PM Â? Closed Sundays" data-te="à??à??à??â??à??à??à??: 6:00 AM â?? 6:00 PM">Monâ??Sat: 6:00 AM â?? 6:00 PM<br><span style="color:#e63946">Closed Sundays</span></p></div>
     </div>
-  </section>
+  </div></section>
 
-  <!-- Resources -->
-  <section class="section">
-    <h2 data-en="📚 Study Resources" data-te="📚 అధ్యయన వనరులు">📚 Study Resources</h2>
-    <p class="section-subtitle" data-en="Prepare for your learner's license test" data-te="లెర్నర్ లైసెన్స్ పరీక్షకు సిద్ధమవ్వండి">Prepare for your learner's license test</p>
-    <div class="resources-grid">
-      <div class="resource-card">
-        <div class="resource-card-icon">📝</div>
-        <a href="https://www.aptransport.org/html/llr-question-bank.html" target="_blank" rel="noopener" data-en="LLR Question Bank" data-te="LLR ప్రశ్న బ్యాంక్">LLR Question Bank</a>
-        <p data-en="Official questions for license test" data-te="లైసెన్స్ పరీక్ష కోసం అధికారిక ప్రశ్నలు">Official questions for license test</p>
-      </div>
-      <div class="resource-card">
-        <div class="resource-card-icon">🎯</div>
-        <a href="http://m.driving-tests.in/" target="_blank" rel="noopener" data-en="Practice Mock Tests" data-te="మాక్ టెస్టులు ప్రాక్టీస్ చేయండి">Practice Mock Tests</a>
-        <p data-en="Test your knowledge before exam" data-te="పరీక్షకు ముందు జ్ఞానం పరీక్షించండి">Test your knowledge before exam</p>
-      </div>
+  <!-- RESOURCES -->
+  <section class="sec dark"><div class="inner">
+    <div class="s-lbl" data-en="Resources" data-te="à?µà??à??à??à??à??">Resources</div>
+    <h2 class="s-ttl" data-en="Study Resources" data-te="à??à??à??à??à??à?? à?µà??à??à??à??à??">Study Resources</h2>
+    <div class="rg">
+      <div class="rc"><div class="r-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><a href="https://www.aptransport.org/html/llr-question-bank.html" target="_blank" rel="noopener" data-en="LLR Question Bank" data-te="LLR à?ªà??à??à??à??à?? à??à??à??à??à??à??à??">LLR Question Bank</a><p data-en="Official AP Transport questions for the learner's license test." data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à??à??à??à?? à?ªà??à??à??à??à?? à?ªà??à??à??à??à??à??à??.">Official AP Transport questions for the learner's license test.</p></div></div>
+      <div class="rc"><div class="r-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><a href="http://m.driving-tests.in/" target="_blank" rel="noopener" data-en="Practice Mock Tests" data-te="à??à??à??à?? à?Ÿà??à??à??à?Ÿà??à??à??">Practice Mock Tests</a><p data-en="Interactive mock tests to build confidence before your exam." data-te="à?ªà??à??à??à??à??à??à?? à??à??à??à??à?? à??à??à??à??à??à?? à?ªà??à??à?šà??à??à??à??à??à??.">Interactive mock tests to build confidence before your exam.</p></div></div>
     </div>
-  </section>
+  </div></section>
 
-  <!-- Footer -->
   <footer>
-    <p data-en="© 2025 New Sri Raja Driving School, Vizianagaram" data-te="© 2025 న్యూ శ్రీ రాజా డ్రైవింగ్ స్కూల్, విజయనగరం">© 2025 New Sri Raja Driving School, Vizianagaram</p>
-    <p data-en="Driving Excellence Since 1995 | All Rights Reserved" data-te="2000 నుంచి భోధన నైపుణ్యం  | అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి">Driving Instruction Excellence Since 2000 | All Rights Reserved</p>
+    <div class="f-brand">ðŸš? <span>New Sri Raja</span> Driving School</div>
+    <p data-en="Â? 2025 New Sri Raja Driving School, Vizianagaram Â? Driving Instruction Excellence Since 2000" data-te="Â? 2025 à??à??à??à?? à??à??à??à?? à??à??à?œà?? à??à??à??à??à?µà??à??à??à?? à??à??à??à??à??à??, à?µà??à?œà??à??à??à??à??">Â? 2025 New Sri Raja Driving School, Vizianagaram &nbsp;Â?&nbsp; Excellence Since 2000</p>
   </footer>
 
-  <script>
-    // Show popup on first load
-    window.addEventListener('load', function() {
-      const savedLang = localStorage.getItem('dsLanguage');
-      if (!savedLang) {
-        document.getElementById('languagePopup').style.display = 'flex';
-      } else {
-        document.getElementById('languagePopup').style.display = 'none';
-        applyLanguage(savedLang);
-      }
-    });
+<script>
+  // Nav scroll
+  window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
 
-    function setLanguage(lang) {
-      localStorage.setItem('dsLanguage', lang);
-      document.getElementById('languagePopup').style.display = 'none';
-      applyLanguage(lang);
-    }
+  // Particles
+  const cv=document.getElementById('pCanvas'),cx=cv.getContext('2d');
+  let W,H,pts=[];
+  const rsz=()=>{W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;};
+  rsz();window.addEventListener('resize',rsz);
+  class Pt{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.4+0.3;this.s=Math.random()*0.35+0.1;this.a=Math.random()*Math.PI*2;this.o=Math.random()*0.35+0.08;}}
+  for(let i=0;i<90;i++)pts.push(new Pt());
+  (function draw(){cx.clearRect(0,0,W,H);pts.forEach(p=>{cx.save();cx.globalAlpha=p.o;cx.fillStyle=Math.random()>.72?'#ffb700':'rgba(255,255,255,0.5)';cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fill();cx.restore();p.y-=p.s;p.x+=Math.sin(p.a+Date.now()*.001)*.3;if(p.y<-5)p.reset();});requestAnimationFrame(draw);})();
 
-    function skipPopup() {
-      const lang = 'en';
-      localStorage.setItem('dsLanguage', lang);
-      document.getElementById('languagePopup').style.display = 'none';
-      applyLanguage(lang);
-    }
+  // Ripple
+  document.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',e=>{const r=document.createElement('span');r.className='ripple';const rc=b.getBoundingClientRect(),sz=Math.max(rc.width,rc.height);r.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rc.left-sz/2}px;top:${e.clientY-rc.top-sz/2}px;`;b.appendChild(r);setTimeout(()=>r.remove(),700);}));
 
-    function applyLanguage(lang) {
-      document.querySelectorAll('[data-en]').forEach(el => {
-        const attr = el.getAttribute('data-' + lang);
-        if (attr !== null) {
-          if (['p', 'div', 'td', 'th', 'a', 'span', 'h1', 'h2', 'h3', 'li', 'strong'].includes(el.tagName.toLowerCase())) {
-            el.innerHTML = attr;
-          } else {
-            el.textContent = attr;
-          }
-        }
-      });
-      document.documentElement.lang = (lang === 'te') ? 'te' : 'en';
-    }
-  </script>
+  // Mouse light on cards
+  document.querySelectorAll('.fc').forEach(c=>c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');}));
 
+  // Scroll reveal
+  const ob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}}),{threshold:0.1});
+  document.querySelectorAll('.fc,.stat,.cc,.tc,.contc,.rc').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(28px)';el.style.transition='opacity 0.6s ease,transform 0.6s ease';ob.observe(el);});
+
+  // Language
+  window.addEventListener('load',()=>{const s=localStorage.getItem('dsL');if(!s)document.getElementById('lPop').style.display='flex';else{document.getElementById('lPop').style.display='none';applyL(s);}});
+  function setLang(l){localStorage.setItem('dsL',l);document.getElementById('lPop').style.display='none';applyL(l);}
+  function applyL(l){document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v!=null){if(['p','div','td','th','a','span','h1','h2','h3','li','strong','em','button'].includes(el.tagName.toLowerCase()))el.innerHTML=v;else el.textContent=v;}});document.documentElement.lang=l==='te'?'te':'en';}
+</script>
 </body>
 </html>
-
