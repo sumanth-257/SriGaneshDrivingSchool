@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sri Ganesh Driving School</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sri Ganesh Driving School | Master The Road</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Updated Font Link: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --amber: #ffb700; --amber2: #ff8c00; --crimson: #e63946;
-      --bg: #060a10; --bg2: #0b1120; --bg3: #0f1a2e;
-      --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.07);
-      --text: #e8eaf0; --muted: #6b7a99;
-    }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
-    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.02;pointer-events:none;z-index:9999;}
+    :root{--bg:#060a10;--bg2:#0a0f1a;--surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--text:rgba(255,255,255,0.9);--muted:rgba(255,255,255,0.6);--amber:#ffb700;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{font-family:'Inter', sans-serif; /* Updated Font */ background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;} /* Updated Font */
+    ::selection{background:rgba(255,183,0,0.3);color:white;}
 
     /* POPUP */
-    .popup{position:fixed;inset:0;background:rgba(6,10,16,0.92);display:flex;align-items:center;justify-content:center;z-index:8000;backdrop-filter:blur(20px);}
-    .popup-inner{position:relative;padding:52px 44px;text-align:center;max-width:400px;width:90%;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);}
+    .popup{display:none;position:fixed;inset:0;background:rgba(6,10,16,0.95);backdrop-filter:blur(20px);z-index:2000;align-items:center;justify-content:center;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+    .popup-inner{position:relative;padding:48px 40px;background:var(--bg2);border:1px solid var(--border);border-radius:28px;max-width:420px;width:90%;text-align:center;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);}
     .popup-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,183,0,0.06),rgba(230,57,70,0.06));border:1px solid rgba(255,183,0,0.15);border-radius:20px;backdrop-filter:blur(40px);}
     .popup-inner>*{position:relative;z-index:1;}
     .popup-icon{font-size:2.8rem;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(255,183,0,0.5));}
-    .popup-inner h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:8px;color:white;}
+    .popup-inner h2{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:1.6rem;font-weight:700;margin-bottom:8px;color:white;} /* Updated Font */
     .popup-inner p{color:var(--muted);font-size:0.9rem;margin-bottom:32px;}
     .popup-btns{display:flex;flex-direction:column;gap:12px;}
-    .lang-btn{padding:14px;border:none;border-radius:12px;font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;}
+    .lang-btn{padding:14px;border:none;border-radius:12px;font-family:'Inter', sans-serif; /* Updated Font */ font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;}
     .lang-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transform:translateX(-100%);transition:transform 0.5s;}
     .lang-btn:hover::before{transform:translateX(100%);}
     .lang-btn:hover{transform:translateY(-2px);}
@@ -36,12 +32,10 @@
     .lang-skip{background:var(--surface);color:var(--muted);border:1px solid var(--border)!important;}
     @keyframes popIn{from{opacity:0;transform:scale(0.85) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 
-
-
     /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 5%;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s;}
     nav.scrolled{background:rgba(6,10,16,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
-    .nav-logo{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:white;display:flex;align-items:center;gap:10px;}
+    .nav-logo{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:1.05rem;font-weight:700;color:white;display:flex;align-items:center;gap:10px;} /* Updated Font */
     .nav-dot{width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 12px var(--amber);animation:pulseDot 2s infinite;}
     @keyframes pulseDot{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:0.6}}
     .nav-right{font-size:0.68rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
@@ -55,14 +49,20 @@
     .hc{position:relative;z-index:2;max-width:880px;}
     .h-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(255,183,0,0.08);border:1px solid rgba(255,183,0,0.2);border-radius:100px;font-size:0.72rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:32px;animation:fsu 0.8s 0.1s both;}
     .h-tag-d{width:6px;height:6px;background:var(--amber);border-radius:50%;animation:pulseDot 1.5s infinite;}
-    .h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,9vw,7.5rem);line-height:0.92;letter-spacing:-2px;margin-bottom:28px;color:white;animation:fsu 0.8s 0.2s both;}
+    .h1{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-weight:700; /* Adjusted Weight */ font-size:clamp(2.5rem, 7vw, 6rem); /* Reduced Size */ line-height:0.92;letter-spacing:-2px;margin-bottom:28px;color:white;animation:fsu 0.8s 0.2s both;} /* Updated Font & Size */
+    .h1 span { /* Added rule for the "Sri Ganesh Driving" part */
+      background:linear-gradient(135deg, var(--amber), #ff8c00); /* Uses --amber in the gradient */
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
     .h1 em{display:block;background:linear-gradient(135deg,#ffb700,#ff8c00,#e63946);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
     .h-sub{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto 44px;animation:fsu 0.8s 0.3s both;}
     .h-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fsu 0.8s 0.4s both;margin-bottom:36px;}
     @keyframes fsu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
-    /* â•â• GLOWING BUTTONS â•â• */
-    .btn{position:relative;padding:14px 30px;border:none;border-radius:14px;font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:600;letter-spacing:0.3px;cursor:pointer;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+    /* GLOWING BUTTONS */
+    .btn{position:relative;padding:14px 30px;border:none;border-radius:14px;font-family:'Inter', sans-serif; /* Updated Font */ font-size:0.88rem;font-weight:600;letter-spacing:0.3px;cursor:pointer;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
     .btn:hover{transform:translateY(-4px) scale(1.03);}
     .btn:active{transform:translateY(-1px) scale(0.98);}
     .btn .shimmer{position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-20deg);transition:left 0.55s;}
@@ -94,22 +94,22 @@
     @keyframes sLine{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{opacity:0;transform:scaleY(0);transform-origin:bottom}}
 
     /* SECTIONS */
-    .sec{padding:60px 5%;}
+    .sec{padding:30px 5%;}
     .sec.dark{background:var(--bg2);}
     .inner{max-width:1140px;margin:0 auto;}
     .s-lbl{display:inline-flex;align-items:center;gap:10px;font-size:0.68rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
     .s-lbl::before{content:'';width:28px;height:1.5px;background:var(--amber);}
-    h2.s-ttl{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.05;margin-bottom:12px;color:white;}
+    h2.s-ttl{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700; /* Adjusted Weight */ line-height:1.05;margin-bottom:12px;color:white;} /* Updated Font */
     .s-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:500px;}
 
     /* STATS */
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:36px;}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:15px;}
     .stat{padding:32px 24px;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.3s;}
     .stat:last-child{border-right:none;}
     .stat::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(255,183,0,0.08) 0%,transparent 70%);opacity:0;transition:opacity 0.3s;}
     .stat:hover{background:rgba(255,183,0,0.04);}
     .stat:hover::before{opacity:1;}
-    .stat-n{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;background:linear-gradient(135deg,#ffb700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+    .stat-n{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:3rem;font-weight:700; /* Adjusted Weight */ background:linear-gradient(135deg,#ffb700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;} /* Updated Font */
     .stat-l{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px;font-weight:600;}
 
     /* FEATURES */
@@ -119,13 +119,13 @@
     .fc:hover{transform:translateY(-8px);border-color:rgba(255,183,0,0.25);box-shadow:0 24px 60px rgba(0,0,0,0.45);}
     .fc:hover::after{opacity:1;}
     .fc-ico{width:50px;height:50px;border-radius:14px;background:rgba(255,183,0,0.1);border:1px solid rgba(255,183,0,0.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px;}
-    .fc h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:white;margin-bottom:10px;}
+    .fc h3{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:1.05rem;font-weight:700;color:white;margin-bottom:10px;} /* Updated Font */
     .fc p{font-size:0.88rem;color:var(--muted);line-height:1.7;}
 
     /* TABLE */
     .t-shell{border-radius:18px;overflow:hidden;border:1px solid var(--border);margin-top:36px;}
     table{width:100%;border-collapse:collapse;}
-    thead th{padding:18px 24px;font-family:'Syne',sans-serif;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;background:rgba(255,183,0,0.07);color:var(--amber);text-align:center;border-bottom:1px solid var(--border);}
+    thead th{padding:18px 24px;font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;background:rgba(255,183,0,0.07);color:var(--amber);text-align:center;border-bottom:1px solid var(--border);} /* Updated Font */
     tbody td{padding:18px 24px;text-align:center;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:500;color:var(--text);}
     tbody tr:last-child td{border-bottom:none;}
     tbody tr{background:var(--surface);transition:background 0.2s;}
@@ -139,31 +139,31 @@
     .cc:hover{transform:translateY(-8px);border-color:rgba(255,183,0,0.25);box-shadow:0 32px 80px rgba(0,0,0,0.5);}
     .cc:hover::before{transform:scaleX(1);}
     .cc-pill{display:inline-block;padding:5px 14px;background:rgba(255,183,0,0.1);border:1px solid rgba(255,183,0,0.2);border-radius:100px;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
-    .cc h3{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:white;margin-bottom:6px;}
+    .cc h3{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:1.8rem;font-weight:700; /* Adjusted Weight */ color:white;margin-bottom:6px;} /* Updated Font */
     .cc-dur{font-size:0.95rem;color:var(--amber);font-weight:600;margin-bottom:16px;}
     .cc p{font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
     .cp{display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--muted);margin-bottom:8px;}
-    .cp-d{width:5px;height:5px;background:var(--amber);border-radius:50%;flex-shrink:0;}
+    .cp-d{width:5px;height:5px;background:var(--amber);flex-shrink:0;}
     .note-b{margin-top:32px;padding:24px 28px;border-radius:14px;background:rgba(255,183,0,0.04);border:1px solid rgba(255,183,0,0.14);}
     .note-b strong{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:14px;}
     .ni{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--muted);margin-bottom:8px;}
-    .ni::before{content:'â€º';color:var(--amber);font-weight:700;}
+    .ni::before{content:'›';color:var(--amber);font-weight:700;}
 
     /* TESTIMONIALS */
     .tg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
     .tc{padding:32px 26px;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
     .tc:hover{transform:translateY(-7px);border-color:rgba(0,200,150,0.25);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
-    .tc-q{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;line-height:1;color:rgba(255,183,0,0.12);margin-bottom:4px;}
+    .tc-q{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:4rem;font-weight:700; /* Adjusted Weight */ line-height:1;color:rgba(255,183,0,0.12);margin-bottom:4px;} /* Updated Font */
     .tc p{font-size:0.9rem;color:var(--muted);line-height:1.75;font-style:italic;}
     .tc strong{display:block;margin-top:16px;color:white;font-size:0.85rem;font-weight:700;}
     .stars{color:var(--amber);font-size:0.8rem;letter-spacing:2px;margin-bottom:10px;}
 
     /* CONTACT */
     .contg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
-    .contc{padding:36px 28px;text-align:center;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
+    .contc{padding:26px 28px;text-align:center;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
     .contc:hover{transform:translateY(-7px);border-color:rgba(0,180,216,0.3);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
     .c-ico{font-size:2.3rem;margin-bottom:16px;filter:drop-shadow(0 0 12px rgba(255,183,0,0.4));}
-    .contc strong{font-family:'Syne',sans-serif;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:white;display:block;margin-bottom:14px;}
+    .contc strong{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:white;display:block;margin-bottom:14px;} /* Updated Font */
     .contc a{display:block;color:var(--amber);text-decoration:none;font-weight:600;font-size:0.92rem;margin:5px 0;transition:all 0.2s;}
     .contc a:hover{color:white;text-shadow:0 0 16px rgba(255,183,0,0.5);}
     .contc p{color:var(--muted);font-size:0.88rem;line-height:1.7;}
@@ -173,13 +173,13 @@
     .rc{padding:32px 28px;border-radius:18px;border:1px solid var(--border);background:var(--surface);display:flex;gap:18px;align-items:flex-start;backdrop-filter:blur(20px);transition:all 0.4s cubic-bezier(0.34,1.2,0.64,1);}
     .rc:hover{transform:translateY(-6px);border-color:rgba(155,93,229,0.3);box-shadow:0 24px 60px rgba(0,0,0,0.4);}
     .r-ico{width:48px;height:48px;border-radius:13px;background:rgba(155,93,229,0.1);border:1px solid rgba(155,93,229,0.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
-    .rc a{display:block;color:white;text-decoration:none;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:6px;transition:color 0.2s;}
+    .rc a{display:block;color:white;text-decoration:none;font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:1rem;font-weight:700; /* Adjusted Weight */ margin-bottom:6px;transition:color 0.2s;} /* Updated Font */
     .rc a:hover{color:var(--amber);}
     .rc p{font-size:0.85rem;color:var(--muted);line-height:1.6;}
 
     /* FOOTER */
-    footer{padding:40px 5%;text-align:center;border-top:1px solid var(--border);}
-    .f-brand{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:white;margin-bottom:8px;}
+    footer{padding:10px 5%;text-align:center;border-top:1px solid var(--border);}
+    .f-brand{font-family:'Space Grotesk', sans-serif; /* Updated Font */ font-size:1.15rem;font-weight:700; /* Adjusted Weight */ color:white;margin-bottom:8px;} /* Updated Font */
     .f-brand span{color:var(--amber);}
     footer p{color:var(--muted);font-size:0.82rem;}
 
@@ -208,24 +208,11 @@
   </style>
 </head>
 <body>
-  <!-- POPUP -->
-  <div id="lPop" class="popup">
-    <div class="popup-inner">
-      <div class="popup-icon">ðŸš—</div>
-      <h2 data-en="Select Language" data-te="à°­à°¾à°· à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿">Select Language</h2>
-      <p data-en="Choose your preferred language" data-te="à°®à±€ à°‡à°·à±à°Ÿà°®à±ˆà°¨ à°­à°¾à°·à°¨à± à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿">Choose your preferred language</p>
-      <div class="popup-btns">
-        <button class="lang-btn lang-en" onclick="setLang('en')"><span class="shimmer"></span>ðŸ‡¬ðŸ‡§ English</button>
-        <button class="lang-btn lang-te" onclick="setLang('te')"><span class="shimmer"></span>ðŸ‡®ðŸ‡³ à°¤à±†à°²à±à°—à±</button>
-        <button class="lang-btn lang-skip" onclick="setLang('en')" data-en="Skip â†’ English" data-te="à°¦à°¾à°Ÿà°µà±‡à°¯à°¿">Skip â†’ English</button>
-      </div>
-    </div>
-  </div>
-
   <!-- NAV -->
   <nav id="nav">
-    <div class="nav-logo"><div class="nav-dot"></div>Sri Ganesh Driving</div>
-    <div class="nav-right">Est. 2000 Â· Vizianagaram</div>
+    <!-- Swapped Logo and Title Order -->
+    <div class="nav-logo"><div class="nav-dot"></div>Master The Road</div>
+    <div class="nav-right">Excellence Since 2000</div>
   </nav>
 
   <!-- HERO -->
@@ -233,57 +220,56 @@
     <canvas id="pCanvas"></canvas>
     <div class="orb1"></div><div class="orb2"></div>
     <div class="hc">
-      <div class="h-tag"><div class="h-tag-d"></div><span data-en="Vizianagaram's #1 Driving School" data-te="à°µà°¿à°œà°¯à°¨à°—à°°à°‚ à°¨à°‚à°¬à°°à± 1 à°¡à±à°°à±ˆà°µà°¿à°‚à°—à± à°¸à±à°•à±‚à°²à±">Vizianagaram's #1 Driving School</span></div>
-      <h1 class="h1"><span data-en="Master" data-te="à°ªà±à°°à°¾à°µà±€à°£à±à°¯à°‚">Master</span><em data-en="The Road" data-te="à°°à±‹à°¡à±à°¡à±à°²à±‹">The Road</em></h1>
-      <p class="h-sub" data-en="Train with 30+ years of expertise. 15,000+ confident graduates. Complete license support." data-te="30+ à°¸à°‚à°µà°¤à±à°¸à°°à°¾à°² à°¨à??à?ªà??à??à??à??à??à??à?? à??à??à??à??à??à??. 15,000+ à??à??à??à??à??à??à??à?? à?ªà?Ÿà??à?Ÿà??à??à??à??à??à??à??. à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??.">Train with 30+ years of expertise. 15,000+ confident graduates. Complete license support.</p>
+      <div class="h-tag"><div class="h-tag-d"></div><span>Vizianagaram's #1 Driving School</span></div>
+      <!-- Swapped Logo and Title Order -->
+      <h1 class="h1"><span>Sri Ganesh Driving</span><em>School</em></h1>
       <div class="h-btns">
-        <a href="tel:+919494331119" class="btn btn-amber"><span class="shimmer"></span>ðŸ?ž Call Now</a>
-        <a href="enroll.html" target="_blank" class="btn btn-green"><span class="shimmer"></span>ðŸ?? Enroll Now</a>
-        <a href="student-portal.html" target="_blank" class="btn btn-teal"><span class="shimmer"></span>ðŸ?Š Student Portal</a>
-        <a href="#classes" class="btn btn-ghost"><span class="shimmer"></span><span data-en="View Courses â??" data-te="à??à??à??à??à??à??à??à?? â??">View Courses â??</span></a>
-        <a href="admin.html" target="_blank" class="btn btn-purple"><span class="shimmer"></span>ðŸ?? Admin</a>
+        <a href="tel:+919494331119" class="btn btn-amber"><span class="shimmer"></span>📞 Call Now</a>
+        <a href="enroll.html" target="_blank" class="btn btn-green"><span class="shimmer"></span>🎯 Enroll Now</a>
+        <a href="student-portal.html" target="_blank" class="btn btn-teal"><span class="shimmer"></span>🎓 Student Portal</a>
+        <a href="#classes" class="btn btn-ghost"><span class="shimmer"></span><span>View Courses →</span></a>
+        <a href="admin.html" target="_blank" class="btn btn-purple"><span class="shimmer"></span>👤 Admin</a>
       </div>
-      <div class="h-alert"><span class="shake">âš?ï??</span><span data-en="ALERT TODAY â?? ALIVE TOMORROW" data-te="à??à??à??à?œà?? à?œà??à??à??à??à??à??à??à??à?? â?? à??à??à?ªà?? à??à??à??à??à??à??à??à??à??à??à??">ALERT TODAY â?? ALIVE TOMORROW</span></div>
+      <div class="h-alert"><span>ALERT TODAY – ALIVE TOMORROW</span></div>
     </div>
-    <div class="scroll-hint"><div class="scroll-line"></div><span>scroll</span></div>
   </section>
 
   <!-- STATS -->
   <section class="sec dark"><div class="inner">
     <div class="stats">
-      <div class="stat"><div class="stat-n">30+</div><div class="stat-l" data-en="Years Experience" data-te="à??à??à?µà??à??à??à??à??à?? à??à??à??à??à?µà??">Years Experience</div></div>
-      <div class="stat"><div class="stat-n">200</div><div class="stat-l" data-en="KM Training" data-te="à??à??à??à?? à??à??à??à??à??à??">KM Training</div></div>
-      <div class="stat"><div class="stat-n">100%</div><div class="stat-l" data-en="License Support" data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à??">License Support</div></div>
-      <div class="stat"><div class="stat-n">15k+</div><div class="stat-l" data-en="Happy Students" data-te="à??à??à??à??à??à??à??à?šà??à?? à?µà??à??à??à??à??à??à??à??à??à??à??">Happy Students</div></div>
+      <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Years Experience</div></div>
+      <div class="stat"><div class="stat-n">200</div><div class="stat-l">KM Training</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l">License Support</div></div>
+      <div class="stat"><div class="stat-n">15k+</div><div class="stat-l">Happy Students</div></div>
     </div>
   </div></section>
 
   <!-- WHY US -->
   <section class="sec"><div class="inner">
-    <div class="s-lbl" data-en="Why Choose Us" data-te="à??à??à??à?? à?Žà??à??à??à??à?? à?Žà??à?šà??à??à??à?µà??à??à??">Why Choose Us</div>
-    <h2 class="s-ttl" data-en="What Makes Us Different" data-te="à??à??à??à?? à?Žà??à??à??à??à?? à?ªà??à??à??à??à??à??à??à??à??">What Makes Us Different</h2>
-    <p class="s-sub" data-en="Three decades of proven excellence in driver education, safety, and real-world confidence." data-te="à??à??à??à??à?µà??à?? à?µà??à??à??à??à??à?? à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?ªà??à?? à??à??à?ªà??à??à??à??à??.">Three decades of proven excellence in driver education, safety, and real-world confidence.</p>
+    <div class="s-lbl">Why Choose Us</div>
+    <h2 class="s-ttl">What Makes Us Different</h2>
+    <p class="s-sub">Three decades of proven excellence in driver education, safety, and real-world confidence.</p>
     <div class="fg">
-      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 data-en="Expert Instructor" data-te="à??à??à?ªà??à?? à??à??à??à??à??à??à??à??à??">Expert Instructor</h3><p data-en="Ganesh sir brings 30+ years of precise, patient instruction. Every student leaves a confident driver." data-te="à??à??à??à??à?? à??à??à?? 30+ à??à??à?µà??à??à??à??à??à?? à??à??à?ªà??à??à??.">Ganesh sir brings 30+ years of precise, patient instruction. Every student leaves a confident driver.</p></div>
-      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3 data-en="Real Traffic Training" data-te="à??à??à?œà??à??à?? à?Ÿà??à??à??à??à??à??à?? à??à??à??à??à??à??">Real Traffic Training</h3><p data-en="Live on-road sessions in actual traffic. No shortcuts â?? real skill for real roads." data-te="à??à??à?œà??à??à?? à?Ÿà??à??à??à??à??à??à??â?Œà??à?? à??à??à??-à??à??à??à?? à??à??à??à??à??à??à??.">Live on-road sessions in actual traffic. No shortcuts â?? real skill for real roads.</p></div>
-      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><h3 data-en="Full License Support" data-te="à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??">Full License Support</h3><p data-en="End-to-end help for learner's and permanent licenses. We handle it, you drive." data-te="à??à??à??à??à??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à??à?Ÿà?? à??à??à??à??à??à??à??à?? à??à??à??à?? à?ªà??à??à??à??à?? à??à??à??à??à??.">End-to-end help for learner's and permanent licenses. We handle it, you drive.</p></div>
-      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3 data-en="Flexible Batches" data-te="à??à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??">Flexible Batches</h3><p data-en="Morning and afternoon batches Monâ??Sat. Train around your schedule." data-te="à??à??à??à?? à??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??.">Morning and afternoon batches Monâ??Sat. Train around your schedule.</p></div>
-      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3 data-en="Patient, Clear Teaching" data-te="à??à??à??à??à??à?? à??à??à?ªà??à??à?Ÿà??à??à?? à??à??à??à??">Patient, Clear Teaching</h3><p data-en="No rush. Ganesh sir makes even the most nervous beginner feel at ease from day one." data-te="à??à??à??à??à??à??, à??à??à?ªà??à??à?Ÿà??à??à?? â?? à??à?Šà??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à??à??à??à??.">No rush. Ganesh sir makes even the most nervous beginner feel at ease from day one.</p></div>
-      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3 data-en="200 KM Coverage" data-te="200 à??à??à??à?? à??à??à??à??à??à??">200 KM Coverage</h3><p data-en="Every course covers 200 kilometers of comprehensive practice â?? enough to make driving instinct." data-te="à?ªà??à??à??à?? à??à??à??à??à??à?? 200 à??à??à??à??à??à??à?Ÿà??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à?Ÿà??à??à??.">Every course covers 200 kilometers of comprehensive practice â?? enough to make driving instinct.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Expert Instructor</h3><p>Ganesh sir brings 30+ years of precise, patient instruction. Every student leaves a confident driver.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Real Traffic Training</h3><p>Live on-road sessions in actual traffic. No shortcuts – real skill for real roads.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><h3>Full License Support</h3><p>End-to-end help for learner's and permanent licenses. We handle it, you drive.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>Flexible Batches</h3><p>Morning and afternoon batches Mon–Sat. Train around your schedule.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>Patient, Clear Teaching</h3><p>No rush. Ganesh sir makes even the most nervous beginner feel at ease from day one.</p></div>
+      <div class="fc"><div class="fc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>200 KM Coverage</h3><p>Every course covers 200 kilometers of comprehensive practice – enough to make driving instinct.</p></div>
     </div>
   </div></section>
 
   <!-- SCHEDULE -->
   <section class="sec dark"><div class="inner">
-    <div class="s-lbl" data-en="Timings" data-te="à??à??à??à??à??à??">Timings</div>
-    <h2 class="s-ttl" data-en="Schedule & Batches" data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??">Schedule & Batches</h2>
-    <p class="s-sub" data-en="Two daily batches to fit your lifestyle." data-te="à??à?? à?œà??à?µà??à??à??à??à??à??à?? à??à??à??à?ªà??à??à?? à??à??à??à??à?? à??à??à??à??à?šà??â?Œà??à??.">Two daily batches to fit your lifestyle.</p>
+    <div class="s-lbl">Timings</div>
+    <h2 class="s-ttl">Schedule & Batches</h2>
+    <p class="s-sub">Two daily batches to fit your Schedule</p>
     <div class="t-shell">
       <table>
-        <thead><tr><th data-en="Day" data-te="à??à??à?œà??">Day</th><th data-en="Morning Batch" data-te="à??à??à??à?? à??à??à??à??à?šà??">Morning Batch</th><th data-en="Afternoon Batch" data-te="à??à??à??à??à??à??à??à??à?? à??à??à??à??à?šà??">Afternoon Batch</th></tr></thead>
+        <thead><tr><th>Day</th><th>Morning Batch</th><th>Afternoon Batch</th></tr></thead>
         <tbody>
-          <tr><td><strong data-en="Monday â?? Saturday" data-te="à??à??à?? â?? à??à??à??">Monday â?? Saturday</strong></td><td>6:00 AM â?? 12:00 PM</td><td>1:00 PM â?? 6:00 PM</td></tr>
-          <tr><td><strong data-en="Sunday" data-te="à??à??à??à?µà??à??à??">Sunday</strong></td><td colspan="2" class="closed-td" data-en="CLOSED" data-te="à??à??à??à?µà??">CLOSED</td></tr>
+          <tr><td><strong>Monday – Saturday</strong></td><td>6:00 AM – 12:00 PM</td><td>1:00 PM – 6:00 PM</td></tr>
+          <tr><td><strong>Sunday</strong></td><td colspan="2" class="closed-td">CLOSED</td></tr>
         </tbody>
       </table>
     </div>
@@ -291,59 +277,58 @@
 
   <!-- COURSES -->
   <section id="classes" class="sec"><div class="inner">
-    <div class="s-lbl" data-en="Programs" data-te="à??à??à??à??à??à??à??à??à??à??à??à??">Programs</div>
-    <h2 class="s-ttl" data-en="Training Courses" data-te="à??à??à??à??à??à?? à??à??à??à??à??à??à??à??">Training Courses</h2>
-    <p class="s-sub" data-en="Two programs, one goal: making you a great driver." data-te="à??à??à??à??à?? à??à??à??à??à??à??à??à??à??à??à??à??, à??à?? à??à??à??à??à??à??à??.">Two programs, one goal: making you a great driver.</p>
+    <div class="s-lbl">Programs</div>
+    <h2 class="s-ttl">Training Courses</h2>
+    <p class="s-sub">Two programs, one goal: making you a great driver.</p>
     <div class="cg">
-      <div class="cc"><div class="cc-pill" data-en="Standard" data-te="à??à??à?Ÿà??à??à??à??à??à??à??">Standard</div><h3 data-en="Standard Course" data-te="à??à??à?Ÿà??à??à??à??à??à??à?? à??à??à??à??à??à??">Standard Course</h3><div class="cc-dur" data-en="20 Classes Â? 20 Days" data-te="20 à??à??à??à??à??à??à??à?? Â? 20 à??à??à?œà??à??à??">20 Classes Â? 20 Days</div><p data-en="The ideal pace for steady learners. Build skills day by day." data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à??à??à??à??à??à??à?? à??à??à??à?µà??à?? à?µà??à??à??.">The ideal pace for steady learners. Build skills day by day.</p><div class="cp"><div class="cp-d"></div><span data-en="30 minutes per session" data-te="à??à??à??à??à??â?Œà??à?? 30 à??à??à??à??à??à??à??à??">30 minutes per session</span></div><div class="cp"><div class="cp-d"></div><span data-en="200 KM total distance" data-te="à??à?Šà??à??à??à?? 200 à??à??à??à??">200 KM total distance</span></div><div class="cp"><div class="cp-d"></div><span data-en="Full license support" data-te="à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??">Full license support</span></div></div>
-      <div class="cc"><div class="cc-pill" data-en="Fast Track" data-te="à??à??à??à??à?Ÿà?? à?Ÿà??à??à??à??à??">Fast Track</div><h3 data-en="Fast Track Course" data-te="à??à??à??à??à?Ÿà?? à?Ÿà??à??à??à??à?? à??à??à??à??à??à??">Fast Track Course</h3><div class="cc-dur" data-en="20 Classes Â? 10 Days" data-te="20 à??à??à??à??à??à??à??à?? Â? 10 à??à??à?œà??à??à??">20 Classes Â? 10 Days</div><p data-en="Intensive training for quick learners. Double sessions, half the time." data-te="à??à??à?µà??à??à?? à??à??à??à??à?šà??à??à??à?µà??à??à??à??à??à??à??à?? à?µà??à??à??à??à?? à??à??à?Ÿà??à??à??à??à??à?µà?? à??à??à??à??à??à??.">Intensive training for quick learners. Double sessions, half the time.</p><div class="cp"><div class="cp-d"></div><span data-en="1 hour per session" data-te="à??à??à??à??à??â?Œà??à?? 1 à??à??à?Ÿ">1 hour per session</span></div><div class="cp"><div class="cp-d"></div><span data-en="200 KM total distance" data-te="à??à?Šà??à??à??à?? 200 à??à??à??à??">200 KM total distance</span></div><div class="cp"><div class="cp-d"></div><span data-en="Full license support" data-te="à?ªà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à??">Full license support</span></div></div>
+      <div class="cc"><div class="cc-pill">Standard</div><h3>Standard Course</h3><div class="cc-dur">20 Classes · 20 Days</div><p>The ideal pace for steady learners. Build skills day by day.</p><div class="cp"><div class="cp-d"></div><span>30 minutes per session</span></div><div class="cp"><div class="cp-d"></div><span>200 KM total distance</span></div></div>
+      <div class="cc"><div class="cc-pill">Fast Track</div><h3>Fast Track Course</h3><div class="cc-dur">20 Classes · 10 Days</div><p>Intensive training for quick learners. Double sessions, half the time.</p><div class="cp"><div class="cp-d"></div><span>1 hour per session</span></div><div class="cp"><div class="cp-d"></div><span>200 KM total distance</span></div></div>
     </div>
     <div class="note-b">
-      <strong data-en="Important Notes" data-te="à??à??à??à??à?? à??à??à?šà??à??à??">Important Notes</strong>
-      <div class="ni" data-en="Total training covers 200 kilometres" data-te="à??à?Šà??à??à??à?? à??à??à??à??à??à?? 200 à??à??à??à??à??à??à?Ÿà??à??à?? à?µà??à??à??">Total training covers 200 kilometres</div>
-      <div class="ni" data-en="Students must come to school â?? no home pickups" data-te="à?µà??à??à??à??à??à??à??à??à??à??à?? à??à??à??à??à??à??â?Œà??à?? à??à??à?µà??à??à??">Students must come to school â?? no home pickups</div>
-      <div class="ni" data-en="Distance calculated school-to-school only" data-te="à??à??à??à?? à??à??à??à??à??à?? à??à??à??à??à?? à??à??à??à??à??à?? à?µà??à??à?? à??à??à??à??à??à??à??">Distance calculated school-to-school only</div>
-      <div class="ni" data-en="Both courses share the same comprehensive curriculum" data-te="à??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à?? à??à??à??à??à?? à?ªà??à??à??à??à??à??à??à??à??">Both courses share the same comprehensive curriculum</div>
+      <strong>Important Notes</strong>
+      <div class="ni">Total training covers 200 kilometres</div>
+      <div class="ni">Students must come to school – no home pickups</div>
+      <div class="ni">Distance calculated school-to-school only</div>
+      <div class="ni">Both courses share the same comprehensive curriculum</div>
     </div>
   </div></section>
 
   <!-- TESTIMONIALS -->
   <section class="sec dark"><div class="inner">
-    <div class="s-lbl" data-en="Students" data-te="à?µà??à??à??à??à??à??à??à??à??à??à??">Students</div>
-    <h2 class="s-ttl" data-en="Success Stories" data-te="à?µà??à?œà?? à??à??à??à??">Success Stories</h2>
-    <p class="s-sub" data-en="Real words from real drivers who trained with us." data-te="à??à?? à?µà??à??à?? à??à??à??à??à??à?? à?ªà?Šà??à??à??à?? à??à??à?œà??à??à?? à??à??à??à??à?µà??à??à?? à??à??à?Ÿà??à??.">Real words from real drivers who trained with us.</p>
+    <div class="s-lbl">Students</div>
+    <h2 class="s-ttl">Success Stories</h2>
+    <p class="s-sub">Real words from real drivers who are trained by us.</p>
     <div class="tg">
-      <div class="tc"><div class="stars">â??â??â??â??â??</div><div class="tc-q">"</div><p data-en="Excellent training by Ganesh sir. Got real confidence to drive in traffic. Highly recommended!" data-te="à??à??à??à??à?? à??à??à?? à??à??à??à??à??à?? à??à??à??à??à??à??. à?Ÿà??à??à??à??à??à??à??â?Œà??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?µà?? à?šà??à??à??à??à??à??à??.">Excellent training by Ganesh sir. Got real confidence to drive in traffic. Highly recommended!</p><strong data-en="â?? Phaniraj" data-te="â?? à??à??à??à??à??à?œà??">â?? Phaniraj</strong></div>
-      <div class="tc"><div class="stars">â??â??â??â??â??</div><div class="tc-q">"</div><p data-en="Very good teaching method. Ganesh sir explains with patience. Even total beginners feel comfortable here." data-te="à?šà??à??à?? à??à??à?šà?? à??à??à??à??à?? à?µà??à??à??à??à??. à??à?Šà??à?Ÿà??à??à??à??à??à??à?? à?µà?šà??à?šà??à??à?µà??à??à?? à??à?Œà??à??à??à??à??à??à?? à??à??à??à??à??à??à??.">Very good teaching method. Ganesh sir explains with patience. Even total beginners feel comfortable here.</p><strong data-en="â?? Naziya" data-te="â?? à??à?œà??à??à??">â?? Naziya</strong></div>
-      <div class="tc"><div class="stars">â??â??â??â??â??</div><div class="tc-q">"</div><p data-en="Very professional. I didn't know the basics, but he made me drive confidently in traffic within days!" data-te="à?šà??à??à?? à?ªà??à??à?Šà??à??à??à??à??à??. à??à?Šà??à??à??à?? à??à??à?œà??à??à??à??à?? à??à??à??à??à??à??à??à?? à??à??à??à??à?ªà??à??à?šà??à??à??!">Very professional. I didn't know the basics, but he made me drive confidently in traffic within days!</p><strong data-en="â?? Sri Lakshmi" data-te="â?? à??à??à??à?? à??à??à??à??à??à??à??">â?? Sri Lakshmi</strong></div>
+      <div class="tc"><div class="stars">★★★★★</div><p>Excellent training by Ganesh sir. Got real confidence to drive in traffic. Highly recommended!</p><strong>– Phaniraj</strong></div>
+      <div class="tc"><div class="stars">★★★★★</div><p>Very good teaching method. Ganesh sir explains with patience. Even total beginners feel comfortable here.</p><strong>– Naziya</strong></div>
+      <div class="tc"><div class="stars">★★★★★</div><p>Very professional. I didn't know the basics, but he made me drive confidently in traffic within days!</p><strong>– Sri Lakshmi</strong></div>
     </div>
   </div></section>
 
   <!-- CONTACT -->
   <section class="sec"><div class="inner">
-    <div class="s-lbl" data-en="Contact" data-te="à??à??à?ªà??à??à??à??à??à?šà??à??à??">Contact</div>
-    <h2 class="s-ttl" data-en="Get In Touch" data-te="à??à??à?ªà??à??à??à??à??à?šà??à??à??">Get In Touch</h2>
-    <p class="s-sub" data-en="Ready to hit the road? We're one call away." data-te="à??à??à??à??à??à??à?ªà??à??à?? à?µà??à??à??à??à??à??à??à??à??à??à??à?Ÿà??à??à??à??à??à??à??? à??à?? à??à??à??à?? à?šà??à??à??à??à??.">Ready to hit the road? We're one call away.</p>
+    <div class="s-lbl">Contact</div>
+    <h2 class="s-ttl">Get In Touch</h2>
+    <p class="s-sub">Ready to Drive? then call us.</p>
     <div class="contg">
-      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div><strong data-en="CALL / WHATSAPP" data-te="à??à??à??à?? / à?µà??à?Ÿà??à??à??à?ªà??">CALL / WHATSAPP</strong><a href="tel:+919494331119">+91 9494331119</a><a href="tel:+919440754257">+91 9440754257</a></div>
-      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><strong data-en="VISIT US" data-te="à??à??à??à??à??à??à??à??à?šà??à??à??">VISIT US</strong><p data-en="Beside Apollo Pharmacy, Opposite Godrej Interio, Dasannapet, Vizianagaram" data-te="à??à?ªà??à??à?? à??à??à??à??à??à??à?? à?ªà??à??à??à??, à?µà??à?œà??à??à??à??à??">Beside Apollo Pharmacy<br>Opposite Godrej Interio<br>Dasannapet, Vizianagaram</p></div>
-      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><strong data-en="OPEN HOURS" data-te="à??à??à??à??">OPEN HOURS</strong><p data-en="Monâ??Sat: 6:00 AM â?? 6:00 PM Â? Closed Sundays" data-te="à??à??à??â??à??à??à??: 6:00 AM â?? 6:00 PM">Monâ??Sat: 6:00 AM â?? 6:00 PM<br><span style="color:#e63946">Closed Sundays</span></p></div>
+      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div><strong>CALL / WHATSAPP</strong><a href="tel:+919494331119">+91 9494331119</a><a href="tel:+919440754257">+91 9440754257</a></div>
+      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><strong>VISIT US</strong><p>Near Dasannpeta<br>Power Office<br>Dasannapet, Vizianagaram</p></div>
+      <div class="contc"><div class="c-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffb700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><strong>OPEN HOURS</strong><p>Mon–Sat: 6:00 AM – 6:00 PM<br><span style="color:#e63946">Closed Sundays</span></p></div>
     </div>
   </div></section>
 
   <!-- RESOURCES -->
   <section class="sec dark"><div class="inner">
-    <div class="s-lbl" data-en="Resources" data-te="à?µà??à??à??à??à??">Resources</div>
-    <h2 class="s-ttl" data-en="Study Resources" data-te="à??à??à??à??à??à?? à?µà??à??à??à??à??">Study Resources</h2>
+    <div class="s-lbl">Resources</div>
+    <h2 class="s-ttl">Study Resources</h2>
     <div class="rg">
-      <div class="rc"><div class="r-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><a href="https://www.aptransport.org/html/llr-question-bank.html" target="_blank" rel="noopener" data-en="LLR Question Bank" data-te="LLR à?ªà??à??à??à??à?? à??à??à??à??à??à??à??">LLR Question Bank</a><p data-en="Official AP Transport questions for the learner's license test." data-te="à??à??à??à??à??à??à??à?? à??à??à??à??à??à??à??à?? à?ªà??à??à??à??à?? à?ªà??à??à??à??à??à??à??.">Official AP Transport questions for the learner's license test.</p></div></div>
-      <div class="rc"><div class="r-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><a href="http://m.driving-tests.in/" target="_blank" rel="noopener" data-en="Practice Mock Tests" data-te="à??à??à??à?? à?Ÿà??à??à??à?Ÿà??à??à??">Practice Mock Tests</a><p data-en="Interactive mock tests to build confidence before your exam." data-te="à?ªà??à??à??à??à??à??à?? à??à??à??à??à?? à??à??à??à??à??à?? à?ªà??à??à?šà??à??à??à??à??à??.">Interactive mock tests to build confidence before your exam.</p></div></div>
+      <div class="rc"><div class="r-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><a href="https://www.aptransport.org/html/llr-question-bank.html" target="_blank" rel="noopener">LLR Question Bank</a><p>Official AP Transport questions for the learner's license test.</p></div></div>
+      <div class="rc"><div class="r-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><a href="http://m.driving-tests.in/" target="_blank" rel="noopener">Practice Mock Tests</a><p>Interactive mock tests to build confidence before your exam.</p></div></div>
     </div>
   </div></section>
 
   <footer>
-    <div class="f-brand">ðŸš? <span>Sri Ganesh</span> Driving School</div>
-    <p data-en="Â? 2025 Sri Ganesh Driving School, Vizianagaram Â? Driving Instruction Excellence Since 2000" data-te="Â? 2025 à??à??à??à?? à??à??à??à?? à??à??à?œà?? à??à??à??à??à?µà??à??à??à?? à??à??à??à??à??à??, à?µà??à?œà??à??à??à??à??">Â? 2025 Sri Ganesh Driving School, Vizianagaram &nbsp;Â?&nbsp; Excellence Since 2000</p>
+    <p>© 2025 Sri Ganesh Driving School, Vizianagaram</p>
   </footer>
 
 <script>
@@ -368,11 +353,7 @@
   // Scroll reveal
   const ob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}}),{threshold:0.1});
   document.querySelectorAll('.fc,.stat,.cc,.tc,.contc,.rc').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(28px)';el.style.transition='opacity 0.6s ease,transform 0.6s ease';ob.observe(el);});
-
-  // Language
-  window.addEventListener('load',()=>{const s=localStorage.getItem('dsL');if(!s)document.getElementById('lPop').style.display='flex';else{document.getElementById('lPop').style.display='none';applyL(s);}});
-  function setLang(l){localStorage.setItem('dsL',l);document.getElementById('lPop').style.display='none';applyL(l);}
-  function applyL(l){document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v!=null){if(['p','div','td','th','a','span','h1','h2','h3','li','strong','em','button'].includes(el.tagName.toLowerCase()))el.innerHTML=v;else el.textContent=v;}});document.documentElement.lang=l==='te'?'te':'en';}
 </script>
 </body>
 </html>
+
