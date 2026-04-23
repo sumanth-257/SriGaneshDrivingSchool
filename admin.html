@@ -3,737 +3,342 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal - New Sri Raja Driving School</title>
+  <title>Admin Portal  Sri Ganesh Driving School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Updated Font Link: Inter & Space Grotesk -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
   <style>
-    /* (your existing CSS kept as-is) */
-    /* ... (omitted here for brevity - keep the CSS from your current file) ... */
-    /* For the answer I'm using your same CSS from previous message */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* Added Inter and Space Grotesk to :root comment for clarity */
+    :root{--amber:#ffb700;--crimson:#e63946;--purple:#9b5de5;--bg:#060a10;--bg2:#0b1120;--surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.07);--text:#e8eaf0;--muted:#6b7a99;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    /* Changed Body Font: Outfit -> Inter */
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(6,10,16,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+    /* Changed Nav Logo Font: Syne -> Space Grotesk */
+    .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:white;display:flex;align-items:center;gap:10px;} /* Updated Font */
+    .nav-dot{width:8px;height:8px;background:var(--purple);border-radius:50%;box-shadow:0 0 12px var(--purple);animation:pd 2s infinite;flex-shrink:0;}
+    @keyframes pd{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:0.6}}
+    .back-link{font-size:.875rem;color:var(--muted);text-decoration:none;transition:color .2s;min-height:44px;display:flex;align-items:center;}
+    .back-link:hover{color:var(--amber);}
+
+    /* HERO */
+    .hero{position:relative;min-height:24vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;padding:70px 20px 30px;}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(155,93,229,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(155,93,229,0.04) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(155,93,229,0.1) 0%,transparent 70%);}
+    .hero-content{position:relative;z-index:2;animation:fsu .8s both;}
+    .hero-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;background:rgba(155,93,229,0.08);border:1px solid rgba(155,93,229,0.2);border-radius:100px;font-size:2.5rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c084fc;margin-bottom:14px;}
+    .hero-pill-d{width:5px;height:5px;background:#c084fc;border-radius:50%;animation:pd 1.5s infinite;flex-shrink:0;}
+    /* Changed Hero Title Font: Syne -> Space Grotesk */
+    .hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;color:white;margin-bottom:8px;} /* Updated Font */
+    .hero h1 em{display:block;background:linear-gradient(135deg,#9b5de5,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+    .hero p{color:var(--muted);font-size:1rem;}
+    @keyframes fsu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* LOGIN CARD */
+    .login-wrap{max-width:440px;margin:-18px auto 50px;padding:0 16px;position:relative;z-index:10;}
+    .card{border-radius:20px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+    .card-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;}
+    .card-head::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+    .card-head-ico{width:46px;height:46px;border-radius:14px;background:rgba(155,93,229,0.1);border:1px solid rgba(155,93,229,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    /* Changed Card Headings Font: Syne -> Space Grotesk */
+    .card-head h2{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;color:white;} /* Updated Font */
+    .card-head p{color:var(--muted);font-size:.85rem;margin-top:3px;}
+    .card-body{padding:22px 24px;}
+    .field{margin-bottom:18px;position:relative;}
+    .field label{display:block;font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;transition:color .2s;}
+    .field:focus-within label{color:#c084fc;}
+    .field-wrap{position:relative;}
+    .field-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;display:flex;align-items:center;}
+    /* Kept Outfit for inputs to maintain consistency with the form style */
+    .field input{width:100%;padding:15px 16px 15px 44px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;font-family:'Inter',sans-serif;font-size:1rem;font-weight:500;color:var(--text);transition:all .3s;min-height:52px;} /* Updated Font */
+    .field input:focus{outline:none;border-color:rgba(155,93,229,0.5);background:rgba(155,93,229,0.05);box-shadow:0 0 0 3px rgba(155,93,229,0.1);}
+    .field input::placeholder{color:rgba(107,122,153,0.7);}
+
+    /* BUTTONS */
+    .btn{position:relative;padding:15px 24px;border:none;border-radius:14px;font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.3px;cursor:pointer;overflow:hidden;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:50px;} /* Updated Font */
+    .btn:active{transform:scale(.97);}
+    .btn .shimmer{position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-20deg);transition:left .55s;}
+    .btn:hover .shimmer{left:160%;}
+    .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.25);transform:scale(0);animation:rpl .6s linear;pointer-events:none;}
+    @keyframes rpl{to{transform:scale(4.5);opacity:0}}
+    .btn-full{width:100%;justify-content:center;}
+    .btn-purple{background:linear-gradient(135deg,#9b5de5,#6a0dad);color:white;box-shadow:0 10px 32px rgba(155,93,229,0.4),inset 0 1px 0 rgba(255,255,255,.15);}
+    .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid rgba(255,255,255,.1);}
+    .btn-approve{background:linear-gradient(135deg,#00c896,#00a87a);color:#060a10;box-shadow:0 6px 20px rgba(0,200,150,.3),inset 0 1px 0 rgba(255,255,255,.2);padding:10px 16px;font-size:.875rem;border-radius:10px;min-height:40px;}
+    .btn-approve:active{transform:scale(.97);}
+    .btn-deny{background:linear-gradient(135deg,#e63946,#c0392b);color:white;box-shadow:0 6px 20px rgba(230,57,70,.3),inset 0 1px 0 rgba(255,255,255,.15);padding:10px 16px;font-size:.875rem;border-radius:10px;min-height:40px;}
+    .btn-deny:active{transform:scale(.97);}
+    .btn-logout{background:rgba(230,57,70,.1);color:#ff8a92;border:1px solid rgba(230,57,70,.2);font-size:.875rem;}
+
+    .login-err{text-align:center;font-size:.9rem;font-weight:600;color:#ff8a92;min-height:20px;margin-top:12px;}
+
+    /* CONTENT */
+    .content-wrap{max-width:1100px;margin:-18px auto 50px;padding:0 16px;display:none;position:relative;z-index:10;}
+    .content-card{border-radius:20px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);box-shadow:0 24px 60px rgba(0,0,0,.5);}
+
+    /* TABS */
+    .tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--border);background:rgba(0,0,0,.3);overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
+    .tabs::-webkit-scrollbar{display:none;}
+    /* Changed Tab Labels Font: Outfit -> Inter */
+    .tab{padding:16px 18px;background:transparent;border:none;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;position:relative;display:flex;align-items:center;gap:6px;min-height:52px;-webkit-tap-highlight-color:transparent;} /* Updated Font */
+    .tab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--purple);transform:scaleX(0);transition:transform .2s;}
+    .tab:hover{color:var(--text);}
+    .tab.active{color:var(--purple);}
+    .tab.active::after{transform:scaleX(1);box-shadow:0 0 10px rgba(155,93,229,.4);}
+    .tabs-right{margin-left:auto;}
+
+    /* TABLE AREA */
+    .tarea{padding:24px;}
+    /* Changed Table Title Font: Syne -> Space Grotesk */
+    .t-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;color:white;margin-bottom:18px;} /* Updated Font */
+    .t-shell{border-radius:14px;overflow:hidden;border:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    table{width:100%;border-collapse:collapse;min-width:500px;}
+    thead th{padding:14px 16px;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;background:rgba(155,93,229,.07);color:#c084fc;text-align:center;border-bottom:1px solid var(--border);font-weight:700;white-space:nowrap;}
+    tbody td{padding:13px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem;font-weight:500;color:var(--text);}
+    tbody tr:last-child td{border-bottom:none;}
+    tbody tr{background:var(--surface);transition:background .2s;}
+    tbody tr:hover{background:rgba(155,93,229,.04);}
+    .empty{text-align:center;padding:50px;color:var(--muted);font-size:.95rem;font-weight:600;}
+    .act-wrap{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+
+    /* MINI PROGRESS CHART */
+    .mini-chart{display:flex;align-items:center;gap:8px;justify-content:center;}
+    .mini-bar-track{width:72px;height:6px;background:rgba(255,255,255,0.1);border-radius:100px;overflow:hidden;flex-shrink:0;}
+    .mini-bar-fill{height:100%;border-radius:100px;transition:width .6s;}
+    .mini-pct{font-size:.8rem;font-weight:700;min-width:34px;text-align:left;}
+
+    /* FOOTER */
+    footer{padding:28px 20px;text-align:center;border-top:1px solid var(--border);}
+    /* Changed Footer Brand Font: Syne -> Space Grotesk */
+    .f-brand{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:white;margin-bottom:6px;} /* Updated Font */
+    .f-brand span{color:var(--amber);}
+    footer p{color:var(--muted);font-size:.85rem;}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .tarea{padding:16px 12px;}
+      .content-wrap{padding:0 10px;}
     }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f172a;
-      color: #1e293b;
-      overflow-x: hidden;
+    @media(max-width:600px){
+      .hero{padding:60px 16px 24px;min-height:auto;}
+      .hero h1{font-size:clamp(1.8rem,9vw,2.6rem);} /* Adjusted for new font if needed, but clamp usually handles it */
+      .login-wrap{padding:0 12px;}
+      .tab{padding:14px 12px;font-size:.75rem;letter-spacing:.5px;}
+      .t-title{font-size:1.1rem;} /* Adjusted for new font */
     }
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 2rem;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    }
-
-    nav .logo {
-      font-size: 20px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #f59e0b, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    header {
-      position: relative;
-      min-height: 40vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #dc2626 100%);
-      overflow: hidden;
-      text-align: center;
-      color: white;
-      padding: 50px 20px;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.1;
-      background-image:
-        radial-gradient(circle at 20% 50%, #f59e0b 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, #3b82f6 0%, transparent 50%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    header h1 {
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      font-weight: 900;
-      margin-bottom: 12px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    header p {
-      font-size: clamp(0.9rem, 4vw, 1.1rem);
-      opacity: 0.95;
-      font-weight: 300;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .login-wrapper {
-      max-width: 450px;
-      margin: -40px auto 60px;
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 10;
-      animation: slideDown 0.5s ease-out;
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .login-wrapper h2 {
-      text-align: center;
-      font-size: 22px;
-      background: linear-gradient(135deg, #1e3a8a, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 25px;
-      font-weight: 800;
-    }
-
-    .content-wrapper {
-      max-width: 1000px;
-      margin: -40px auto 60px;
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 10;
-    }
-
-    .content-wrapper h3 {
-      font-size: 20px;
-      background: linear-gradient(135deg, #1e3a8a, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      font-weight: 800;
-    }
-
-    #loginSection {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    label {
-      font-weight: 700;
-      color: #0f172a;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: -8px;
-    }
-
-    input[type="password"], input[type="text"] {
-      width: 100%;
-      padding: 12px 14px;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s;
-      background: #f8fafc;
-    }
-
-    input[type="password"]:focus, input[type="text"]:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    input::placeholder {
-      color: #94a3b8;
-    }
-
-    button {
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    #loginBtn {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      color: white;
-    }
-
-    #loginBtn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
-    }
-
-    #loginMsg {
-      text-align: center;
-      font-weight: 600;
-      font-size: 14px;
-      min-height: 20px;
-      color: #dc2626;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-    }
-
-    .tabs button {
-      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-      color: #1e3a8a;
-      border: 2px solid #3b82f6;
-      padding: 10px 18px;
-      font-size: 13px;
-    }
-
-    .tabs button:hover {
-      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    .tabs button.logout {
-      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-      color: #991b1b;
-      border-color: #fca5a5;
-    }
-
-    .tabs button.logout:hover {
-      background: linear-gradient(135deg, #dc2626, #991b1b);
-      color: white;
-    }
-
-    .table-wrapper {
-      overflow-x: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    }
-
-    th {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      color: white;
-      padding: 16px;
-      font-weight: 700;
-      text-align: center;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    td {
-      padding: 14px;
-      text-align: center;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 13px;
-      font-weight: 500;
-      color: #0f172a;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: #f0f9ff;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .approve-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
-      padding: 8px 14px;
-      font-size: 12px;
-    }
-
-    .approve-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    }
-
-    .deny-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-      padding: 8px 14px;
-      font-size: 12px;
-    }
-
-    .deny-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px;
-      color: #64748b;
-      font-weight: 600;
-    }
-
-    footer {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 14px;
-    }
-
-    footer p {
-      margin: 5px 0;
-    }
-
-    footer p:first-child {
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        min-height: 35vh;
-        padding: 35px 15px;
-      }
-
-      header h1 {
-        font-size: clamp(1.5rem, 6vw, 2.2rem);
-      }
-
-      .login-wrapper,
-      .content-wrapper {
-        margin: -35px 15px 40px;
-        padding: 25px 20px;
-      }
-
-      .tabs {
-        gap: 8px;
-      }
-
-      .tabs button {
-        padding: 8px 14px;
-        font-size: 12px;
-      }
-
-      table {
-        font-size: 12px;
-      }
-
-      th, td {
-        padding: 12px 8px;
-      }
-
-      .action-buttons {
-        gap: 6px;
-      }
-
-      .approve-btn, .deny-btn {
-        padding: 6px 10px;
-        font-size: 11px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        min-height: 30vh;
-        padding: 25px 10px;
-      }
-
-      header h1 {
-        font-size: 1.4rem;
-        margin-bottom: 8px;
-      }
-
-      .login-wrapper,
-      .content-wrapper {
-        margin: -30px 10px 30px;
-        padding: 20px 15px;
-      }
-
-      .login-wrapper h2,
-      .content-wrapper h3 {
-        font-size: 18px;
-      }
-
-      button {
-        padding: 10px 16px;
-        font-size: 12px;
-      }
-
-      input[type="password"], input[type="text"] {
-        padding: 10px 12px;
-      }
-
-      .tabs {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .tabs button {
-        width: 100%;
-      }
-
-      .table-wrapper {
-        overflow-x: auto;
-      }
-
-      table {
-        font-size: 11px;
-      }
-
-      th, td {
-        padding: 10px 6px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .approve-btn, .deny-btn {
-        width: 100%;
-      }
+    @media(max-width:390px){
+      nav{padding:0 14px;height:56px;}
+      .nav-logo{font-size:.88rem;}
+      .card-head{padding:16px 14px;}
+      .card-body{padding:16px 14px;}
+      .field input{font-size:.95rem;}
+      .field label{font-size:.75rem;}
+      .tab{padding:12px 10px;font-size:.7rem;}
+      .btn-approve,.btn-deny{font-size:.8rem;padding:9px 12px;}
     }
   </style>
 </head>
 <body>
-
-  <!-- Navigation -->
   <nav>
-    <div class="logo">🚗 New Sri Raja Driving School</div>
+    <div class="nav-logo"><div class="nav-dot"></div>Sri Ganesh Driving</div>
+    <a href="index.html" class="back-link">Home</a>
   </nav>
 
-  <!-- Hero Header -->
-  <header>
-    <div class="hero-bg"></div>
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
     <div class="hero-content">
-      <h1>🔐 Admin Portal</h1>
-      <p>Manage Approvals & Student Records</p>
+      <div class="hero-pill">Restricted Access</div>
+      <p>Manage approvals &amp; student records</p>
     </div>
-  </header>
+  </div>
 
-  <!-- Login Section -->
-  <div class="login-wrapper" id="loginWrapper">
-    <h2>Admin Login</h2>
-    <form id="loginSection">
-      <div>
-        <label for="adminPass">Admin Password</label>
-        <input type="password" id="adminPass" placeholder="Enter your password" required />
+  <!-- LOGIN -->
+  <div class="login-wrap" id="loginWrap">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-head-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9b5de5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div><h2>Admin Login</h2><p>Enter password to access the portal</p></div>
       </div>
-      <button type="submit" id="loginBtn">🔓 Login</button>
-      <p id="loginMsg"></p>
-    </form>
+      <div class="card-body">
+        <form id="loginForm">
+          <div class="field">
+            <label for="ap">Admin Password</label>
+            <div class="field-wrap">
+              <span class="field-ico" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;pointer-events:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <input type="password" id="ap" placeholder="Enter your admin password" required/>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-purple btn-full"><span class="shimmer"></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Login to Portal</button>
+          <p class="login-err" id="loginErr"></p>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <!-- Content Section -->
-  <div class="content-wrapper" id="contentWrapper" style="display:none;">
-    <div class="tabs">
-      <button onclick="loadPendingAttendance()">📋 Pending Attendance</button>
-      <button onclick="loadPendingStudents()">👥 Pending Students</button>
-      <button onclick="loadRegisteredStudents()">View Registered Students</button>
-      <button class="logout" onclick="logout()">🚪 Logout</button>
-    </div>
-    <div class="table-wrapper">
-      <div id="tableContainer">Loading...</div>
+  <!-- CONTENT -->
+  <div class="content-wrap" id="contentWrap">
+    <div class="content-card">
+      <div class="tabs">
+        <button class="tab active" onclick="loadPendingAtt(this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Pending Attendance</button>
+        <button class="tab" onclick="loadPendingStudents(this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Pending Students</button>
+        <button class="tab" onclick="loadStudents(this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>All Students</button>
+        <button class="tab tabs-right btn-logout" onclick="doLogout()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</button>
+      </div>
+      <div class="tarea">
+        <div id="tc"></div>
+      </div>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
-    <p>© 2025 New Sri Raja Driving School, Vizianagaram</p>
-    <p>Driving Instruction Excellence Since 2000 | All Rights Reserved</p>
+    <div class="f-brand"><span>Sri Ganesh</span> Driving School</div>
+    <p>© 2025 Sri Ganesh Driving School, Vizianagaram · Excellence Since 2000</p>
   </footer>
 
   <script>
-    // NOTE: Update this URL to match your deployed Apps Script web app URL
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1WQvVlbjDF7Vnv0tAmB6BuebSG-g6WeKOMcPC8sWlOnAD874h_SLkkQRdSiwZBb5C/exec";
-    let adminPass = "";
+    const SURL="https://script.google.com/macros/s/AKfycbw1WQvVlbjDF7Vnv0tAmB6BuebSG-g6WeKOMcPC8sWlOnAD874h_SLkkQRdSiwZBb5C/exec";
+    let ap="";
 
-    const loginForm = document.getElementById("loginSection");
-    const loginMsg = document.getElementById("loginMsg");
-    const adminPassInput = document.getElementById("adminPass");
+    // Ripple helper
+    function addRipple(btn){btn.addEventListener('click',e=>{
+      const r=document.createElement('span');
+      r.className='ripple';
+      const rc=btn.getBoundingClientRect(), sz=Math.max(rc.width,rc.height);
+      r.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rc.left-sz/2}px;top:${e.clientY-rc.top-sz/2}px;`;
+      btn.appendChild(r);
+      setTimeout(()=>r.remove(),700);
+    });}
+    document.querySelectorAll('.btn').forEach(addRipple);
 
-    loginForm.addEventListener("submit", (e) => {
+    document.getElementById('loginForm').addEventListener('submit',e=>{
       e.preventDefault();
-      adminPass = adminPassInput.value.trim();
-      if (!adminPass) {
-        loginMsg.textContent = "⚠️ Enter password!";
-        loginMsg.style.color = "#991b1b";
-        return;
-      }
-
-      // Optionally, you can validate adminPass against server here.
-      document.getElementById("loginWrapper").style.display = "none";
-      document.getElementById("contentWrapper").style.display = "block";
-      loadPendingAttendance();
+      ap=document.getElementById('ap').value.trim();
+      if(!ap){document.getElementById('loginErr').textContent='⚠️ Enter password!';return;}
+      document.getElementById('loginWrap').style.display='none';
+      document.getElementById('contentWrap').style.display='block';
+      loadPendingAtt(document.querySelector('.tab.active')); // Load the active tab's content initially
     });
 
-    function logout() {
-      adminPass = "";
-      document.getElementById("contentWrapper").style.display = "none";
-      document.getElementById("loginWrapper").style.display = "block";
-      adminPassInput.value = "";
-      loginMsg.textContent = "";
+    function doLogout(){
+      ap='';
+      document.getElementById('contentWrap').style.display='none';
+      document.getElementById('loginWrap').style.display='block';
+      document.getElementById('ap').value='';
+      document.getElementById('loginErr').textContent='';
     }
 
-    async function loadPendingAttendance() {
-      if (!adminPass) {
-        alert("Please login with admin password first.");
-        logout();
-        return;
+    function setTab(el){
+      document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+      if(el) el.classList.add('active');
+    }
+
+    function loading(){
+      document.getElementById('tc').innerHTML=`<p style='padding:40px;color:var(--muted);text-align:center;font-size:.9rem;'>⏳ Loading…</p>`;
+    }
+
+    async function loadPendingAtt(el){
+      setTab(el);
+      loading();
+      try{
+        const d=await(await fetch(`${SURL}?action=pending&password=${encodeURIComponent(ap)}`)).json();
+        if(d.status!=='OK'){alert('Invalid password');doLogout();return;}
+        let h=`<div class="t-title">Pending Attendance Approvals</div><div class="t-shell"><table><thead><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Timing</th><th>Actions</th></tr></thead><tbody>`;
+        if(!d.records?.length) h+=`<tr><td colspan="6" class="empty">✓ No pending records</td></tr>`;
+        else d.records.forEach(r=>{
+          h+=`<tr><td>${r.date}</td><td>${r.phone}</td><td><strong style="color:white">${r.name}</strong></td><td>${r.course}</td><td>${r.timing}</td><td><div class="act-wrap"><button class="btn btn-approve" onclick="approve('${r.phone}','${r.date}')"><span class="shimmer"></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;"><polyline points="20 6 9 17 4 12"/></svg> Approve</button><button class="btn btn-deny" onclick="deny('${r.phone}','${r.date}')"><span class="shimmer"></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Deny</button></div></td></tr>`;
+        });
+        document.getElementById('tc').innerHTML=h+`</tbody></table></div>`;
+        document.querySelectorAll('.btn').forEach(addRipple);
+      }catch{
+        document.getElementById('tc').innerHTML=`<p style='padding:40px;color:#ff8a92;text-align:center;'>⚠️ Network error</p>`;
       }
+    }
 
-      let res;
-      try {
-        res = await fetch(`${SCRIPT_URL}?action=pending&password=${encodeURIComponent(adminPass)}`);
-      } catch (err) {
-        alert("Network error while fetching pending attendance.");
-        return;
+    async function loadPendingStudents(el){
+      setTab(el);
+      loading();
+      try{
+        const d=await(await fetch(`${SURL}?action=pendingStudents&password=${encodeURIComponent(ap)}`)).json();
+        if(d.status!=='OK'){alert('Invalid password');doLogout();return;}
+        let h=`<div class="t-title">Pending Student Enrollments</div><div class="t-shell"><table><thead><tr><th>Date</th><th>Phone</th><th>Name</th><th>Course</th><th>Max Classes</th><th>Actions</th></tr></thead><tbody>`;
+        if(!d.records?.length) h+=`<tr><td colspan="6" class="empty">✓ No pending enrollments</td></tr>`;
+        else d.records.forEach(r=>{
+          h+=`<tr><td>${r.date}</td><td>${r.phone}</td><td><strong style="color:white">${r.name}</strong></td><td>${r.course}</td><td>${r.maxClasses}</td><td><div class="act-wrap"><button class="btn btn-approve" onclick="approveS('${r.phone}')"><span class="shimmer"></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;"><polyline points="20 6 9 17 4 12"/></svg> Approve</button><button class="btn btn-deny" onclick="denyS('${r.phone}')"><span class="shimmer"></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Deny</button></div></td></tr>`;
+        });
+        document.getElementById('tc').innerHTML=h+`</tbody></table></div>`;
+        document.querySelectorAll('.btn').forEach(addRipple);
+      }catch{
+        document.getElementById('tc').innerHTML=`<p style='padding:40px;color:#ff8a92;text-align:center;'>⚠️ Network error</p>`;
       }
+    }
 
-      let data;
-      try { data = await res.json(); } catch (err) { alert("Invalid server response."); return; }
-
-      if (data.status !== "OK") { alert("Invalid password or unauthorized access"); logout(); return; }
-
-      let html = "<h3>Pending Attendance Approvals</h3>";
-      html += `<table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Phone</th>
-            <th>Name</th>
-            <th>Course</th>
-            <th>Timing</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-      if (!data.records || data.records.length === 0) {
-        html += `<tr><td colspan="6" class="empty-state">No pending records</td></tr>`;
-      } else {
-        data.records.forEach(r => {
-          html += `<tr>
-            <td>${r.date}</td>
+    async function loadStudents(el){
+      setTab(el);
+      loading();
+      try{
+        const d=await(await fetch(`${SURL}?action=viewStudents&password=${encodeURIComponent(ap)}`)).json();
+        if(d.status!=='OK'){alert('Unauthorized');doLogout();return;}
+        let h=`<div class="t-title">Registered Students</div><div class="t-shell"><table><thead><tr><th>Phone</th><th>Name</th><th>Course</th><th>Progress</th><th>Classes Taken</th><th>Max Classes</th></tr></thead><tbody>`;
+        if(!d.records?.length) h+=`<tr><td colspan="6" class="empty">No registered students yet</td></tr>`;
+        else d.records.forEach(r=>{
+          const taken=parseInt(r.classesTaken)||0;
+          const max=parseInt(r.maxClasses)||1;
+          const pct=Math.min(100,Math.round((taken/max)*100));
+          const clr=pct>=80?'#00c896':pct>=40?'#ffb700':'#00b4d8';
+          h+=`<tr>
             <td>${r.phone}</td>
-            <td>${r.name}</td>
-            <td>${r.course}</td>
-            <td>${r.timing}</td>
+            <td><strong style="color:white">${r.name}</strong></td>
+            <td><span style="font-size:.75rem;padding:3px 10px;border-radius:100px;background:rgba(155,93,229,.15);color:#c084fc;font-weight:700;">${r.course}</span></td>
             <td>
-              <div class="action-buttons">
-                <button class="approve-btn" onclick="approve('${r.phone}','${r.date}')">✅ Approve</button>
-                <button class="deny-btn" onclick="deny('${r.phone}','${r.date}')">❌ Deny</button>
+              <div class="mini-chart">
+                <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${pct}%;background:${clr};box-shadow:0 0 6px ${clr}66;"></div></div>
+                <span class="mini-pct" style="color:${clr}">${pct}%</span>
               </div>
             </td>
+            <td><strong style="color:${clr}">${taken}</strong></td>
+            <td>${max}</td>
           </tr>`;
         });
+        document.getElementById('tc').innerHTML=h+`</tbody></table></div>`;
+      }catch{
+        document.getElementById('tc').innerHTML=`<p style='padding:40px;color:#ff8a92;text-align:center;'>⚠️ Network error</p>`;
       }
-      html += "</tbody></table>";
-      document.getElementById("tableContainer").innerHTML = html;
     }
 
-    async function loadPendingStudents() {
-      if (!adminPass) {
-        alert("Please login with admin password first.");
-        logout();
-        return;
-      }
-
-      let res;
-      try {
-        res = await fetch(`${SCRIPT_URL}?action=pendingStudents&password=${encodeURIComponent(adminPass)}`);
-      } catch (err) {
-        alert("Network error while fetching pending students.");
-        return;
-      }
-
-      let data;
-      try { data = await res.json(); } catch (err) { alert("Invalid server response."); return; }
-
-      if (data.status !== "OK") { alert("Invalid password or unauthorized access"); logout(); return; }
-
-      let html = "<h3>Pending Student Enrollments</h3>";
-      html += `<table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Phone</th>
-            <th>Name</th>
-            <th>Course</th>
-            <th>Max Classes</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-      if (!data.records || data.records.length === 0) {
-        html += `<tr><td colspan="6" class="empty-state">No pending enrollments</td></tr>`;
-      } else {
-        data.records.forEach(r => {
-          html += `<tr>
-            <td>${r.date}</td>
-            <td>${r.phone}</td>
-            <td>${r.name}</td>
-            <td>${r.course}</td>
-            <td>${r.maxClasses}</td>
-            <td>
-              <div class="action-buttons">
-                <button class="approve-btn" onclick="approveStudent('${r.phone}')">✅ Approve</button>
-                <button class="deny-btn" onclick="denyStudent('${r.phone}')">❌ Deny</button>
-              </div>
-            </td>
-          </tr>`;
-        });
-      }
-      html += "</tbody></table>";
-      document.getElementById("tableContainer").innerHTML = html;
+    async function approve(ph,dt){
+      try{
+        await fetch(SURL,{method:'POST',body:new URLSearchParams({action:'approve',phone:ph,date:dt})});
+      }catch{}
+      loadPendingAtt(null); // Reload the current tab
     }
-
-    async function approve(phone, date) {
-      try {
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: new URLSearchParams({ action: "approve", phone, date })
-        });
-      } catch (err) {
-        alert("Network error while approving.");
-      }
-      loadPendingAttendance();
+    async function deny(ph,dt){
+      try{
+        await fetch(SURL,{method:'POST',body:new URLSearchParams({action:'deny',phone:ph,date:dt})});
+      }catch{}
+      loadPendingAtt(null); // Reload the current tab
     }
-
-    async function deny(phone, date) {
-      try {
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: new URLSearchParams({ action: "deny", phone, date })
-        });
-      } catch (err) {
-        alert("Network error while denying.");
-      }
-      loadPendingAttendance();
+    async function approveS(ph){
+      try{
+        await fetch(SURL,{method:'POST',body:new URLSearchParams({action:'approveStudent',phone:ph})});
+      }catch{}
+      loadPendingStudents(null); // Reload the current tab
     }
-
-    async function approveStudent(phone) {
-      try {
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: new URLSearchParams({ action: "approveStudent", phone })
-        });
-      } catch (err) {
-        alert("Network error while approving student.");
-      }
-      loadPendingStudents();
-    }
-
-    async function denyStudent(phone) {
-      try {
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: new URLSearchParams({ action: "denyStudent", phone })
-        });
-      } catch (err) {
-        alert("Network error while denying student.");
-      }
-      loadPendingStudents();
-    }
-
-    // Fixed: loadRegisteredStudents now uses adminPass (from login) and writes to tableContainer
-    // Removed the 'Password' column header to match the secure Apps Script response.
-    async function loadRegisteredStudents() {
-      if (!adminPass) {
-        alert("Please login first (enter admin password).");
-        return;
-      }
-
-      let res;
-      try {
-        res = await fetch(`${SCRIPT_URL}?action=viewStudents&password=${encodeURIComponent(adminPass)}`);
-      } catch (err) {
-        alert("Network error while fetching registered students.");
-        return;
-      }
-
-      let data;
-      try { data = await res.json(); } catch (err) { alert("Invalid server response."); return; }
-
-      if (data.status !== "OK") {
-        alert("Unauthorized or no data found.");
-        return;
-      }
-
-      let html = `
-        <h3>Registered Students</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Phone</th>
-              <th>Name</th>
-              <th>Course</th>
-              <th>Max Classes</th>
-              <th>Classes Taken</th>
-              <!-- ✅ Removed 'Password' header -->
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
-      if (!data.records || data.records.length === 0) {
-        html += `<tr><td colspan="5" class="empty-state">No registered students</td></tr>`; // Adjusted colspan
-      } else {
-        data.records.forEach(r => {
-          html += `
-            <tr>
-              <td>${r.phone}</td>
-              <td>${r.name}</td>
-              <td>${r.course}</td>
-              <td>${r.maxClasses}</td>
-              <td>${r.classesTaken}</td>
-            </tr>`;
-        });
-      }
-
-      html += "</tbody></table>";
-      document.getElementById("tableContainer").innerHTML = html;
+    async function denyS(ph){
+      try{
+        await fetch(SURL,{method:'POST',body:new URLSearchParams({action:'denyStudent',phone:ph})});
+      }catch{}
+      loadPendingStudents(null); // Reload the current tab
     }
   </script>
-
 </body>
 </html>
+
