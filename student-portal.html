@@ -284,7 +284,7 @@
       markBtn.disabled=true;const orig=markBtn.innerHTML;markBtn.innerHTML='<span class="shimmer"></span>Submitting';
       const fd=new FormData();fd.append('phone',phone.value.trim());fd.append('timing',t);
       fetch(SURL,{method:'POST',body:fd}).then(r=>r.text()).then(tx=>{
-        if(tx==='PENDING_REVIEW'){markBtn.innerHTML='<span class="shimmer"></span>âœ… Submitted';showMsg('Attendance submitted! Awaiting admin approval.','success');}
+        if(tx==='PENDING_REVIEW'){markBtn.innerHTML='<span class="shimmer"></span> Submitted';showMsg('Attendance submitted! Awaiting admin approval.','success');}
         else if(tx==='LIMIT_REACHED'){markBtn.innerHTML=orig;markBtn.disabled=false;showMsg('You\'ve reached your course class limit.','error');}
         else{markBtn.innerHTML=orig;markBtn.disabled=false;showMsg('Error. Please try again.','error');}
       }).catch(()=>{markBtn.innerHTML=orig;markBtn.disabled=false;showMsg('Network error.','error');});
