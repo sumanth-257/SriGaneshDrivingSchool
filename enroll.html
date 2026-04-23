@@ -229,7 +229,7 @@
       try{
         const res=await fetch(SCRIPT_URL,{method:'POST',body:new URLSearchParams({action:'enrollStudent',phone:p,name:n,course:c,password:pw})});
         const txt=await res.text();
-        if(txt==='PENDING_APPROVAL'){showMsg('Enrollment submitted! Pending admin approval ” we\'ll call you soon.','success');btn.innerHTML='<span class="shimmer"></span>Submitted';document.getElementById('step3').className='step done';document.getElementById('eForm').reset();updateStep();}
+        if(txt==='PENDING_APPROVAL'){showMsg('Enrollment submitted! Pending Instructor approval','success');btn.innerHTML='<span class="shimmer"></span>Submitted';document.getElementById('step3').className='step done';document.getElementById('eForm').reset();updateStep();}
         else if(txt==='ALREADY_EXISTS'){showMsg('This phone number is already registered','error');btn.disabled=false;btn.innerHTML=orig;}
         else if(txt==='MISSING_FIELDS'){showMsg('Missing data. Please try again.','error');btn.disabled=false;btn.innerHTML=orig;}
         else{showMsg('Unexpected error. Please try again.','error');btn.disabled=false;btn.innerHTML=orig;}
