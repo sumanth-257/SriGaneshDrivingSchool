@@ -3,464 +3,239 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Enrollment - New Sri Raja Driving School</title>
+  <title>Enroll |Sri Ganesh Driving School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Updated Font Link: Inter & Space Grotesk -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* Added Inter and Space Grotesk to :root comment for clarity */
+    :root{--amber:#ffb700;--amber2:#ff8c00;--crimson:#e63946;--bg:#060a10;--bg2:#0b1120;--surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.07);--text:#e8eaf0;--muted:#6b7a99;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    /* Changed Body Font: Outfit -> Inter */
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(6,10,16,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+    /* Changed Nav Logo Font: Syne -> Space Grotesk */
+    .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:white;display:flex;align-items:center;gap:10px;} /* Updated Font */
+    .nav-dot{width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 12px var(--amber);animation:pd 2s infinite;flex-shrink:0;}
+    @keyframes pd{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:0.6}}
+    .back-link{font-size:.875rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;min-height:44px;padding:8px 0;}
+    .back-link:hover{color:var(--amber);}
+
+    /* HERO */
+    .hero{position:relative;min-height:26vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;padding:70px 20px 32px;}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,183,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,183,0,0.03) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(0,200,150,0.1) 0%,transparent 70%);}
+    .hero-content{position:relative;z-index:2;animation:fsu .8s both;}
+    .hero-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:100px;font-size:2.5rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#00c896;margin-bottom:16px;}
+    .hero-pill-d{width:5px;height:5px;background:#00c896;border-radius:50%;animation:pd 1.5s infinite;flex-shrink:0;}
+    /* Changed Hero Title Font: Syne -> Space Grotesk */
+    .hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;color:white;margin-bottom:10px;} /* Updated Font */
+    .hero h1 em{display:block;background:linear-gradient(135deg,#00c896,#00a87a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+    .hero p{color:var(--muted);font-size:1rem;}
+    @keyframes fsu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* CARD */
+    .card-wrap{max-width:500px;margin:-20px auto 50px;padding:0 16px;position:relative;z-index:10;}
+    .card{border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.5);border:1px solid var(--border);background:var(--bg2);}
+
+    /* Card header */
+    .card-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;}
+    .card-head::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent);}
+    .card-head-ico{width:46px;height:46px;border-radius:14px;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    /* Changed Card Headings Font: Syne -> Space Grotesk */
+    .card-head h2{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;color:white;} /* Updated Font */
+    .card-head p{color:var(--muted);font-size:.85rem;margin-top:3px;}
+
+    /* Steps indicator */
+    .steps{display:flex;align-items:center;gap:0;padding:16px 24px;border-bottom:1px solid var(--border);}
+    .step{flex:1;text-align:center;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);position:relative;padding-bottom:10px;}
+    .step::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--border);border-radius:2px;}
+    .step.active{color:#00c896;}
+    .step.active::after{background:#00c896;box-shadow:0 0 8px rgba(0,200,150,0.5);}
+    .step.done{color:var(--amber);}
+    .step.done::after{background:var(--amber);}
+    .step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.8rem;background:var(--border);color:var(--muted);margin-bottom:6px;}
+    .step.active .step-num{background:rgba(0,200,150,0.15);color:#00c896;border:1px solid rgba(0,200,150,0.3);}
+    .step.done .step-num{background:rgba(255,183,0,0.15);color:var(--amber);border:1px solid rgba(255,183,0,0.3);}
+
+    /* Form body */
+    .card-body{padding:22px 24px;}
+
+    /* INPUT FIELDS */
+    .field{margin-bottom:18px;position:relative;}
+    .field label{display:block;font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;transition:color 0.2s;}
+    .field:focus-within label{color:#00c896;}
+    .field-wrap{position:relative;}
+    .field-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;z-index:1;display:flex;align-items:center;justify-content:center;}
+    /* Kept Outfit for inputs to maintain consistency with the form style */
+    .field input,.field select{width:100%;padding:15px 16px 15px 44px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;font-family:'Inter',sans-serif;font-size:1rem;font-weight:500;color:var(--text);transition:all 0.3s;-webkit-appearance:none;min-height:52px;} /* Updated Font */
+    .field input:focus,.field select:focus{outline:none;border-color:rgba(0,200,150,0.5);background:rgba(0,200,150,0.05);box-shadow:0 0 0 3px rgba(0,200,150,0.1);}
+    .field input::placeholder{color:rgba(107,122,153,0.7);font-size:.95rem;}
+    .field select{cursor:pointer;color:var(--text);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300c896' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-color:rgba(255,255,255,0.05);}
+    .field select option{background:#0b1120;color:var(--text);}
+
+    /* SUBMIT BUTTON */
+    .submit-btn{width:100%;padding:17px;border:none;border-radius:14px;font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.5px;cursor:pointer;position:relative;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;margin-top:8px;background:linear-gradient(135deg,#00c896,#00a87a);color:#060a10;box-shadow:0 10px 32px rgba(0,200,150,0.4),inset 0 1px 0 rgba(255,255,255,0.2);min-height:54px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;display:flex;align-items:center;justify-content:center;gap:8px;} /* Updated Font */
+    .submit-btn:active{transform:scale(.97);}
+    .submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+    .submit-btn .shimmer{position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transform:skewX(-20deg);transition:left 0.6s;}
+    .submit-btn:hover:not(:disabled) .shimmer{left:160%;}
+    .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.25);transform:scale(0);animation:rpl .6s linear;pointer-events:none;}
+    @keyframes rpl{to{transform:scale(4.5);opacity:0}}
+
+    /* MESSAGES */
+    .msg{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;font-size:.95rem;font-weight:600;text-align:center;animation:fsu .3s both;line-height:1.5;}
+    .msg.show{display:block;}
+    .msg.success{background:rgba(0,200,150,0.1);color:#00c896;border:1px solid rgba(0,200,150,0.25);}
+    .msg.error{background:rgba(230,57,70,0.1);color:#ff8a92;border:1px solid rgba(230,57,70,0.25);}
+    .msg.info{background:rgba(255,183,0,0.08);color:var(--amber);border:1px solid rgba(255,183,0,0.2);}
+
+    /* INFO NOTE */
+    .info-note{margin-top:18px;padding:16px 18px;border-radius:12px;background:rgba(255,183,0,0.04);border:1px solid rgba(255,183,0,0.12);font-size:.9rem;color:var(--muted);line-height:1.7;}
+    .info-note strong{color:var(--amber);}
+
+    /* FOOTER */
+    footer{padding:28px 20px;text-align:center;border-top:1px solid var(--border);}
+    /* Changed Footer Brand Font: Syne -> Space Grotesk */
+    .f-brand{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:white;margin-bottom:6px;} /* Updated Font */
+    .f-brand span{color:var(--amber);}
+    footer p{color:var(--muted);font-size:.85rem;}
+
+    /* â”€â”€ MOBILE FIRST â”€â”€ */
+    @media(max-width:600px){
+      .card-wrap{padding:0 12px;margin-top:-16px;}
+      .hero{padding:60px 16px 24px;min-height:auto;}
+      .hero h1{font-size:clamp(1.8rem,9vw,2.6rem);} /* Adjusted for new font if needed, but clamp usually handles it */
     }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f172a;
-      color: #1e293b;
-      overflow-x: hidden;
-    }
-
-    /* Navigation */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 2rem;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    }
-
-    nav .logo {
-      font-size: 20px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #f59e0b, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Hero Header */
-    header {
-      position: relative;
-      min-height: 45vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #dc2626 100%);
-      overflow: hidden;
-      text-align: center;
-      color: white;
-      padding: 60px 20px;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.1;
-      background-image: 
-        radial-gradient(circle at 20% 50%, #f59e0b 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, #3b82f6 0%, transparent 50%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    header h1 {
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      font-weight: 900;
-      margin-bottom: 15px;
-      line-height: 1.2;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    header p {
-      font-size: clamp(0.95rem, 4vw, 1.2rem);
-      opacity: 0.95;
-      font-weight: 300;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Form Container */
-    .form-wrapper {
-      max-width: 480px;
-      margin: -40px auto 60px;
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 10;
-    }
-
-    .form-wrapper h2 {
-      text-align: center;
-      font-size: 22px;
-      background: linear-gradient(135deg, #1e3a8a, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 28px;
-      font-weight: 800;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    label {
-      font-weight: 700;
-      color: #0f172a;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: -12px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s;
-      background: #f8fafc;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    input::placeholder {
-      color: #94a3b8;
-    }
-
-    /* Buttons */
-    button {
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    #enrollBtn {
-      background: linear-gradient(135deg, #f59e0b, #dc2626);
-      color: white;
-      margin-top: 8px;
-    }
-
-    #enrollBtn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
-    }
-
-    #enrollBtn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    /* Messages */
-    #msg {
-      margin-top: 16px;
-      padding: 14px;
-      text-align: center;
-      font-weight: 600;
-      border-radius: 10px;
-      font-size: 14px;
-      min-height: 20px;
-      display: none;
-    }
-
-    #msg.show {
-      display: block;
-    }
-
-    #msg.success {
-      background: #dcfce7;
-      color: #166534;
-      border: 2px solid #86efac;
-    }
-
-    #msg.error {
-      background: #fee2e2;
-      color: #991b1b;
-      border: 2px solid #fca5a5;
-    }
-
-    #msg.info {
-      background: #e0f2fe;
-      color: #0c4a6e;
-      border: 2px solid #7dd3fc;
-    }
-
-    /* Info Box */
-    .info-box {
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      padding: 18px;
-      border-left: 5px solid #f59e0b;
-      border-radius: 10px;
-      margin-top: 20px;
-      font-size: 13px;
-      color: #92400e;
-      line-height: 1.6;
-    }
-
-    .info-box strong {
-      color: #b45309;
-    }
-
-    /* Footer */
-    footer {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-
-    footer p {
-      margin: 5px 0;
-    }
-
-    footer p:first-child {
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      header {
-        min-height: 40vh;
-        padding: 40px 15px;
-      }
-
-      header h1 {
-        font-size: clamp(1.6rem, 6vw, 2.2rem);
-      }
-
-      header p {
-        font-size: clamp(0.85rem, 3vw, 1rem);
-      }
-
-      .form-wrapper {
-        margin: -35px 15px 40px;
-        padding: 28px 20px;
-      }
-
-      .form-wrapper h2 {
-        font-size: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        min-height: 35vh;
-        padding: 30px 10px;
-      }
-
-      header h1 {
-        font-size: 1.4rem;
-        margin-bottom: 10px;
-      }
-
-      header p {
-        font-size: 0.9rem;
-      }
-
-      .form-wrapper {
-        margin: -30px 10px 30px;
-        padding: 25px 15px;
-      }
-
-      .form-wrapper h2 {
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-
-      button {
-        padding: 11px 16px;
-        font-size: 13px;
-      }
-
-      input, select {
-        padding: 11px 12px;
-        font-size: 14px;
-      }
-
-      .info-box {
-        padding: 14px;
-        font-size: 12px;
-      }
+    @media(max-width:390px){
+      nav{padding:0 14px;height:56px;}
+      .card-head{padding:16px 14px;}
+      .card-body{padding:16px 14px;}
+      .steps{padding:14px 14px;}
+      .step{font-size:.7rem;}
+      .field input,.field select{font-size:.95rem;}
+      .field label{font-size:.75rem;}
+      .submit-btn{font-size:.95rem;}
     }
   </style>
 </head>
 <body>
-
-  <!-- Navigation -->
   <nav>
-    <div class="logo">🚗 New Sri Raja Driving School</div>
+    <div class="nav-logo"><div class="nav-dot"></div>Sri Ganesh Driving</div>
+    <a href="index.html" class="back-link">Back to Home</a>
   </nav>
 
-  <!-- Hero Header -->
-  <header>
-    <div class="hero-bg"></div>
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
     <div class="hero-content">
-      <h1>🧾 Enroll New Student</h1>
-      <p>Start Your Driving Journey Today</p>
+      <div class="hero-pill"><div class="hero-pill-d"></div>Enroll Today</div>
+      <p>15,000+ students trained </p>
     </div>
-  </header>
-
-  <!-- Form Container -->
-  <div class="form-wrapper">
-    <h2>Student Registration</h2>
-    
-    <form id="enrollmentForm">
-      <div>
-        <label for="phone">Phone Number</label>
-        <input type="text" id="phone" placeholder="Enter 10-digit phone number" maxlength="10" required />
-      </div>
-
-      <div>
-        <label for="password">Password</label>
-        <input id="password" type="password" placeholder="Create a 6-digit password" maxlength="6" required />
-      </div>
-
-      <div>
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required />
-      </div>
-
-      <div>
-        <label for="course">Select Course</label>
-        <select id="course" required>
-          <option value="">-- Choose a Course --</option>
-          <option value="Standard">Standard Course (20 Classes in 20 Days)</option>
-          <option value="FastTrack">FastTrack Course (20 Classes in 10 Days)</option>
-        </select>
-      </div>
-
-      <button type="submit" id="enrollBtn">✅ Enroll Now</button>
-      <div id="msg"></div>
-    </form>
   </div>
 
-  <!-- Footer -->
+  <div class="card-wrap">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-head-ico">🧾</div>
+        <div>
+          <h2>Student Registration</h2>
+          <p>Fill in your details to get started</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step active" id="step1"><div class="step-num">1</div> Your Info</div>
+        <div class="step" id="step2"><div class="step-num">2</div> Course</div>
+        <div class="step" id="step3"><div class="step-num">3</div> Confirm</div>
+      </div>
+      <div class="card-body">
+        <form id="eForm">
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+              <input type="text" id="phone" placeholder="10-digit mobile number" maxlength="10" required autocomplete="off" inputmode="numeric"/>
+            </div>
+          </div>
+          <div class="field">
+            <label for="password">Password (6-digit PIN)</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <input type="password" id="password" placeholder="Create a 6-digit PIN" maxlength="6" required inputmode="numeric"/>
+            </div>
+          </div>
+          <div class="field">
+            <label for="name">Full Name</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <input type="text" id="name" placeholder="Enter your full name" required/>
+            </div>
+          </div>
+          <div class="field">
+            <label for="course">Select Course</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              <select id="course" required>
+                <option value="">Choose a course</option>
+                <option value="Standard">Standard Course (20 Classes in 20 Days)</option>
+                <option value="FastTrack">Fast Track Course (20 Classes in 10 Days)</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" id="enrollBtn" class="submit-btn"><span class="shimmer"></span>Enroll Now</button>
+          <div id="msg" class="msg"></div>
+        </form>
+        <div class="info-note"><strong>Note:</strong> Your enrollment will be reviewed.Please ensure your phone number is correct.</div>
+      </div>
+    </div>
+  </div>
+
   <footer>
-    <p><strong>© 2025 New Sri Raja Driving School, Vizianagaram</strong></p>
-    <p>Driving Instruction Excellence Since 2000  | All Rights Reserved</p>
+    <p>© 2025 Sri Ganesh Driving School, Vizianagaram· Excellence Since 2000</p>
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1WQvVlbjDF7Vnv0tAmB6BuebSG-g6WeKOMcPC8sWlOnAD874h_SLkkQRdSiwZBb5C/exec";
+    const SCRIPT_URL="https://script.google.com/macros/s/AKfycbw1WQvVlbjDF7Vnv0tAmB6BuebSG-g6WeKOMcPC8sWlOnAD874h_SLkkQRdSiwZBb5C/exec";
+    const phone=document.getElementById('phone'),pwd=document.getElementById('password'),nm=document.getElementById('name'),course=document.getElementById('course'),btn=document.getElementById('enrollBtn'),msgEl=document.getElementById('msg');
 
-    const phoneInput = document.getElementById("phone");
-    const passwordInput = document.getElementById("password");
-    const nameInput = document.getElementById("name");
-    const courseSelect = document.getElementById("course");
-    const enrollBtn = document.getElementById("enrollBtn");
-    const msg = document.getElementById("msg");
-    const form = document.getElementById("enrollmentForm");
+    phone.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');updateStep();});
+    pwd.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');updateStep();});
+    nm.addEventListener('input',updateStep);
+    course.addEventListener('change',updateStep);
 
-    // Allow only digits in phone input
-    phoneInput.addEventListener("input", function() {
-      this.value = this.value.replace(/[^0-9]/g, "");
-    });
-
-    // Allow only digits in password (since it's numeric)
-    passwordInput.addEventListener("input", function() {
-      this.value = this.value.replace(/[^0-9]/g, "");
-    });
-
-    function showMessage(text, type) {
-      msg.textContent = text;
-      msg.className = `show ${type}`;
+    function updateStep(){
+      const s1=phone.value.length>0||pwd.value.length>0||nm.value.length>0;
+      const s2=course.value!=='';
+      document.getElementById('step1').className='step'+(s1?' done':' active');
+      document.getElementById('step2').className='step'+(s2?' done':s1?' active':'');
+      document.getElementById('step3').className='step'+(s2?' active':'');
     }
 
-    // Handle form submission
-    form.addEventListener("submit", async (e) => {
+    function showMsg(t,type){msgEl.textContent=t;msgEl.className='msg show '+type;}
+
+    // Ripple
+    btn.addEventListener('click',e=>{const r=document.createElement('span');r.className='ripple';const rc=btn.getBoundingClientRect(),sz=Math.max(rc.width,rc.height);r.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rc.left-sz/2}px;top:${e.clientY-rc.top-sz/2}px;`;btn.appendChild(r);setTimeout(()=>r.remove(),700);});
+
+    document.getElementById('eForm').addEventListener('submit',async(e)=>{
       e.preventDefault();
-
-      const phone = phoneInput.value.trim();
-      const password = passwordInput.value.trim(); // ✅ Now captured
-      const name = nameInput.value.trim();
-      const course = courseSelect.value;
-
-      // Validation
-      if (!phone || !password || !name || !course) {
-        showMessage("⚠️ Please fill all fields.", "error");
-        return;
-      }
-
-      if (!/^[0-9]{10}$/.test(phone)) {
-        showMessage("⚠️ Enter a valid 10-digit phone number.", "error");
-        return;
-      }
-
-      if (!/^[0-9]{6}$/.test(password)) {
-        showMessage("⚠️ Password must be 6 digits.", "error");
-        return;
-      }
-
-      // Disable button and show loading state
-      enrollBtn.disabled = true;
-      const originalText = enrollBtn.textContent;
-      enrollBtn.textContent = "⏳ Processing...";
-      showMessage("Submitting your enrollment...", "info");
-
-      try {
-        const response = await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: new URLSearchParams({
-            action: "enrollStudent",
-            phone,
-            name,
-            course,
-            password  // ✅ Now sent to Apps Script
-          })
-        });
-
-        const text = await response.text();
-
-        if (text === "PENDING_APPROVAL") {
-          showMessage("✅ Enrollment submitted! Waiting for admin approval. We'll call you soon.", "success");
-          enrollBtn.textContent = "✅ Submitted";
-          form.reset();
-        } else if (text === "ALREADY_EXISTS") {
-          showMessage("⚠️ This phone number is already registered.", "error");
-          enrollBtn.disabled = false;
-          enrollBtn.textContent = originalText;
-        } else if (text === "MISSING_FIELDS") {
-          showMessage("❌ Missing required data. Please try again.", "error");
-          enrollBtn.disabled = false;
-          enrollBtn.textContent = originalText;
-        } else {
-          showMessage("❌ Unexpected error. Please try again.", "error");
-          enrollBtn.disabled = false;
-          enrollBtn.textContent = originalText;
-        }
-      } catch (error) {
-        showMessage("⚠️ Network error. Please check your connection and try again.", "error");
-        enrollBtn.disabled = false;
-        enrollBtn.textContent = originalText;
-      }
+      const p=phone.value.trim(),pw=pwd.value.trim(),n=nm.value.trim(),c=course.value;
+      if(!p||!pw||!n||!c){showMsg('Please fill in all fields.','error');return;}
+      if(!/^[0-9]{10}$/.test(p)){showMsg('Enter a valid 10-digit phone number.','error');return;}
+      if(!/^[0-9]{6}$/.test(pw)){showMsg('Password must be exactly 6 digits.','error');return;}
+      btn.disabled=true;const orig=btn.innerHTML;btn.innerHTML='<span class="shimmer"></span>Submitting';
+      showMsg('Submitting your enrollment','info');
+      try{
+        const res=await fetch(SCRIPT_URL,{method:'POST',body:new URLSearchParams({action:'enrollStudent',phone:p,name:n,course:c,password:pw})});
+        const txt=await res.text();
+        if(txt==='PENDING_APPROVAL'){showMsg('Enrollment submitted! Pending admin approval ” we\'ll call you soon.','success');btn.innerHTML='<span class="shimmer"></span>Submitted';document.getElementById('step3').className='step done';document.getElementById('eForm').reset();updateStep();}
+        else if(txt==='ALREADY_EXISTS'){showMsg('This phone number is already registered','error');btn.disabled=false;btn.innerHTML=orig;}
+        else if(txt==='MISSING_FIELDS'){showMsg('Missing data. Please try again.','error');btn.disabled=false;btn.innerHTML=orig;}
+        else{showMsg('Unexpected error. Please try again.','error');btn.disabled=false;btn.innerHTML=orig;}
+      }catch{showMsg('Network error. Check your connection.','error');btn.disabled=false;btn.innerHTML=orig;}
     });
   </script>
-
 </body>
 </html>
+
