@@ -3,395 +3,307 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Attendance Portal</title>
+  <title>Student Portal â€” New Sri Raja Driving School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Updated Font Link: Inter & Space Grotesk -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
   <style>
-    /* --- STYLES SAME AS BEFORE --- */
-    * {margin:0;padding:0;box-sizing:border-box;}
-    body {
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background:#0f172a;
-      color:#1e293b;
-      overflow-x:hidden;
+    /* Added Inter and Space Grotesk to :root comment for clarity */
+    :root{--amber:#ffb700;--teal:#00b4d8;--teal2:#0077b6;--bg:#060a10;--bg2:#0b1120;--surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.07);--text:#e8eaf0;--muted:#6b7a99;}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    /* Changed Body Font: Outfit -> Inter */
+    body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;} /* Updated Font */
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(6,10,16,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+    /* Changed Nav Logo Font: Syne -> Space Grotesk */
+    .nav-logo{font-family:'Space Grotesk', sans-serif;font-size:1rem;font-weight:700;color:white;display:flex;align-items:center;gap:10px;} /* Updated Font */
+    .nav-dot{width:8px;height:8px;background:var(--teal);border-radius:50%;box-shadow:0 0 12px var(--teal);animation:pd 2s infinite;flex-shrink:0;}
+    @keyframes pd{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:0.6}}
+    .back-link{font-size:.875rem;color:var(--muted);text-decoration:none;transition:color .2s;padding:8px 0;min-height:44px;display:flex;align-items:center;}
+    .back-link:hover{color:var(--amber);}
+
+    /* HERO */
+    .hero{position:relative;min-height:28vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;padding:70px 20px 32px;}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,180,216,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,.04) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(0,180,216,.1) 0%,transparent 70%);}
+    .hero-content{position:relative;z-index:2;animation:fsu .8s both;}
+    .hero-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.2);border-radius:100px;font-size:2rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
+    .hero-pill-d{width:5px;height:5px;background:var(--teal);border-radius:50%;animation:pd 1.5s infinite;flex-shrink:0;}
+    /* Changed Hero Title Font: Syne -> Space Grotesk */
+    .hero h1{font-family:'Space Grotesk', sans-serif;font-weight:700;color:white;margin-bottom:10px;} /* Updated Font */
+    .hero h1 em{display:block;background:linear-gradient(135deg,#00b4d8,#0077b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+    .hero p{color:var(--muted);font-size:1rem;}
+    @keyframes fsu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* MAIN */
+    .main{max-width:580px;margin:-20px auto 50px;padding:0 16px;position:relative;z-index:10;}
+
+    /* CARD */
+    .card{border-radius:20px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);box-shadow:0 24px 60px rgba(0,0,0,.5);margin-bottom:20px;}
+    .card-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;}
+    .card-head::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+    .card-head-ico{width:44px;height:44px;border-radius:13px;background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    /* Changed Card Headings Font: Syne -> Space Grotesk */
+    .card-head h2{font-family:'Space Grotesk', sans-serif;font-size:1.15rem;font-weight:700;color:white;} /* Updated Font */
+    .card-head p{color:var(--muted);font-size:.85rem;margin-top:3px;}
+    .card-body{padding:22px 24px;}
+
+    /* FORM */
+    .field{margin-bottom:18px;position:relative;}
+    .field label{display:block;font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;transition:color .2s;}
+    .field:focus-within label{color:var(--teal);}
+    .field-wrap{position:relative;}
+    .field-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;display:flex;align-items:center;justify-content:center;}
+    /* Kept Outfit for inputs to maintain consistency with the form style */
+    .field input,.field select{width:100%;padding:15px 16px 15px 44px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;font-family:'Inter', sans-serif;font-size:1rem;font-weight:500;color:var(--text);transition:all .3s;-webkit-appearance:none;min-height:52px;} /* Updated Font */
+    .field input:focus,.field select:focus{outline:none;border-color:rgba(0,180,216,.5);background:rgba(0,180,216,.05);box-shadow:0 0 0 3px rgba(0,180,216,.1);}
+    .field input::placeholder{color:rgba(107,122,153,.7);font-size:.95rem;}
+    .field select{cursor:pointer;color:var(--text);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300b4d8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-color:rgba(255,255,255,.05);}
+    .field select option{background:#0b1120;color:var(--text);}
+
+    /* BUTTONS */
+    /* Kept Outfit for buttons to maintain consistency with the button style */
+    .btn{position:relative;padding:16px 28px;border:none;border-radius:14px;font-family:'Inter', sans-serif;font-size:1rem;font-weight:700;letter-spacing:.3px;cursor:pointer;overflow:hidden;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;width:100%;margin-bottom:10px;min-height:52px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;} /* Updated Font */
+    .btn:last-child{margin-bottom:0;}
+    .btn:active{transform:scale(.97);}
+    .btn .shimmer{position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-20deg);transition:left .55s;}
+    .btn:hover .shimmer{left:160%;}
+    .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.25);transform:scale(0);animation:rpl .6s linear;pointer-events:none;}
+    @keyframes rpl{to{transform:scale(4.5);opacity:0}}
+    .btn-teal{background:linear-gradient(135deg,#00b4d8,#0077b6);color:white;box-shadow:0 10px 32px rgba(0,180,216,.4),inset 0 1px 0 rgba(255,255,255,.15);}
+    .btn-amber{background:linear-gradient(135deg,#ffb700,#ff8c00);color:#060a10;box-shadow:0 10px 32px rgba(255,183,0,.4),inset 0 1px 0 rgba(255,255,255,.2);}
+    .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid rgba(255,255,255,.1);}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
+
+    /* STUDENT INFO BOX */
+    .student-info{display:none;border-radius:14px;border:1px solid rgba(0,180,216,.2);background:rgba(0,180,216,.06);padding:18px;margin:16px 0;animation:fsu .35s both;}
+    .info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+    .info-row:last-child{border-bottom:none;}
+    .info-lbl{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+    .info-val{font-size:1rem;font-weight:700;color:white;}
+    .info-val.hl{color:var(--teal);}
+
+    /* PROGRESS BAR */
+    .progress-wrap{margin:16px 0;display:none;}
+    .progress-lbl{display:flex;justify-content:space-between;font-size:.875rem;color:var(--muted);margin-bottom:10px;font-weight:600;}
+    .progress-track{height:8px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;}
+    .progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),#00b4d8);border-radius:100px;transition:width .6s cubic-bezier(.34,1.2,.64,1);box-shadow:0 0 12px rgba(0,180,216,.4);}
+
+    /* MESSAGES */
+    .msg{display:none;margin-top:14px;padding:14px 16px;border-radius:12px;font-size:.95rem;font-weight:600;text-align:center;animation:fsu .3s both;line-height:1.5;}
+    .msg.show{display:block;}
+    .msg.success{background:rgba(0,200,150,.1);color:#00c896;border:1px solid rgba(0,200,150,.25);}
+    .msg.error{background:rgba(230,57,70,.1);color:#ff8a92;border:1px solid rgba(230,57,70,.25);}
+    .msg.info{background:rgba(255,183,0,.08);color:var(--amber);border:1px solid rgba(255,183,0,.2);}
+
+    /* ATTENDANCE TABLE */
+    .table-card{display:none;border-radius:20px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);box-shadow:0 24px 60px rgba(0,0,0,.5);}
+    .table-head{padding:20px 24px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .table-head::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00c896,transparent);}
+    /* Changed Table Headings Font: Syne -> Space Grotesk */
+    .table-head h3{font-family:'Space Grotesk', sans-serif;font-size:1.15rem;font-weight:700;color:white;} /* Updated Font */
+    .t-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    table{width:100%;border-collapse:collapse;min-width:480px;}
+    thead th{padding:13px 14px;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;background:rgba(0,180,216,.06);color:var(--teal);text-align:center;border-bottom:1px solid var(--border);font-weight:700;white-space:nowrap;}
+    tbody td{padding:13px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem;font-weight:500;color:var(--text);}
+    tbody tr:last-child td{border-bottom:none;}
+    tbody tr{background:var(--surface);}
+    .s-ok{color:#00c896;font-weight:700;}
+    .s-pend{color:var(--amber);font-weight:700;}
+
+    /* FOOTER */
+    footer{padding:15px 20px;text-align:center;border-top:1px solid var(--border);}
+    /* Changed Footer Brand Font: Syne -> Space Grotesk */
+    .f-brand{font-family:'Space Grotesk', sans-serif;font-size:1.05rem;font-weight:700;color:white;margin-bottom:6px;} /* Updated Font */
+    .f-brand span{color:var(--amber);}
+    footer p{color:var(--muted);font-size:.85rem;}
+
+    /* â”€â”€ MOBILE FIRST â”€â”€ */
+    @media(max-width:600px){
+      .main{padding:0 12px;margin-top:-16px;}
+      .card-head{padding:18px 16px 16px;}
+      .card-body{padding:18px 16px;}
+      .hero{padding:60px 16px 28px;min-height:auto;}
+      .hero h1{font-size:clamp(1.8rem,9vw,2.6rem);} /* Adjusted for new font if needed, but clamp usually handles it */
+      .hero p{font-size:.95rem;}
+      .hero-pill{font-size:.7rem;letter-spacing:1.5px;}
     }
-    nav {
-      position:sticky;top:0;z-index:100;
-      background:rgba(15,23,42,0.95);
-      backdrop-filter:blur(10px);
-      padding:1rem 2rem;
-      box-shadow:0 4px 30px rgba(0,0,0,0.2);
+    @media(max-width:390px){
+      nav{padding:0 14px;height:56px;}
+      .nav-logo{font-size:.9rem;}
+      .card-head{padding:16px 14px;}
+      .card-body{padding:16px 14px;}
+      .field input,.field select{font-size:.95rem;padding:14px 14px 14px 42px;}
+      .field label{font-size:.75rem;}
+      .btn{font-size:.95rem;padding:15px 20px;}
+      .info-lbl{font-size:.75rem;}
+      .info-val{font-size:.95rem;}
     }
-    nav .logo {
-      font-size:20px;font-weight:700;
-      background:linear-gradient(135deg,#f59e0b,#dc2626);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    }
-    header {
-      position:relative;min-height:45vh;display:flex;
-      align-items:center;justify-content:center;
-      background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#dc2626 100%);
-      overflow:hidden;text-align:center;color:white;padding:60px 20px;
-    }
-    .hero-bg {
-      position:absolute;inset:0;opacity:0.1;
-      background-image:radial-gradient(circle at 20% 50%,#f59e0b 0%,transparent 50%),radial-gradient(circle at 80% 80%,#3b82f6 0%,transparent 50%);
-    }
-    .hero-content {position:relative;z-index:2;animation:fadeInUp 1s ease-out;}
-    header h1 {font-size:clamp(2.5rem,8vw,4rem);font-weight:900;margin-bottom:15px;line-height:1.2;text-shadow:0 4px 20px rgba(0,0,0,0.3);}
-    header p {font-size:clamp(1rem,4vw,1.3rem);opacity:0.95;font-weight:300;}
-    @keyframes fadeInUp {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
-    .form-wrapper {
-      max-width:500px;margin:-40px auto 40px;background:white;
-      padding:30px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.15);
-      position:relative;z-index:10;
-    }
-    .form-wrapper h2 {
-      text-align:center;font-size:20px;
-      background:linear-gradient(135deg,#1e3a8a,#dc2626);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-      margin-bottom:25px;font-weight:800;
-    }
-    form {display:flex;flex-direction:column;gap:16px;}
-    label {font-weight:700;color:#0f172a;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
-    input, select {
-      width:100%;padding:12px 14px;border:2px solid #e2e8f0;
-      border-radius:10px;font-size:14px;font-weight:500;
-      transition:all 0.3s;background:#f8fafc;
-    }
-    input:focus, select:focus {
-      outline:none;border-color:#3b82f6;background:white;
-      box-shadow:0 0 0 3px rgba(59,130,246,0.1);
-    }
-    button {
-      padding:12px 20px;font-size:14px;font-weight:700;border:none;
-      border-radius:10px;cursor:pointer;transition:all 0.3s;
-      text-transform:uppercase;letter-spacing:0.5px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    }
-    #verifyBtn {background:linear-gradient(135deg,#3b82f6,#1e3a8a);color:white;}
-    #verifyBtn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 8px 30px rgba(59,130,246,0.4);}
-    #markBtn {background:linear-gradient(135deg,#f59e0b,#dc2626);color:white;}
-    #markBtn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 8px 30px rgba(245,158,11,0.4);}
-    #markBtn:disabled{opacity:0.5;cursor:not-allowed;}
-    #viewBtn {background:linear-gradient(135deg,#10b981,#059669)!important;color:white!important;}
-    #viewBtn:hover{transform:translateY(-3px)!important;box-shadow:0 8px 30px rgba(16,185,129,0.4)!important;}
-    #studentInfo {
-      display:none;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
-      padding:25px;border-radius:12px;border-left:6px solid #1e3a8a;
-      margin:20px 0;animation:slideIn 0.4s ease-out;
-    }
-    #studentInfo p {margin:10px 0;font-size:15px;color:#0f172a;font-weight:500;}
-    #studentInfo strong {color:#1e3a8a;font-weight:700;}
-    @keyframes slideIn {from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
-    #info {margin-top:15px;padding:15px;text-align:center;font-weight:600;border-radius:10px;font-size:15px;min-height:20px;}
-    #info.success {background:#dcfce7;color:#166534;border:2px solid #86efac;}
-    #info.error {background:#fee2e2;color:#991b1b;border:2px solid #fca5a5;}
-    #info.info {background:#e0f2fe;color:#0c4a6e;border:2px solid #7dd3fc;}
-    .table-wrapper {
-      display:none;max-width:900px;margin:40px auto;background:white;
-      padding:30px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.15);
-      overflow-x:auto;
-    }
-    .table-wrapper h3 {text-align:center;font-size:22px;margin-bottom:25px;
-      background:linear-gradient(135deg,#1e3a8a,#dc2626);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-    table {width:100%;border-collapse:collapse;background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border-radius:12px;overflow:hidden;}
-    th {background:linear-gradient(135deg,#1e3a8a,#3b82f6);color:white;padding:18px;font-weight:700;text-align:center;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;}
-    td {padding:16px;text-align:center;font-weight:500;border-bottom:1px solid #e2e8f0;color:#0f172a;}
-    tr:last-child td {border-bottom:none;}
-    tr:hover td {background:#f0f9ff;}
-    .status-approved {color:#10b981;font-weight:700;}
-    .status-pending {color:#f59e0b;font-weight:700;}
-    footer {background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);color:white;text-align:center;padding:30px 20px;margin-top:40px;font-size:14px;}
   </style>
 </head>
 <body>
-  <nav><div class="logo">🚗 New Sri Raja Driving School</div></nav>
+  <nav>
+    <div class="nav-logo"><div class="nav-dot"></div>Sri Ganesh Driving</div>
+    <a href="index.html" class="back-link">Back to Home</a>
+  </nav>
 
-  <header>
-    <div class="hero-bg"></div>
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
     <div class="hero-content">
-      <h1>📊 Student Attendance Portal</h1>
-      <p>Track Your Driving Progress</p>
+      <div class="hero-pill">Student Dashboard</div>
+      <p>Verify &amp; mark your attendance, view history</p>
     </div>
-  </header>
-
-  <div class="form-wrapper">
-    <h2>Mark Your Attendance</h2>
-    <form id="attendanceForm" autocomplete="off">
-      <label for="phone">Phone Number</label>
-      <input type="text" id="phone" required maxlength="10" placeholder="Enter 10-digit phone number" />
-
-      <label for="password">Password</label>
-      <input type="password" id="password" required maxlength="6" placeholder="Enter your password" />
-
-      <button type="button" id="verifyBtn">🔍 Verify Student</button>
-
-      <div id="studentInfo">
-        <p><strong>Name:</strong> <span id="studentName"></span></p>
-        <p><strong>Course:</strong> <span id="studentCourse"></span></p>
-        <p><strong>Classes Taken:</strong> <span id="studentTaken"></span></p>
-        <p><strong>Remaining:</strong> <span id="studentRemaining"></span></p>
-      </div>
-
-      <label id="timingLabel" for="timing" style="display:none;">Select Timing</label>
-      <select id="timing" style="display:none;">
-        <option value="">-- Select Timing --</option>
-      </select>
-
-      <button type="submit" id="markBtn" disabled>✅ Mark Attendance</button>
-      <div id="info"></div>
-    </form>
-    <button type="button" id="viewBtn" style="display:none;margin-top:10px;">📜 View My Attendance</button>
   </div>
 
-  <div class="table-wrapper">
-    <h3>Your Attendance Records</h3>
-    <div id="tableContent"></div>
+  <div class="main">
+    <!-- ATTENDANCE FORM -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-head-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div><h2>Mark Attendance</h2><p>Verify identity first, then mark today's class</p></div>
+      </div>
+      <div class="card-body">
+        <form id="attForm" autocomplete="off">
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+              <input type="text" id="phone" required maxlength="10" placeholder="10-digit mobile number" inputmode="numeric"/>
+            </div>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <input type="password" id="password" required maxlength="6" placeholder="Your 6-digit PIN" inputmode="numeric"/>
+            </div>
+          </div>
+
+          <button type="button" id="verBtn" class="btn btn-teal"><span class="shimmer"></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Verify Student</button>
+
+          <div id="sInfo" class="student-info">
+            <div class="info-row"><span class="info-lbl">Name</span><span class="info-val" id="sName"></span></div>
+            <div class="info-row"><span class="info-lbl">Course</span><span class="info-val" id="sCourse"></span></div>
+            <div class="info-row"><span class="info-lbl">Classes Taken</span><span class="info-val hl" id="sTaken"></span></div>
+            <div class="info-row"><span class="info-lbl">Remaining</span><span class="info-val hl" id="sRem"></span></div>
+          </div>
+
+          <div class="progress-wrap" id="progWrap">
+            <div class="progress-lbl"><span>Class Progress</span><span id="progTxt">0%</span></div>
+            <div class="progress-track"><div class="progress-bar" id="progBar" style="width:0%"></div></div>
+          </div>
+
+          <div class="field" id="timingField" style="display:none;margin-top:4px;">
+            <label for="timing">Session Timing</label>
+            <div class="field-wrap">
+              <span class="field-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7a99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              <select id="timing"><option value="">Select your timing</option></select>
+            </div>
+          </div>
+
+          <button type="submit" id="markBtn" class="btn btn-amber" disabled><span class="shimmer"></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Mark Attendance</button>
+          <div id="info" class="msg"></div>
+        </form>
+        <button type="button" id="viewBtn" class="btn btn-ghost" style="display:none;margin-top:4px;"><span class="shimmer"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          View My Attendance History</button>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE TABLE -->
+    <div class="table-card" id="tableCard">
+      <div class="table-head"><h3>Attendance Records</h3></div>
+      <div class="t-wrap"><div id="tableContent"></div></div>
+    </div>
   </div>
 
   <footer>
-    <p><strong>© 2025 New Sri Raja Driving School, Vizianagaram</strong></p>
-    <p>Driving Instruction Excellence Since 2000  | All Rights Reserved</p>
+    <p>© 2025 Sri Ganesh Driving School, Vizianagaram. Excellence Since 2000</p>
   </footer>
 
   <script>
-    
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1WQvVlbjDF7Vnv0tAmB6BuebSG-g6WeKOMcPC8sWlOnAD874h_SLkkQRdSiwZBb5C/exec";
+    const SURL="https://script.google.com/macros/s/AKfycbw1WQvVlbjDF7Vnv0tAmB6BuebSG-g6WeKOMcPC8sWlOnAD874h_SLkkQRdSiwZBb5C/exec";
+    const phone=document.getElementById('phone'),pwd=document.getElementById('password'),verBtn=document.getElementById('verBtn'),markBtn=document.getElementById('markBtn'),infoEl=document.getElementById('info'),sInfo=document.getElementById('sInfo'),timingField=document.getElementById('timingField'),timing=document.getElementById('timing'),viewBtn=document.getElementById('viewBtn'),tableCard=document.getElementById('tableCard'),tableContent=document.getElementById('tableContent'),progWrap=document.getElementById('progWrap');
+    let verified=false,verPhone='',courseType='';
 
-    const phoneInput = document.getElementById("phone");
-    const passwordInput = document.getElementById("password");
-    const verifyBtn = document.getElementById("verifyBtn");
-    const markBtn = document.getElementById("markBtn");
-    const info = document.getElementById("info");
-    const studentInfoDiv = document.getElementById("studentInfo");
-    const timingLabel = document.getElementById("timingLabel");
-    const timingSelect = document.getElementById("timing");
-    const viewBtn = document.getElementById("viewBtn");
-    const tableWrapper = document.querySelector(".table-wrapper");
-    const tableContent = document.getElementById("tableContent");
+    // Ripple
+    function addRipple(b){b.addEventListener('click',e=>{
+      const r=document.createElement('span');
+      r.className='ripple';
+      const rc=b.getBoundingClientRect(),sz=Math.max(rc.width,rc.height);
+      r.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rc.left-sz/2}px;top:${e.clientY-rc.top-sz/2}px;`;
+      b.appendChild(r);
+      setTimeout(()=>r.remove(),700);
+    });}
+    document.querySelectorAll('.btn').forEach(addRipple);
 
-    let isVerified = false;
-    let courseType = "";
-    let verifiedPhone = "";
+    function showMsg(t,type){infoEl.textContent=t;infoEl.className='msg show '+type;}
+    function resetV(){sInfo.style.display='none';timingField.style.display='none';markBtn.disabled=true;viewBtn.style.display='none';tableCard.style.display='none';progWrap.style.display='none';verified=false;verPhone='';}
 
-    function showInfo(message, type) {
-      info.textContent = message;
-      info.className = type;
-    }
+    phone.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'').slice(0,10);});
 
-    function resetVerification() {
-      studentInfoDiv.style.display = "none";
-      timingLabel.style.display = "none";
-      timingSelect.style.display = "none";
-      markBtn.disabled = true;
-      viewBtn.style.display = "none";
-      tableWrapper.style.display = "none";
-      isVerified = false;
-      verifiedPhone = "";
-    }
-
-    // ✅ Restrict phone input to 10 digits only
-    phoneInput.addEventListener("input", function() {
-      this.value = this.value.replace(/[^0-9]/g, "");
-      if (this.value.length > 10) this.value = this.value.slice(0, 10);
-    });
-
-    // ✅ SECURE: Verify with password
-    verifyBtn.addEventListener("click", () => {
-      const phone = phoneInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      if (!/^[0-9]{10}$/.test(phone)) {
-        showInfo("⚠️ Enter a valid 10-digit phone number.", "error");
-        return;
-      }
-      if (!password) {
-        showInfo("⚠️ Enter your password.", "error");
-        return;
-      }
-
-      showInfo("Verifying...", "info");
-
-      // ✅ Send action, phone, and password
-      fetch(`${SCRIPT_URL}?action=verifyStudent&phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "WRONG_PASSWORD") {
-            showInfo("❌ Incorrect password.", "error");
-            resetVerification();
-          } else if (data.status === "NOT_REGISTERED") {
-            showInfo("❌ Phone number not registered.", "error");
-            resetVerification();
-          } else if (data.status === "FOUND") {
-            verifiedPhone = phone;
-            courseType = data.course;
-            document.getElementById("studentName").textContent = data.name;
-            document.getElementById("studentCourse").textContent = data.course;
-            document.getElementById("studentTaken").textContent = data.taken;
-            document.getElementById("studentRemaining").textContent = data.remaining;
-            
-            studentInfoDiv.style.display = "block";
-            buildTimingDropdown(courseType);
-            isVerified = true;
-            markBtn.disabled = false;
-            viewBtn.style.display = "block";
-            showInfo("✅ Student verified successfully!", "success");
-          } else {
-            showInfo("❓ Unexpected response.", "error");
-            resetVerification();
-          }
+    verBtn.addEventListener('click',()=>{
+      const p=phone.value.trim(),pw=pwd.value.trim();
+      if(!/^[0-9]{10}$/.test(p)){showMsg('Enter a valid 10-digit phone number.','error');return;}
+      if(!pw){showMsg('Enter your password.','error');return;}
+      verBtn.innerHTML='<span class="shimmer"></span>Verifying';
+      showMsg('Verifying your identity','info');
+      fetch(`${SURL}?action=verifyStudent&phone=${encodeURIComponent(p)}&password=${encodeURIComponent(pw)}`)
+        .then(r=>r.json())
+        .then(d=>{
+          verBtn.innerHTML='<span class="shimmer"></span>Verify Student';
+          if(d.status==='WRONG_PASSWORD'){showMsg('Incorrect password.','error');resetV();}
+          else if(d.status==='NOT_REGISTERED'){showMsg('Phone number not registered.','error');resetV();}
+          else if(d.status==='FOUND'){
+            verPhone=p;courseType=d.course;
+            document.getElementById('sName').textContent=d.name;
+            document.getElementById('sCourse').textContent=d.course;
+            document.getElementById('sTaken').textContent=d.taken;
+            document.getElementById('sRem').textContent=d.remaining;
+            const max=parseInt(d.taken)+parseInt(d.remaining)||1,pct=Math.round((parseInt(d.taken)/max)*100);
+            document.getElementById('progBar').style.width=pct+'%';document.getElementById('progTxt').textContent=pct+'%';
+            sInfo.style.display='block';progWrap.style.display='block';
+            buildTimings(d.course);verified=true;markBtn.disabled=false;viewBtn.style.display='flex';
+            showMsg('Verified successfully!','success');addRipple(markBtn);addRipple(viewBtn);
+          }else{showMsg('Unexpected response.','error');resetV();}
         })
-        .catch(() => {
-          showInfo("⚠️ Server error. Please try again.", "error");
-          resetVerification();
-        });
+        .catch(()=>{verBtn.innerHTML='<span class="shimmer"></span>Verify Student';showMsg('Server error. Please try again.','error');resetV();});
     });
 
-    function buildTimingDropdown(course) {
-      timingSelect.innerHTML = `<option value="">-- Select Timing --</option>`;
-      const times = [];
-      if (course.toLowerCase().includes("fast")) {
-        for (let h = 6; h <= 17; h++) {
-          const ampm = h < 12 ? "AM" : "PM";
-          times.push(`${h > 12 ? h - 12 : h}:00 ${ampm}`);
-        }
-      } else {
-        for (let h = 6; h <= 17; h++) {
-          const ampm = h < 12 ? "AM" : "PM";
-          times.push(`${h > 12 ? h - 12 : h}:00 ${ampm}`);
-          times.push(`${h > 12 ? h - 12 : h}:30 ${ampm}`);
-        }
-      }
-      times.forEach(t => {
-        const opt = document.createElement("option");
-        opt.value = t;
-        opt.textContent = t;
-        timingSelect.appendChild(opt);
-      });
-      timingLabel.style.display = "block";
-      timingSelect.style.display = "block";
-    }
+    function buildTimings(course){timing.innerHTML=`<option value="">Select timing </option>`;const ts=[];for(let h=6;h<=17;h++){const a=h<12?'AM':'PM',h12=h>12?h-12:h;ts.push(`${h12}:00 ${a}`);if(!course.toLowerCase().includes('fast'))ts.push(`${h12}:30 ${a}`);}ts.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;timing.appendChild(o);});timingField.style.display='block';}
 
-    function formatDateTime(rawDate) {
-      try {
-        const date = new Date(rawDate);
-        if (isNaN(date)) return rawDate;
-
-        const time = date.toLocaleTimeString("en-IN", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true
-        });
-
-        const day = date.getDate().toString().padStart(2, "0");
-        const month = date.toLocaleString("en-GB", { month: "short" });
-        const year = date.getFullYear();
-
-        return `${time} | ${day}-${month}-${year}`;
-      } catch {
-        return rawDate;
-      }
-    }
-
-    document.getElementById("attendanceForm").addEventListener("submit", e => {
-      e.preventDefault();
-      if (!isVerified) {
-        showInfo("⚠️ Please verify student first.", "error");
-        return;
-      }
-      const phone = phoneInput.value.trim();
-      const timing = timingSelect.value;
-      if (!timing) {
-        showInfo("⚠️ Please select a timing.", "error");
-        return;
-      }
-
-      markBtn.disabled = true;
-      const originalText = markBtn.textContent;
-      markBtn.textContent = "⏳ Submitting...";
-
-      const formData = new FormData();
-      formData.append("phone", phone);
-      formData.append("timing", timing);
-
-      fetch(SCRIPT_URL, { method: "POST", body: formData })
-        .then(res => res.text())
-        .then(text => {
-          if (text === "PENDING_REVIEW") {
-            markBtn.textContent = "✅ Submitted";
-            showInfo("✅ Attendance submitted! Pending admin approval.", "success");
-          } else if (text === "LIMIT_REACHED") {
-            markBtn.textContent = originalText;
-            showInfo("⚠️ You've reached your course limit.", "error");
-            markBtn.disabled = false;
-          } else {
-            markBtn.textContent = originalText;
-            showInfo("❌ Error submitting attendance.", "error");
-            markBtn.disabled = false;
-          }
-        })
-        .catch(() => {
-          markBtn.textContent = originalText;
-          showInfo("⚠️ Network error. Please try again.", "error");
-          markBtn.disabled = false;
-        });
+    document.getElementById('attForm').addEventListener('submit',e=>{
+      e.preventDefault();if(!verified){showMsg('Verify first.','error');return;}
+      const t=timing.value;if(!t){showMsg('Select a timing.','error');return;}
+      markBtn.disabled=true;const orig=markBtn.innerHTML;markBtn.innerHTML='<span class="shimmer"></span>Submitting';
+      const fd=new FormData();fd.append('phone',phone.value.trim());fd.append('timing',t);
+      fetch(SURL,{method:'POST',body:fd}).then(r=>r.text()).then(tx=>{
+        if(tx==='PENDING_REVIEW'){markBtn.innerHTML='<span class="shimmer"></span>âœ… Submitted';showMsg('Attendance submitted! Awaiting admin approval.','success');}
+        else if(tx==='LIMIT_REACHED'){markBtn.innerHTML=orig;markBtn.disabled=false;showMsg('You\'ve reached your course class limit.','error');}
+        else{markBtn.innerHTML=orig;markBtn.disabled=false;showMsg('Error. Please try again.','error');}
+      }).catch(()=>{markBtn.innerHTML=orig;markBtn.disabled=false;showMsg('Network error.','error');});
     });
 
-    viewBtn.addEventListener("click", () => {
-      if (!verifiedPhone) {
-        showInfo("⚠️ Please verify your number first.", "error");
-        return;
-      }
-      showInfo("Fetching attendance...", "info");
-
-      fetch(`${SCRIPT_URL}?action=viewAttendance&phone=${encodeURIComponent(verifiedPhone)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "OK" && data.records && data.records.length > 0) {
-            renderAttendanceTable(data.records);
-            tableWrapper.style.display = "block";
-            info.textContent = "";
-            tableWrapper.scrollIntoView({ behavior: "smooth" });
-          } else {
-            tableContent.innerHTML = "<p style='text-align:center;padding:30px;color:#64748b;font-weight:600;'>No attendance records yet.</p>";
-            tableWrapper.style.display = "block";
-            info.textContent = "";
-            tableWrapper.scrollIntoView({ behavior: "smooth" });
-          }
-        })
-        .catch(() => showInfo("⚠️ Error fetching attendance.", "error"));
+    viewBtn.addEventListener('click',()=>{
+      if(!verPhone){showMsg('Verify first.','error');return;}
+      showMsg('Fetching records','info');
+      fetch(`${SURL}?action=viewAttendance&phone=${encodeURIComponent(verPhone)}`).then(r=>r.json()).then(d=>{
+        infoEl.className='msg';
+        if(d.status==='OK'&&d.records?.length) renderTable(d.records);
+        else tableContent.innerHTML=`<p style='text-align:center;padding:44px;color:var(--muted);font-weight:600;font-size:.9rem;'>No attendance records yet.</p>`;
+        tableCard.style.display='block';setTimeout(()=>tableCard.scrollIntoView({behavior:'smooth',block:'start'}),100);
+      }).catch(()=>showMsg('Error fetching records.','error'));
     });
 
-    function renderAttendanceTable(records) {
-      let html = `
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Course</th>
-              <th>Timing</th>
-              <th>Class #</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-      records.forEach(r => {
-        const statusClass = r.status.includes("Approved") ? "status-approved" : "status-pending";
-        const formattedDate = formatDateTime(r.timestamp);
-        html += `
-          <tr>
-            <td>${formattedDate}</td>
-            <td>${r.course}</td>
-            <td>${r.timing}</td>
-            <td>${r.classNo}</td>
-            <td class="${statusClass}">${r.status}</td>
-          </tr>`;
-      });
-      html += `</tbody></table>`;
-      tableContent.innerHTML = html;
-    }
+    function fmtDate(raw){try{const d=new Date(raw);if(isNaN(d))return raw;return d.toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true})+'  '+String(d.getDate()).padStart(2,'0')+'-'+d.toLocaleString('en-GB',{month:'short'})+'-'+d.getFullYear();}catch{return raw;}}
+    function renderTable(records){let h=`<table><thead><tr><th>Date & Time</th><th>Course</th><th>Timing</th><th>Class #</th><th>Status</th></tr></thead><tbody>`;records.forEach(r=>{const cl=r.status.includes('Approved')?'s-ok':'s-pend';h+=`<tr><td>${fmtDate(r.timestamp)}</td><td>${r.course}</td><td>${r.timing}</td><td>${r.classNo}</td><td class="${cl}">${r.status}</td></tr>`;});tableContent.innerHTML=h+`</tbody></table>`;}
   </script>
 </body>
 </html>
+
