@@ -393,6 +393,10 @@
   menuToggle.addEventListener('click',openSidebar);
   sidebarClose.addEventListener('click',closeSidebar);
   overlay.addEventListener('click',closeSidebar);
+
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/SriGaneshDrivingSchool/service-worker.js');
+}
 </script>
 </body>
 </html>
